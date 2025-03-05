@@ -2,10 +2,10 @@ package robedpixel.Sdl.Hints;
 
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
 
 class NativeHintsFuncs {
-    private final Arena allocator;
+    private static volatile NativeHintsFuncs INSTANCE;
+    private static final Object mutex = new Object();
     private final MethodHandle SDL_SetHintWithPriority;
     private final MethodHandle SDL_SetHint;
     private final MethodHandle SDL_ResetHint;
@@ -15,7 +15,6 @@ class NativeHintsFuncs {
     private final MethodHandle SDL_AddHintCallback;
     private final MethodHandle SDL_RemoveHintCallback;
     public NativeHintsFuncs(Arena allocator){
-        this.allocator = allocator;
         SymbolLookup library = SymbolLookup.libraryLookup("SDL3", allocator);
         SDL_SetHintWithPriority = Linker.nativeLinker().downcallHandle(
                 library.find("SDL_SetHintWithPriority").orElseThrow(),
@@ -58,6 +57,7 @@ class NativeHintsFuncs {
                 FunctionDescriptor.of(ValueLayout.JAVA_BOOLEAN,ValueLayout.ADDRESS,ValueLayout.ADDRESS,ValueLayout.ADDRESS)
         );
     }
+
     public Boolean setHintWithPriority(Arena localAllocator,String name, String value, HintPriority priority) throws Throwable {
         return (Boolean) SDL_SetHintWithPriority.invoke(localAllocator.allocateFrom(name),localAllocator.allocateFrom(value),priority);
     }
@@ -83,5 +83,16 @@ class NativeHintsFuncs {
     public Boolean removeHintCallback(MemorySegment name, MemorySegment callbackFunc,MemorySegment userData) throws Throwable {
 
         return (Boolean)SDL_RemoveHintCallback.invoke(name,callbackFunc,userData);
+    }
+    public static NativeHintsFuncs getInstance(Arena allocator) {
+        NativeHintsFuncs result = INSTANCE;
+        if (result == null) {
+            synchronized (mutex) {
+                result = INSTANCE;
+                if (result == null)
+                    INSTANCE = result = new NativeHintsFuncs(allocator);
+            }
+        }
+        return result;
     }
 }

@@ -1,5 +1,7 @@
 package robedpixel.Sdl.Hints;
 
+import robedpixel.Sdl.NativeSdlLib;
+
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -7,7 +9,7 @@ import java.lang.invoke.MethodHandles;
 public class Hints {
     private NativeHintsFuncs SdlFuncs;
     public Hints(Arena allocator){
-        SdlFuncs = new NativeHintsFuncs(allocator);
+        SdlFuncs = NativeHintsFuncs.getInstance(allocator);
     }
     public Boolean setHintWithPriority(String name, String value, HintPriority priority) throws Throwable {
         try(Arena arena = Arena.ofConfined()) {

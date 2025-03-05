@@ -1,15 +1,16 @@
 package robedpixel.Sdl.Guid;
 
+
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
 
 class NativeGuidFuncs {
-    private final Arena allocator;
+    private static volatile NativeGuidFuncs INSTANCE;
+    private static final Object mutex = new Object();
     private final MethodHandle SDL_GUIDToString;
     private final MethodHandle SDL_StringToGUID;
     public NativeGuidFuncs(Arena allocator) {
-        this.allocator = allocator;
         SymbolLookup library = SymbolLookup.libraryLookup("SDL3", allocator);
         SDL_GUIDToString = Linker.nativeLinker().downcallHandle(
                 library.find("SDL_GUIDToString").orElseThrow(),
@@ -50,5 +51,16 @@ class NativeGuidFuncs {
             returnObject.getData()[i] = (short)dataArray.get(guidAddress,i);
         }
         return returnObject;
+    }
+    public static NativeGuidFuncs getInstance(Arena allocator) {
+        NativeGuidFuncs result = INSTANCE;
+        if (result == null) {
+            synchronized (mutex) {
+                result = INSTANCE;
+                if (result == null)
+                    INSTANCE = result = new NativeGuidFuncs(allocator);
+            }
+        }
+        return result;
     }
 }
