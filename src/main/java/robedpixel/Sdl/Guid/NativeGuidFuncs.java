@@ -23,10 +23,10 @@ class NativeGuidFuncs {
         );
     }
     //TODO: test, may not be correct
-    public String guidToString(SdlGuid guid, int chGuid) throws Throwable {
+    public String guidToString(Arena localAllocator, SdlGuid guid, int chGuid) throws Throwable {
         char[] charArray = new char[chGuid];
-        MemorySegment arrayAddress = allocator.allocateFrom(ValueLayout.JAVA_CHAR, charArray);
-        MemorySegment structAddress = allocator.allocate(SdlGuid.getStructLayout());
+        MemorySegment arrayAddress = localAllocator.allocateFrom(ValueLayout.JAVA_CHAR, charArray);
+        MemorySegment structAddress = localAllocator.allocate(SdlGuid.getStructLayout());
         VarHandle dataArray = SdlGuid.getStructLayout().arrayElementVarHandle(MemoryLayout.PathElement.sequenceElement(),
                 MemoryLayout.PathElement.groupElement("data"));
         for (int i=0;i<guid.getData().length;i++){
@@ -40,10 +40,9 @@ class NativeGuidFuncs {
         return String.valueOf(charArray);
     }
     //TODO: test, may not be correct
-    public SdlGuid stringToGuid(String pchGuid) throws Throwable {
+    public SdlGuid stringToGuid(Arena localAllocator, String pchGuid) throws Throwable {
         SdlGuid returnObject = new SdlGuid();
-        MemorySegment structAddress = allocator.allocate(SdlGuid.getStructLayout());
-        MemorySegment stringAddress = allocator.allocateFrom(pchGuid);
+        MemorySegment stringAddress = localAllocator.allocateFrom(pchGuid);
         MemorySegment guidAddress = (MemorySegment)SDL_StringToGUID.invoke(stringAddress);
         VarHandle dataArray = SdlGuid.getStructLayout().arrayElementVarHandle(MemoryLayout.PathElement.sequenceElement(),
                 MemoryLayout.PathElement.groupElement("data"));

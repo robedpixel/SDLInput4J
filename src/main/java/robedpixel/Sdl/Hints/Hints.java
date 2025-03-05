@@ -10,27 +10,65 @@ public class Hints {
         SdlFuncs = new NativeHintsFuncs(allocator);
     }
     public Boolean setHintWithPriority(String name, String value, HintPriority priority) throws Throwable {
-        return SdlFuncs.setHintWithPriority(name,value,priority);
+        try(Arena arena = Arena.ofConfined()) {
+            return SdlFuncs.setHintWithPriority(arena,name, value, priority);
+        }
     }
     public Boolean setHint(String name, String value) throws Throwable {
-        return SdlFuncs.setHint(name, value);
+        try(Arena arena = Arena.ofConfined()) {
+            return SdlFuncs.setHint(arena,name, value);
+        }
     }
     public Boolean resetHint(String name) throws Throwable {
-        return SdlFuncs.resetHint(name);
+        try(Arena arena = Arena.ofConfined()) {
+            return SdlFuncs.resetHint(arena,name);
+        }
     }
     public void resetHints() throws Throwable{
         SdlFuncs.resetHints();
     }
     public String getHint(String name) throws Throwable {
-        return SdlFuncs.getHint(name);
+        try(Arena arena = Arena.ofConfined()) {
+            return SdlFuncs.getHint(arena,name);
+        }
     }
     public Boolean getHintBoolean(String name, boolean defaultValue) throws Throwable {
-        return SdlFuncs.getHintBoolean(name, defaultValue);
+        try(Arena arena = Arena.ofConfined()) {
+            return SdlFuncs.getHintBoolean(arena,name, defaultValue);
+        }
     }
-    public Boolean addHintCallback(String name, SdlHintCallback callbackUpcallStub,MemorySegment userData) throws Throwable {
-        return SdlFuncs.addHintCallback(name, callbackUpcallStub, userData);
+    public Boolean addHintCallback(SdlHintCallback callbackUpcallStub) throws Throwable {
+        MethodHandle callbackHandle;
+        FunctionDescriptor callbackHandleDescriptor = FunctionDescriptor.ofVoid(
+                ValueLayout.ADDRESS,ValueLayout.ADDRESS,ValueLayout.ADDRESS,ValueLayout.ADDRESS);
+        try {
+            callbackHandle = MethodHandles.publicLookup().bind(callbackUpcallStub,"callback",callbackHandleDescriptor.toMethodType());
+        } catch (Exception e) {
+            throw new AssertionError(
+                    "Problem creating method handle compareHandle", e);
+        }
+        MemorySegment nameAddress = callbackUpcallStub.getCallbackAllocator().allocateFrom(callbackUpcallStub.getName());
+        MemorySegment callbackFunc = Linker.nativeLinker().upcallStub(
+                callbackHandle,
+                callbackHandleDescriptor,
+                callbackUpcallStub.getCallbackAllocator());
+        return SdlFuncs.addHintCallback(nameAddress, callbackFunc, callbackUpcallStub.getUserData());
     }
-    public Boolean removeHintCallback(String name, SdlHintCallback callbackUpcallStub,MemorySegment userData) throws Throwable {
-        return SdlFuncs.removeHintCallback(name, callbackUpcallStub, userData);
+    public Boolean removeHintCallback(SdlHintCallback callbackUpcallStub) throws Throwable {
+        MethodHandle callbackHandle;
+        FunctionDescriptor callbackHandleDescriptor = FunctionDescriptor.ofVoid(
+                ValueLayout.ADDRESS,ValueLayout.ADDRESS,ValueLayout.ADDRESS,ValueLayout.ADDRESS);
+        try {
+            callbackHandle = MethodHandles.publicLookup().bind(callbackUpcallStub,"callback",callbackHandleDescriptor.toMethodType());
+        } catch (Exception e) {
+            throw new AssertionError(
+                    "Problem creating method handle compareHandle", e);
+        }
+        MemorySegment nameAddress = callbackUpcallStub.getCallbackAllocator().allocateFrom(callbackUpcallStub.getName());
+        MemorySegment callbackFunc = Linker.nativeLinker().upcallStub(
+                callbackHandle,
+                callbackHandleDescriptor,
+                callbackUpcallStub.getCallbackAllocator());
+        return SdlFuncs.removeHintCallback(nameAddress, callbackFunc, callbackUpcallStub.getUserData());
     }
 }

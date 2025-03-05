@@ -58,55 +58,30 @@ class NativeHintsFuncs {
                 FunctionDescriptor.of(ValueLayout.JAVA_BOOLEAN,ValueLayout.ADDRESS,ValueLayout.ADDRESS,ValueLayout.ADDRESS)
         );
     }
-    public Boolean setHintWithPriority(String name, String value, HintPriority priority) throws Throwable {
-        return (Boolean) SDL_SetHintWithPriority.invoke(allocator.allocateFrom(name),allocator.allocateFrom(value),priority);
+    public Boolean setHintWithPriority(Arena localAllocator,String name, String value, HintPriority priority) throws Throwable {
+        return (Boolean) SDL_SetHintWithPriority.invoke(localAllocator.allocateFrom(name),localAllocator.allocateFrom(value),priority);
     }
-    public Boolean setHint(String name, String value) throws Throwable {
-        return (Boolean) SDL_SetHint.invoke(allocator.allocateFrom(name),allocator.allocateFrom(value));
+    public Boolean setHint(Arena localAllocator,String name, String value) throws Throwable {
+        return (Boolean) SDL_SetHint.invoke(localAllocator.allocateFrom(name),localAllocator.allocateFrom(value));
     }
-    public Boolean resetHint(String name) throws Throwable {
-        return (Boolean) SDL_ResetHint.invoke(allocator.allocateFrom(name));
+    public Boolean resetHint(Arena localAllocator,String name) throws Throwable {
+        return (Boolean) SDL_ResetHint.invoke(localAllocator.allocateFrom(name));
     }
     public void resetHints() throws Throwable{
         SDL_ResetHints.invoke();
     }
-    public String getHint(String name) throws Throwable {
-        MemorySegment charArrayAddress = (MemorySegment)SDL_GetHint.invoke(allocator.allocateFrom(name));
+    public String getHint(Arena localAllocator,String name) throws Throwable {
+        MemorySegment charArrayAddress = (MemorySegment)SDL_GetHint.invoke(localAllocator.allocateFrom(name));
         return charArrayAddress.getString(0);
     }
-    public Boolean getHintBoolean(String name, boolean defaultValue) throws Throwable {
-        return (Boolean) SDL_GetHintBoolean.invoke(allocator.allocateFrom(name),defaultValue);
+    public Boolean getHintBoolean(Arena localAllocator,String name, boolean defaultValue) throws Throwable {
+        return (Boolean) SDL_GetHintBoolean.invoke(localAllocator.allocateFrom(name),defaultValue);
     }
-    public Boolean addHintCallback(String name, SdlHintCallback callbackUpcallStub,MemorySegment userData) throws Throwable {
-        MethodHandle callbackHandle;
-        FunctionDescriptor callbackHandleDescriptor = FunctionDescriptor.ofVoid(
-                ValueLayout.ADDRESS,ValueLayout.ADDRESS,ValueLayout.ADDRESS,ValueLayout.ADDRESS);
-        try {
-            callbackHandle = MethodHandles.publicLookup().bind(callbackUpcallStub,"callback",callbackHandleDescriptor.toMethodType());
-        } catch (Exception e) {
-            throw new AssertionError(
-                    "Problem creating method handle compareHandle", e);
-        }
-        MemorySegment callbackFunc = Linker.nativeLinker().upcallStub(
-                callbackHandle,
-                callbackHandleDescriptor,
-                allocator);
+    public Boolean addHintCallback(MemorySegment name, MemorySegment callbackFunc,MemorySegment userData) throws Throwable {
         return (Boolean)SDL_AddHintCallback.invoke(name,callbackFunc,userData);
     }
-    public Boolean removeHintCallback(String name, SdlHintCallback callbackUpcallStub,MemorySegment userData) throws Throwable {
-        MethodHandle callbackHandle;
-        FunctionDescriptor callbackHandleDescriptor = FunctionDescriptor.ofVoid(
-                ValueLayout.ADDRESS,ValueLayout.ADDRESS,ValueLayout.ADDRESS,ValueLayout.ADDRESS);
-        try {
-            callbackHandle = MethodHandles.publicLookup().bind(callbackUpcallStub,"callback",callbackHandleDescriptor.toMethodType());
-        } catch (Exception e) {
-            throw new AssertionError(
-                    "Problem creating method handle compareHandle", e);
-        }
-        MemorySegment callbackFunc = Linker.nativeLinker().upcallStub(
-                callbackHandle,
-                callbackHandleDescriptor,
-                allocator);
+    public Boolean removeHintCallback(MemorySegment name, MemorySegment callbackFunc,MemorySegment userData) throws Throwable {
+
         return (Boolean)SDL_RemoveHintCallback.invoke(name,callbackFunc,userData);
     }
 }

@@ -9,10 +9,14 @@ public class Guid {
         SdlFuncs = new NativeGuidFuncs(allocator);
     }
     public String guidToString(SdlGuid guid, int chGuid) throws Throwable {
-        return SdlFuncs.guidToString(guid, chGuid);
+        try(Arena arena = Arena.ofConfined()) {
+            return SdlFuncs.guidToString(arena, guid, chGuid);
+        }
     }
     //TODO: find a way to extract struct value to function
     public SdlGuid stringToGuid(String pchGuid) throws Throwable {
-        return SdlFuncs.stringToGuid(pchGuid);
+        try(Arena arena = Arena.ofConfined()) {
+            return SdlFuncs.stringToGuid(arena, pchGuid);
+        }
     }
 }

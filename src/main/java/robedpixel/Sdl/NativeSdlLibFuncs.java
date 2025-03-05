@@ -10,7 +10,7 @@ class NativeSdlLibFuncs {
     private static volatile NativeSdlLibFuncs INSTANCE;
     private static final Object mutex = new Object();
     @Getter
-    private final Arena allocator;
+    private final Arena globalAllocator;
     private final MethodHandle SDL_Init;
     private final MethodHandle SDL_Quit;
     private final MethodHandle SDL_QuitSubSystem;
@@ -20,8 +20,8 @@ class NativeSdlLibFuncs {
     private final MethodHandle SDL_SetAppMetadataProperty;
     private final MethodHandle SDL_GetAppMetadataProperty;
     public NativeSdlLibFuncs(){
-        allocator = Arena.ofShared();
-        SymbolLookup library = SymbolLookup.libraryLookup("SDL3", allocator);
+        globalAllocator = Arena.ofShared();
+        SymbolLookup library = SymbolLookup.libraryLookup("SDL3", globalAllocator);
         SDL_Init = Linker.nativeLinker().downcallHandle(
                 library.find("SDL_Init").orElseThrow(),
 
@@ -85,31 +85,18 @@ class NativeSdlLibFuncs {
     public Boolean isMainThread() throws Throwable {
         return (Boolean)SDL_IsMainThread.invoke();
     }
-    public Boolean runOnMainThread(SdlMainThreadCallback callbackUpcallStub, MemorySegment userData, boolean waitComplete) throws Throwable {
-        MethodHandle callbackHandle;
-        FunctionDescriptor callbackHandleDescriptor = FunctionDescriptor.ofVoid(
-                ValueLayout.ADDRESS);
-        try {
-            callbackHandle = MethodHandles.publicLookup().bind(callbackUpcallStub,"callback",callbackHandleDescriptor.toMethodType());
-        } catch (Exception e) {
-            throw new AssertionError(
-                    "Problem creating method handle compareHandle", e);
-        }
-        MemorySegment callbackFunc = Linker.nativeLinker().upcallStub(
-                callbackHandle,
-                callbackHandleDescriptor,
-                allocator);
-        return (Boolean)SDL_RunOnMainThread.invoke(callbackFunc,userData,waitComplete);
+    public Boolean runOnMainThread(Arena localAllocator, MemorySegment callbackUpcallStub, MemorySegment userData, boolean waitComplete) throws Throwable {
+        return (Boolean)SDL_RunOnMainThread.invoke(callbackUpcallStub,userData,waitComplete);
     }
-    public Boolean setAppMetadata(String appName,String appVersion, String appIdentifier) throws Throwable {
-        return (Boolean)SDL_SetAppMetadata.invoke(allocator.allocateFrom(appName),allocator.allocateFrom(appVersion),allocator.allocateFrom(appIdentifier));
+    public Boolean setAppMetadata(Arena localAllocator, String appName,String appVersion, String appIdentifier) throws Throwable {
+        return (Boolean)SDL_SetAppMetadata.invoke(localAllocator.allocateFrom(appName), localAllocator.allocateFrom(appVersion), localAllocator.allocateFrom(appIdentifier));
     }
-    public Boolean setAppMetadataProperty(String name, String value) throws Throwable {
-        return (Boolean)SDL_SetAppMetadataProperty.invoke(allocator.allocateFrom(name),allocator.allocateFrom(value));
+    public Boolean setAppMetadataProperty(Arena localAllocator, String name, String value) throws Throwable {
+        return (Boolean)SDL_SetAppMetadataProperty.invoke(localAllocator.allocateFrom(name), localAllocator.allocateFrom(value));
     }
 
-    public String getAppMetadataProperty(String name) throws Throwable {
-        MemorySegment charArrayAddress = (MemorySegment)SDL_GetAppMetadataProperty.invoke(allocator.allocateFrom(name));
+    public String getAppMetadataProperty(Arena localAllocator, String name) throws Throwable {
+        MemorySegment charArrayAddress = (MemorySegment)SDL_GetAppMetadataProperty.invoke(localAllocator.allocateFrom(name));
         return charArrayAddress.getString(0);
     }
 }
