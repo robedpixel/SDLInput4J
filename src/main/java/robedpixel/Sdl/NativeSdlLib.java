@@ -43,20 +43,7 @@ public class NativeSdlLib implements AutoCloseable{
         SdlFuncs.quitSubSystem(flags);
     }
     public Boolean runOnMainThread(SdlMainThreadCallback callbackUpcallStub, boolean waitComplete) throws Throwable {
-        MethodHandle callbackHandle;
-        FunctionDescriptor callbackHandleDescriptor = FunctionDescriptor.ofVoid(
-                ValueLayout.ADDRESS);
-        try {
-            callbackHandle = MethodHandles.publicLookup().bind(callbackUpcallStub,"callback",callbackHandleDescriptor.toMethodType());
-        } catch (Exception e) {
-            throw new AssertionError(
-                    "Problem creating method handle compareHandle", e);
-        }
-        MemorySegment callbackFunc = Linker.nativeLinker().upcallStub(
-                callbackHandle,
-                callbackHandleDescriptor,
-                callbackUpcallStub.getCallbackAllocator());
-        return SdlFuncs.runOnMainThread(callbackUpcallStub.getCallbackAllocator(),callbackFunc, callbackUpcallStub.getUserData(), waitComplete);
+        return SdlFuncs.runOnMainThread(callbackUpcallStub.getCallbackAllocator(),callbackUpcallStub.getCallbackAddress(), callbackUpcallStub.getUserData(), waitComplete);
     }
     public Boolean setAppMetadata(String appName,String appVersion, String appIdentifier, Arena localAllocator)throws Throwable{
         try(Arena arena = Arena.ofConfined()){
