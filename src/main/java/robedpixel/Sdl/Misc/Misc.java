@@ -7,6 +7,13 @@ public class Misc {
     public Misc(Arena allocator){
         SdlFuncs = NativeMiscFuncs.getInstance(allocator);
     }
+
+    /**
+     * Open a URL/URI in the browser or other appropriate external application.
+     * @param url a valid URL/URI to open. Use file:///full/path/to/file for local files, if supported.
+     * @return Returns true on success or false on failure; call SDL_GetError() for more information.
+     * @throws Throwable
+     */
     public Boolean openUrl(String url) throws Throwable {
         try (Arena arena = Arena.ofConfined()){
             return SdlFuncs.openUrl(arena,url);

@@ -7,6 +7,9 @@ import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 
+/**
+ * A callback used to send notifications of hint value changes.
+ */
 public abstract class SdlHintCallback implements AutoCloseable{
     @Getter
     private Arena callbackAllocator = Arena.ofConfined();

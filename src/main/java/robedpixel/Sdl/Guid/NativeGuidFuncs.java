@@ -10,6 +10,8 @@ class NativeGuidFuncs {
     private static final Object mutex = new Object();
     private final MethodHandle SDL_GUIDToString;
     private final MethodHandle SDL_StringToGUID;
+    private final Arena objectAllocator = Arena.ofAuto();
+    private MemorySegment structAddress = objectAllocator.allocate(SdlGuid.getStructLayout());
     public NativeGuidFuncs(Arena allocator) {
         SymbolLookup library = SymbolLookup.libraryLookup("SDL3", allocator);
         SDL_GUIDToString = Linker.nativeLinker().downcallHandle(
@@ -24,16 +26,15 @@ class NativeGuidFuncs {
         );
     }
     //TODO: test, may not be correct
-    public String guidToString(Arena localAllocator, SdlGuid guid, int chGuid) throws Throwable {
+    public synchronized String guidToString(Arena localAllocator, SdlGuid guid, int chGuid) throws Throwable {
         char[] charArray = new char[chGuid];
         MemorySegment arrayAddress = localAllocator.allocateFrom(ValueLayout.JAVA_CHAR, charArray);
-        MemorySegment structAddress = localAllocator.allocate(SdlGuid.getStructLayout());
         VarHandle dataArray = SdlGuid.getStructLayout().arrayElementVarHandle(MemoryLayout.PathElement.sequenceElement(),
                 MemoryLayout.PathElement.groupElement("data"));
         for (int i=0;i<guid.getData().length;i++){
             dataArray.set(structAddress,i,guid.getData()[i]);
         }
-        SDL_GUIDToString.invoke(guid,arrayAddress,chGuid);
+        SDL_GUIDToString.invoke(structAddress,arrayAddress,chGuid);
         //Load in arrayAddress to chararray
         for (int i = 0;i<chGuid;i++){
             charArray[i] = arrayAddress.get(ValueLayout.JAVA_CHAR, i);
@@ -41,7 +42,7 @@ class NativeGuidFuncs {
         return String.valueOf(charArray);
     }
     //TODO: test, may not be correct
-    public SdlGuid stringToGuid(Arena localAllocator, String pchGuid) throws Throwable {
+    public synchronized SdlGuid stringToGuid(Arena localAllocator, String pchGuid) throws Throwable {
         SdlGuid returnObject = new SdlGuid();
         MemorySegment stringAddress = localAllocator.allocateFrom(pchGuid);
         MemorySegment guidAddress = (MemorySegment)SDL_StringToGUID.invoke(stringAddress);

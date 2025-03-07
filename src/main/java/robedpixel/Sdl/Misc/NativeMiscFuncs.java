@@ -16,7 +16,7 @@ class NativeMiscFuncs {
                 FunctionDescriptor.of(ValueLayout.JAVA_BOOLEAN,ValueLayout.ADDRESS)
         );
     }
-    public Boolean openUrl(Arena localAllocator, String url) throws Throwable {
+    public synchronized Boolean openUrl(Arena localAllocator, String url) throws Throwable {
         return (Boolean)SDL_OpenURL.invoke(localAllocator.allocateFrom(url));
     }
     public static NativeMiscFuncs getInstance(Arena allocator) {

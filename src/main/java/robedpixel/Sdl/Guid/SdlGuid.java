@@ -15,6 +15,9 @@ public class SdlGuid {
     private short[] data = new short[16];
     @Getter
     private final MemorySegment funcDesc = MemorySegment.ofArray(data);
+    /**
+     * StructLayout of SdlGuid in SDL C Library
+     */
     @Getter
     private static final StructLayout structLayout = MemoryLayout.structLayout(MemoryLayout.sequenceLayout(16, ValueLayout.JAVA_SHORT).withName("data")).withName("SDL_GUID");
 }

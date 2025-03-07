@@ -10,16 +10,15 @@ public class Power {
     public Power(Arena allocator){
         SdlFuncs = NativePowerFuncs.getInstance(allocator);
     }
-    public SdlPowerSnapshot getPowerInfo(Arena localAllocator) throws Throwable {
+
+    /**
+     * Get the current power supply details
+     * @return Snapshot of power info at the time of call
+     * @throws Throwable
+     */
+    public SdlPowerSnapshot getPowerInfo() throws Throwable {
         SdlPowerSnapshot returnObject = new SdlPowerSnapshot();
-        try(Arena arena = Arena.ofConfined()) {
-            MemorySegment secondAddress = arena.allocate(ValueLayout.JAVA_INT);
-            MemorySegment percentAddress = arena.allocate(ValueLayout.JAVA_INT);
-            int powerState = (int) SdlFuncs.getPowerInfo(secondAddress, percentAddress);
-            returnObject.setPowerState(powerState);
-            returnObject.setSeconds(secondAddress.get(ValueLayout.JAVA_INT,0));
-            returnObject.setPercent(percentAddress.get(ValueLayout.JAVA_INT,9));
-        }
+        SdlFuncs.getPowerInfo(returnObject);
         return returnObject;
     }
 }

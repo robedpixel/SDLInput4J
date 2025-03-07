@@ -79,23 +79,23 @@ class NativeSdlLibFuncs {
     public void quitLibrary() throws Throwable{
         SDL_Quit.invoke();
     }
-    public void quitSubSystem(SdlInitFlags flags) throws Throwable{
+    public synchronized void quitSubSystem(SdlInitFlags flags) throws Throwable{
         SDL_QuitSubSystem.invoke(flags.getValue());
     }
-    public Boolean isMainThread() throws Throwable {
+    public synchronized Boolean isMainThread() throws Throwable {
         return (Boolean)SDL_IsMainThread.invoke();
     }
-    public Boolean runOnMainThread(Arena localAllocator, MemorySegment callbackUpcallStub, MemorySegment userData, boolean waitComplete) throws Throwable {
+    public synchronized Boolean runOnMainThread(Arena localAllocator, MemorySegment callbackUpcallStub, MemorySegment userData, boolean waitComplete) throws Throwable {
         return (Boolean)SDL_RunOnMainThread.invoke(callbackUpcallStub,userData,waitComplete);
     }
-    public Boolean setAppMetadata(Arena localAllocator, String appName,String appVersion, String appIdentifier) throws Throwable {
+    public synchronized Boolean setAppMetadata(Arena localAllocator, String appName,String appVersion, String appIdentifier) throws Throwable {
         return (Boolean)SDL_SetAppMetadata.invoke(localAllocator.allocateFrom(appName), localAllocator.allocateFrom(appVersion), localAllocator.allocateFrom(appIdentifier));
     }
-    public Boolean setAppMetadataProperty(Arena localAllocator, String name, String value) throws Throwable {
+    public synchronized Boolean setAppMetadataProperty(Arena localAllocator, String name, String value) throws Throwable {
         return (Boolean)SDL_SetAppMetadataProperty.invoke(localAllocator.allocateFrom(name), localAllocator.allocateFrom(value));
     }
 
-    public String getAppMetadataProperty(Arena localAllocator, String name) throws Throwable {
+    public synchronized String getAppMetadataProperty(Arena localAllocator, String name) throws Throwable {
         MemorySegment charArrayAddress = (MemorySegment)SDL_GetAppMetadataProperty.invoke(localAllocator.allocateFrom(name));
         return charArrayAddress.getString(0);
     }

@@ -58,29 +58,29 @@ class NativeHintsFuncs {
         );
     }
 
-    public Boolean setHintWithPriority(Arena localAllocator,String name, String value, HintPriority priority) throws Throwable {
+    public synchronized Boolean setHintWithPriority(Arena localAllocator,String name, String value, HintPriority priority) throws Throwable {
         return (Boolean) SDL_SetHintWithPriority.invoke(localAllocator.allocateFrom(name),localAllocator.allocateFrom(value),priority);
     }
-    public Boolean setHint(Arena localAllocator,String name, String value) throws Throwable {
+    public synchronized Boolean setHint(Arena localAllocator,String name, String value) throws Throwable {
         return (Boolean) SDL_SetHint.invoke(localAllocator.allocateFrom(name),localAllocator.allocateFrom(value));
     }
-    public Boolean resetHint(Arena localAllocator,String name) throws Throwable {
+    public synchronized Boolean resetHint(Arena localAllocator,String name) throws Throwable {
         return (Boolean) SDL_ResetHint.invoke(localAllocator.allocateFrom(name));
     }
-    public void resetHints() throws Throwable{
+    public synchronized void resetHints() throws Throwable{
         SDL_ResetHints.invoke();
     }
-    public String getHint(Arena localAllocator,String name) throws Throwable {
+    public synchronized String getHint(Arena localAllocator,String name) throws Throwable {
         MemorySegment charArrayAddress = (MemorySegment)SDL_GetHint.invoke(localAllocator.allocateFrom(name));
         return charArrayAddress.getString(0);
     }
-    public Boolean getHintBoolean(Arena localAllocator,String name, boolean defaultValue) throws Throwable {
+    public synchronized Boolean getHintBoolean(Arena localAllocator,String name, boolean defaultValue) throws Throwable {
         return (Boolean) SDL_GetHintBoolean.invoke(localAllocator.allocateFrom(name),defaultValue);
     }
-    public Boolean addHintCallback(MemorySegment name, MemorySegment callbackFunc,MemorySegment userData) throws Throwable {
+    public synchronized Boolean addHintCallback(MemorySegment name, MemorySegment callbackFunc,MemorySegment userData) throws Throwable {
         return (Boolean)SDL_AddHintCallback.invoke(name,callbackFunc,userData);
     }
-    public Boolean removeHintCallback(MemorySegment name, MemorySegment callbackFunc,MemorySegment userData) throws Throwable {
+    public synchronized Boolean removeHintCallback(MemorySegment name, MemorySegment callbackFunc,MemorySegment userData) throws Throwable {
 
         return (Boolean)SDL_RemoveHintCallback.invoke(name,callbackFunc,userData);
     }
