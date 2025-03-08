@@ -2,11 +2,12 @@ package robedpixel.Sdl;
 
 
 import lombok.extern.slf4j.Slf4j;
-import robedpixel.Sdl.Hints.Hints;
+import robedpixel.Sdl.Error.SdlError;
+import robedpixel.Sdl.Guid.SdlGuid;
+import robedpixel.Sdl.Hints.SdlHints;
+import robedpixel.Sdl.Power.SdlPower;
 
 import java.lang.foreign.*;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
 
 //linux library is libSDL3.so
 //windows library is SDL3.dll
@@ -16,6 +17,11 @@ import java.lang.invoke.MethodHandles;
 public class NativeSdlLib implements AutoCloseable{
     private static volatile NativeSdlLib INSTANCE;
     private NativeSdlLibFuncs SdlFuncs;
+
+    /**
+     * Initialize the SDL library
+     * @param flags Subsystem initialization flags.
+     */
     public NativeSdlLib(SdlInitFlagsFactory.SDLFlagValue... flags){
             try {
                 SdlFuncs = NativeSdlLibFuncs.getInstance();
@@ -36,34 +42,100 @@ public class NativeSdlLib implements AutoCloseable{
                 throw new RuntimeException(e);
             }
     }
+
+    /**
+     * Return whether this is the main thread.
+     * @return Returns true if this thread is the main thread, or false otherwise.
+     * @throws Throwable
+     */
     public Boolean isMainThread() throws Throwable{
         return SdlFuncs.isMainThread();
     }
+
+    /**
+     * Shut down specific SDL subsystems.
+     * @param flags any of the flags used by SDL Initialisation; see SdlInitFlags for details.
+     * @throws Throwable
+     */
     public void quitSubSystem(SdlInitFlags flags) throws Throwable {
         SdlFuncs.quitSubSystem(flags);
     }
+
+    /**
+     * Call a function on the main thread during event processing.
+     * @param callbackUpcallStub  The callback to call on the main thread.
+     * @param waitComplete True to wait for the callback to complete, false to return immediately.
+     * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+     * @throws Throwable
+     */
     public Boolean runOnMainThread(SdlMainThreadCallback callbackUpcallStub, boolean waitComplete) throws Throwable {
         return SdlFuncs.runOnMainThread(callbackUpcallStub.getCallbackAllocator(),callbackUpcallStub.getCallbackAddress(), callbackUpcallStub.getUserData(), waitComplete);
     }
-    public Boolean setAppMetadata(String appName,String appVersion, String appIdentifier, Arena localAllocator)throws Throwable{
+
+    /**
+     * Specify basic metadata about your app.
+     * @param appName The name of the application ("My Game 2: Bad Guy's Revenge!").
+     * @param appVersion The version of the application ("1.0.0beta5" or a git hash, or whatever makes sense).
+     * @param appIdentifier A unique string in reverse-domain format that identifies this app ("com.example.mygame2").
+     * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+     * @throws Throwable
+     */
+    public Boolean setAppMetadata(String appName,String appVersion, String appIdentifier)throws Throwable{
         try(Arena arena = Arena.ofConfined()){
             return SdlFuncs.setAppMetadata(arena,appName,appVersion,appIdentifier);
         }
     }
+
+    /**
+     * Specify metadata about your app through a set of properties.
+     * @param name The name of the metadata property to set.
+     * @param value The value of the property, or empty string to remove that property.
+     * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+     * @throws Throwable
+     */
     public Boolean setAppMetadataProperty(String name, String value) throws Throwable {
         try(Arena arena = Arena.ofConfined()){
             return SdlFuncs.setAppMetadataProperty(arena, name, value);
         }
     }
 
-    public String getAppMetadataProperty(String name, Arena localAllocator) throws Throwable {
+    /**
+     * Get metadata about your app.
+     * @param name The name of the metadata property to get.
+     * @return Returns the current value of the metadata property, or the default if it is not set, empty string for properties with no default.
+     * @throws Throwable
+     */
+    public String getAppMetadataProperty(String name) throws Throwable {
         try(Arena arena = Arena.ofConfined()){
             return SdlFuncs.getAppMetadataProperty(arena, name);
         }
     }
-    public Hints getHints(){
-        return new Hints(SdlFuncs.getGlobalAllocator());
+
+    /**
+     * Get the SDL Hints module
+     * @return Hints module for SDL
+     */
+    public SdlHints getSdlHints(){
+        return new SdlHints(SdlFuncs.getGlobalAllocator());
     }
+
+    /**
+     * Get the SDL Error module
+     * @return Error module for SDL
+     */
+    public SdlError getSdlError(){ return new SdlError(SdlFuncs.getGlobalAllocator());}
+
+    /**
+     * Get the SDL Guid module
+     * @return Guid module for SDL
+     */
+    public SdlGuid getSdlGuid(){return new SdlGuid(SdlFuncs.getGlobalAllocator());}
+
+    /**
+     * Get the SDL Power module
+     * @return Power module for SDL
+     */
+    public SdlPower getSdlPower(){return new SdlPower(SdlFuncs.getGlobalAllocator());}
 
     @Override
     public void close() throws Exception {

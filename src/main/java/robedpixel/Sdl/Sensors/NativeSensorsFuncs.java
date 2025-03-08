@@ -1,12 +1,12 @@
 package robedpixel.Sdl.Sensors;
 
-import robedpixel.Sdl.Power.NativePowerFuncs;
+import robedpixel.Sdl.Power.NativeSdlPowerFuncs;
 
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 
 class NativeSensorsFuncs {
-    private static volatile NativePowerFuncs INSTANCE;
+    private static volatile NativeSdlPowerFuncs INSTANCE;
     private static final Object mutex = new Object();
     private final MethodHandle SDL_GetSensors;
     private final MethodHandle SDL_GetSensorNameForID;

@@ -3,14 +3,14 @@ package robedpixel.Sdl.Power;
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 
-public class NativePowerFuncs {
-    private static volatile NativePowerFuncs INSTANCE;
+public class NativeSdlPowerFuncs {
+    private static volatile NativeSdlPowerFuncs INSTANCE;
     private static final Object mutex = new Object();
     private final MethodHandle SDL_GetPowerInfo;
     private final Arena localAllocator = Arena.ofAuto();
     private final MemorySegment secondAddress = localAllocator.allocate(ValueLayout.JAVA_INT);
     private final MemorySegment percentAddress = localAllocator.allocate(ValueLayout.JAVA_INT);
-    public NativePowerFuncs(Arena allocator){
+    public NativeSdlPowerFuncs(Arena allocator){
         SymbolLookup library = SymbolLookup.libraryLookup("SDL3", allocator);
         SDL_GetPowerInfo = Linker.nativeLinker().downcallHandle(
                 library.find("SDL_GetPowerInfo").orElseThrow(),
@@ -24,13 +24,13 @@ public class NativePowerFuncs {
         sdlPowerSnapshot.setSeconds(secondAddress.get(ValueLayout.JAVA_INT,0));
         sdlPowerSnapshot.setPercent(percentAddress.get(ValueLayout.JAVA_INT,9));
     }
-    public static NativePowerFuncs getInstance(Arena allocator) {
-        NativePowerFuncs result = INSTANCE;
+    public static NativeSdlPowerFuncs getInstance(Arena allocator) {
+        NativeSdlPowerFuncs result = INSTANCE;
         if (result == null) {
             synchronized (mutex) {
                 result = INSTANCE;
                 if (result == null)
-                    INSTANCE = result = new NativePowerFuncs (allocator);
+                    INSTANCE = result = new NativeSdlPowerFuncs(allocator);
             }
         }
         return result;

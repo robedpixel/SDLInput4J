@@ -1,15 +1,13 @@
 package robedpixel.Sdl.Hints;
 
-import robedpixel.Sdl.NativeSdlLib;
-
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 
-public class Hints {
-    private NativeHintsFuncs SdlFuncs;
-    public Hints(Arena allocator){
-        SdlFuncs = NativeHintsFuncs.getInstance(allocator);
+public class SdlHints {
+    private NativeSdlHintsFuncs SdlFuncs;
+    public SdlHints(Arena allocator){
+        SdlFuncs = NativeSdlHintsFuncs.getInstance(allocator);
     }
 
     /**
@@ -17,7 +15,7 @@ public class Hints {
      * @param name The hint to set
      * @param value The value of the hint variable
      * @param priority The HintPriority of the hint
-     * @return Returns true on success or false on failure; call Error.getError() for more information.
+     * @return Returns true on success or false on failure; call SdlError.getError() for more information.
      * @throws Throwable
      */
     public Boolean setHint(String name, String value, HintPriority priority) throws Throwable {
@@ -30,7 +28,7 @@ public class Hints {
      * Set a hint with normal priority.
      * @param name The hint to set
      * @param value The value of the hint variable
-     * @return Returns true on success or false on failure; call Error.getError() for more information.
+     * @return Returns true on success or false on failure; call SdlError.getError() for more information.
      * @throws Throwable
      */
     public Boolean setHint(String name, String value) throws Throwable {
@@ -42,7 +40,7 @@ public class Hints {
     /**
      * Reset a hint to the default value.
      * @param name The hint to reset
-     * @return Returns true on success or false on failure; call Error.getError() for more information.
+     * @return Returns true on success or false on failure; call SdlError.getError() for more information.
      * @throws Throwable
      */
     public Boolean resetHint(String name) throws Throwable {

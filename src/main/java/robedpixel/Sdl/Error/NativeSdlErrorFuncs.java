@@ -3,12 +3,12 @@ package robedpixel.Sdl.Error;
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 
-class NativeErrorFuncs {
-    private static volatile NativeErrorFuncs INSTANCE;
+class NativeSdlErrorFuncs {
+    private static volatile NativeSdlErrorFuncs INSTANCE;
     private static final Object mutex = new Object();
     private final MethodHandle SDL_GetError;
     private final MethodHandle SDL_ClearError;
-    public NativeErrorFuncs(Arena allocator){
+    public NativeSdlErrorFuncs(Arena allocator){
         SymbolLookup library = SymbolLookup.libraryLookup("SDL3", allocator);
         SDL_GetError = Linker.nativeLinker().downcallHandle(
                 library.find("SDL_GetError").orElseThrow(),
@@ -28,13 +28,13 @@ class NativeErrorFuncs {
     public synchronized Boolean clearError() throws Throwable {
         return (Boolean) SDL_ClearError.invoke();
     }
-    public static NativeErrorFuncs getInstance(Arena allocator) {
-        NativeErrorFuncs result = INSTANCE;
+    public static NativeSdlErrorFuncs getInstance(Arena allocator) {
+        NativeSdlErrorFuncs result = INSTANCE;
         if (result == null) {
             synchronized (mutex) {
                 result = INSTANCE;
                 if (result == null)
-                    INSTANCE = result = new NativeErrorFuncs(allocator);
+                    INSTANCE = result = new NativeSdlErrorFuncs(allocator);
             }
         }
         return result;

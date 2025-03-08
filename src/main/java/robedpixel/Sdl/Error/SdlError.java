@@ -1,12 +1,11 @@
 package robedpixel.Sdl.Error;
 
 import java.lang.foreign.Arena;
-import java.lang.foreign.MemorySegment;
 
-public class Error {
-    private final NativeErrorFuncs SdlFuncs;
-    public Error(Arena allocator){
-        SdlFuncs = NativeErrorFuncs.getInstance(allocator);
+public class SdlError {
+    private final NativeSdlErrorFuncs SdlFuncs;
+    public SdlError(Arena allocator){
+        SdlFuncs = NativeSdlErrorFuncs.getInstance(allocator);
     }
 
     /**

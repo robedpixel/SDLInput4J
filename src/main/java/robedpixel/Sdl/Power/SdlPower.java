@@ -2,13 +2,11 @@ package robedpixel.Sdl.Power;
 
 
 import java.lang.foreign.Arena;
-import java.lang.foreign.MemorySegment;
-import java.lang.foreign.ValueLayout;
 
-public class Power {
-    private final NativePowerFuncs SdlFuncs;
-    public Power(Arena allocator){
-        SdlFuncs = NativePowerFuncs.getInstance(allocator);
+public class SdlPower {
+    private final NativeSdlPowerFuncs SdlFuncs;
+    public SdlPower(Arena allocator){
+        SdlFuncs = NativeSdlPowerFuncs.getInstance(allocator);
     }
 
     /**

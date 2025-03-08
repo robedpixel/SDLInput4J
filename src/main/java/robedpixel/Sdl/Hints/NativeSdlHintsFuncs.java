@@ -3,8 +3,8 @@ package robedpixel.Sdl.Hints;
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 
-class NativeHintsFuncs {
-    private static volatile NativeHintsFuncs INSTANCE;
+class NativeSdlHintsFuncs {
+    private static volatile NativeSdlHintsFuncs INSTANCE;
     private static final Object mutex = new Object();
     private final MethodHandle SDL_SetHintWithPriority;
     private final MethodHandle SDL_SetHint;
@@ -14,7 +14,7 @@ class NativeHintsFuncs {
     private final MethodHandle SDL_GetHintBoolean;
     private final MethodHandle SDL_AddHintCallback;
     private final MethodHandle SDL_RemoveHintCallback;
-    public NativeHintsFuncs(Arena allocator){
+    public NativeSdlHintsFuncs(Arena allocator){
         SymbolLookup library = SymbolLookup.libraryLookup("SDL3", allocator);
         SDL_SetHintWithPriority = Linker.nativeLinker().downcallHandle(
                 library.find("SDL_SetHintWithPriority").orElseThrow(),
@@ -84,13 +84,13 @@ class NativeHintsFuncs {
 
         return (Boolean)SDL_RemoveHintCallback.invoke(name,callbackFunc,userData);
     }
-    public static NativeHintsFuncs getInstance(Arena allocator) {
-        NativeHintsFuncs result = INSTANCE;
+    public static NativeSdlHintsFuncs getInstance(Arena allocator) {
+        NativeSdlHintsFuncs result = INSTANCE;
         if (result == null) {
             synchronized (mutex) {
                 result = INSTANCE;
                 if (result == null)
-                    INSTANCE = result = new NativeHintsFuncs(allocator);
+                    INSTANCE = result = new NativeSdlHintsFuncs(allocator);
             }
         }
         return result;
