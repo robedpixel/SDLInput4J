@@ -3,7 +3,7 @@ plugins {
 }
 
 def sdlVersion = '3.2.4'
-group = 'org.example'
+group = 'robedpixel.sdl'
 version = sdlVersion + '-' +'1.0-SNAPSHOT'
 java{
     sourceCompatibility = JavaVersion.VERSION_23
