@@ -1,8 +1,8 @@
-package robedpixel.sdl.sensors;
+package robedpixel.sdl.touch;
 
 import lombok.Getter;
 import lombok.Setter;
 
-public class SdlSensorId {
+public class SdlTouchId {
   @Getter @Setter private int value;
 }
