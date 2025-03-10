@@ -11,13 +11,13 @@ import robedpixel.sdl.sensors.SdlSensorId;
  * prevent memory leaks
  */
 public class SdlTouchIdArray implements AutoCloseable {
-  @Getter SdlSensorId[] data;
+  @Getter SdlTouchId[] data;
   MemorySegment dataAddress;
 
   public SdlTouchIdArray(MemorySegment dataAddress, int count) {
-    this.data = new SdlSensorId[count];
+    this.data = new SdlTouchId[count];
     for (int i = 0; i < count; i++) {
-      this.data[i] = new SdlSensorId();
+      this.data[i] = new SdlTouchId();
       this.data[i].setValue(dataAddress.get(ValueLayout.JAVA_INT, i));
     }
     this.dataAddress = dataAddress;
