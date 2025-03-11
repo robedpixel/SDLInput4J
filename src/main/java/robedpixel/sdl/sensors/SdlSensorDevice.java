@@ -1,12 +1,11 @@
 package robedpixel.sdl.sensors;
 
+import robedpixel.sdl.SdlDevice;
+
 import java.lang.foreign.MemorySegment;
-import lombok.Getter;
 
-public class SdlSensorDevice {
-  @Getter private MemorySegment address;
-
+public class SdlSensorDevice extends SdlDevice {
   public SdlSensorDevice(MemorySegment address) {
-    this.address = address;
+    super(address);
   }
 }

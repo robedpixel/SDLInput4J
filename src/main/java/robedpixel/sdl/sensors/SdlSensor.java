@@ -70,7 +70,7 @@ public class SdlSensor {
     if (address == MemorySegment.NULL) {
       return null;
     } else {
-      return new SdlSensorDevice(SdlFuncs.openSensor(instanceId.getValue()));
+      return new SdlSensorDevice(address);
     }
   }
 
