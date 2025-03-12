@@ -170,7 +170,42 @@ class NativeSdlPropertiesFuncs {
     public boolean setBooleanProperty(Arena localAllocator, int props, String name, boolean value) throws Throwable{
         return (boolean)SDL_SetBooleanProperty.invoke(props,localAllocator.allocateFrom(name),value);
     }
-
+    public boolean hasProperty(Arena localAllocator, int props, String name) throws Throwable {
+        return (boolean)SDL_HasProperty.invoke(props,localAllocator.allocateFrom(name));
+    }
+    public int getPropertyType(Arena localAllocator, int props, String name) throws Throwable {
+        return (int)SDL_GetPropertyType.invoke(props,localAllocator.allocateFrom(name));
+    }
+    public MemorySegment getPointerProperty(Arena localAllocator, int props, String name, MemorySegment defaultValue) throws Throwable {
+        return (MemorySegment) SDL_GetPointerProperty.invoke(props,localAllocator.allocateFrom(name),defaultValue);
+    }
+    public String getStringProperty(Arena localAllocator, int props, String name, String defaultValue) throws Throwable {
+        MemorySegment charArrayAddress =
+                (MemorySegment) SDL_GetStringProperty.invoke(props,localAllocator.allocateFrom(name),localAllocator.allocateFrom(defaultValue));
+        if (charArrayAddress == MemorySegment.NULL) {
+            return null;
+        } else {
+            return charArrayAddress.getString(0);
+        }
+    }
+    public long getNumberProperty(Arena localAllocator, int props, String name, long defaultValue) throws Throwable {
+        return (long)SDL_GetNumberProperty.invoke(props,localAllocator.allocateFrom(name),defaultValue);
+    }
+    public long getFloatProperty(Arena localAllocator, int props, String name, float defaultValue) throws Throwable {
+        return (long)SDL_GetFloatProperty.invoke(props,localAllocator.allocateFrom(name),defaultValue);
+    }
+    public boolean getBooleanProperty(Arena localAllocator, int props, String name, boolean defaultValue) throws Throwable {
+        return (boolean)SDL_GetBooleanProperty.invoke(props,localAllocator.allocateFrom(name),defaultValue);
+    }
+    public boolean clearProperty(Arena localAllocator, int props, String name)throws Throwable{
+        return (boolean)SDL_ClearProperty.invoke(props,localAllocator.allocateFrom(name));
+    }
+    public boolean enumerateProperties(int props,MemorySegment callback, MemorySegment userData) throws Throwable {
+        return (boolean) SDL_EnumerateProperties.invoke(props,callback,userData);
+    }
+    public void destroyProperties(int props) throws Throwable {
+        SDL_DestroyProperties.invoke(props);
+    }
     public static NativeSdlPropertiesFuncs getInstance(Arena allocator) {
         NativeSdlPropertiesFuncs result = INSTANCE;
         if (result == null) {
