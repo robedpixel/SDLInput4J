@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import robedpixel.sdl.error.SdlError;
 import robedpixel.sdl.guid.SdlGuid;
 import robedpixel.sdl.hints.SdlHints;
+import robedpixel.sdl.misc.SdlMisc;
 import robedpixel.sdl.power.SdlPower;
 
 // linux library is libSDL3.so
@@ -162,6 +163,14 @@ public class NativeSdlLib implements AutoCloseable {
    */
   public SdlPower getSdlPower() {
     return new SdlPower(SdlFuncs.getGlobalAllocator());
+  }
+  /**
+   * Get the SDL Misc module
+   *
+   * @return Power module for SDL
+   */
+  public SdlMisc getSdlMisc() {
+    return new SdlMisc(SdlFuncs.getGlobalAllocator());
   }
 
   public static void sdlFree(MemorySegment pointer) throws Throwable {

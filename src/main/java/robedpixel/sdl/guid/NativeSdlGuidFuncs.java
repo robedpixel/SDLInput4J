@@ -27,7 +27,7 @@ class NativeSdlGuidFuncs {
     SDL_StringToGUID =
         Linker.nativeLinker()
             .downcallHandle(
-                library.find("SDL_GUIDToString").orElseThrow(),
+                library.find("SDL_StringToGUID").orElseThrow(),
                 FunctionDescriptor.of(NativeSdlGuidModel.getStructLayout(), ValueLayout.ADDRESS));
   }
 

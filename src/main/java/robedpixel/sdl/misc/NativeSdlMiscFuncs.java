@@ -3,12 +3,12 @@ package robedpixel.sdl.misc;
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 
-class NativeMiscFuncs {
-  private static volatile NativeMiscFuncs INSTANCE;
+class NativeSdlMiscFuncs {
+  private static volatile NativeSdlMiscFuncs INSTANCE;
   private static final Object mutex = new Object();
   private final MethodHandle SDL_OpenURL;
 
-  public NativeMiscFuncs(Arena allocator) {
+  public NativeSdlMiscFuncs(Arena allocator) {
     SymbolLookup library = SymbolLookup.libraryLookup("SDL3", allocator);
     SDL_OpenURL =
         Linker.nativeLinker()
@@ -21,12 +21,12 @@ class NativeMiscFuncs {
     return (boolean) SDL_OpenURL.invoke(localAllocator.allocateFrom(url));
   }
 
-  public static NativeMiscFuncs getInstance(Arena allocator) {
-    NativeMiscFuncs result = INSTANCE;
+  public static NativeSdlMiscFuncs getInstance(Arena allocator) {
+    NativeSdlMiscFuncs result = INSTANCE;
     if (result == null) {
       synchronized (mutex) {
         result = INSTANCE;
-        if (result == null) INSTANCE = result = new NativeMiscFuncs(allocator);
+        if (result == null) INSTANCE = result = new NativeSdlMiscFuncs(allocator);
       }
     }
     return result;

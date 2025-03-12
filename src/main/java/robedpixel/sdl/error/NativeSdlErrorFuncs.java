@@ -19,7 +19,7 @@ class NativeSdlErrorFuncs {
     SDL_ClearError =
         Linker.nativeLinker()
             .downcallHandle(
-                library.find("SDL_GetError").orElseThrow(),
+                library.find("SDL_ClearError").orElseThrow(),
                 FunctionDescriptor.of(ValueLayout.JAVA_BOOLEAN));
   }
 

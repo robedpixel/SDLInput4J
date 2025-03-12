@@ -2,11 +2,11 @@ package robedpixel.sdl.misc;
 
 import java.lang.foreign.Arena;
 
-public class Misc {
-  private final NativeMiscFuncs SdlFuncs;
+public class SdlMisc {
+  private final NativeSdlMiscFuncs SdlFuncs;
 
-  public Misc(Arena allocator) {
-    SdlFuncs = NativeMiscFuncs.getInstance(allocator);
+  public SdlMisc(Arena allocator) {
+    SdlFuncs = NativeSdlMiscFuncs.getInstance(allocator);
   }
 
   /**
