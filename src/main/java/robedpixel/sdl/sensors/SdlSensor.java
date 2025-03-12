@@ -3,7 +3,7 @@ package robedpixel.sdl.sensors;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
-import robedpixel.sdl.SdlPropertiesId;
+import robedpixel.sdl.properties.SdlPropertiesId;
 
 public class SdlSensor {
   private final NativeSdlSensorsFuncs SdlFuncs;

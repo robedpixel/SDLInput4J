@@ -37,11 +37,11 @@ class NativeSdlVideoFuncs {
                         FunctionDescriptor.of(ValueLayout.JAVA_INT));
         SDL_GetDisplays = Linker.nativeLinker()
                 .downcallHandle(
-                        library.find("SDL_GetSystemTheme").orElseThrow(),
+                        library.find("SDL_GetDisplays").orElseThrow(),
                         FunctionDescriptor.of(ValueLayout.ADDRESS,ValueLayout.ADDRESS));
         SDL_GetPrimaryDisplay= Linker.nativeLinker()
                 .downcallHandle(
-                        library.find("SDL_GetSystemTheme").orElseThrow(),
+                        library.find("SDL_GetPrimaryDisplay").orElseThrow(),
                         FunctionDescriptor.of(ValueLayout.JAVA_INT));
     }
 
