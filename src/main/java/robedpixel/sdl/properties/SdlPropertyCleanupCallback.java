@@ -1,4 +1,4 @@
-package robedpixel.sdl;
+package robedpixel.sdl.properties;
 
 import lombok.Getter;
 
@@ -6,17 +6,18 @@ import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 
-public abstract class SdlMainThreadCallback implements AutoCloseable{
+public abstract class SdlPropertyCleanupCallback implements AutoCloseable{
     @Getter
     private final Arena callbackAllocator = Arena.ofConfined();
     @Getter
     private final MemorySegment userData;
     @Getter
     MemorySegment callbackAddress;
-    public SdlMainThreadCallback(MemorySegment userData){
+
+    public SdlPropertyCleanupCallback(MemorySegment userData){
         this.userData = userData;
         FunctionDescriptor callbackHandleDescriptor = FunctionDescriptor.ofVoid(
-                ValueLayout.ADDRESS);
+                ValueLayout.ADDRESS, ValueLayout.ADDRESS);
         MethodHandle callbackHandle;
         try {
             callbackHandle = MethodHandles.publicLookup().bind(this,"callback",callbackHandleDescriptor.toMethodType());
@@ -29,10 +30,12 @@ public abstract class SdlMainThreadCallback implements AutoCloseable{
                 callbackHandleDescriptor,
                 callbackAllocator);
     }
+
     /**
-     * @param userData A MemorySegment for a Java object of any structure for user data
+     * @param userData An app-defined pointer passed to the callback.
+     * @param value The pointer assigned to the property to clean up.
      */
-    void callback(MemorySegment userData) {
+    void callback(MemorySegment userData,MemorySegment value) {
 
     }
     @Override
@@ -40,3 +43,4 @@ public abstract class SdlMainThreadCallback implements AutoCloseable{
         callbackAllocator.close();
     }
 }
+
