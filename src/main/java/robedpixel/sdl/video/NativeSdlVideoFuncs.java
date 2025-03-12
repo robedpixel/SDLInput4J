@@ -1,6 +1,8 @@
 package robedpixel.sdl.video;
 
 
+import robedpixel.sdl.touch.SdlTouchIdArray;
+
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 
@@ -12,6 +14,7 @@ class NativeSdlVideoFuncs {
     private final MethodHandle  SDL_GetCurrentVideoDriver;
     private final MethodHandle SDL_GetSystemTheme;
     private final MethodHandle SDL_GetDisplays;
+    private final MethodHandle SDL_GetPrimaryDisplay;
     private final Arena objectAllocator = Arena.ofAuto();
     private final MemorySegment tempIntAddress = objectAllocator.allocate(ValueLayout.JAVA_INT);
     public NativeSdlVideoFuncs(Arena allocator) {
@@ -36,6 +39,10 @@ class NativeSdlVideoFuncs {
                 .downcallHandle(
                         library.find("SDL_GetSystemTheme").orElseThrow(),
                         FunctionDescriptor.of(ValueLayout.ADDRESS,ValueLayout.ADDRESS));
+        SDL_GetPrimaryDisplay= Linker.nativeLinker()
+                .downcallHandle(
+                        library.find("SDL_GetSystemTheme").orElseThrow(),
+                        FunctionDescriptor.of(ValueLayout.JAVA_INT));
     }
 
     public int getNumVideoDrivers() throws Throwable {
@@ -55,6 +62,18 @@ class NativeSdlVideoFuncs {
     }
     public int getSystemTheme() throws Throwable {
         return (int) SDL_GetSystemTheme.invoke();
+    }
+    public SdlDisplayIdArray getDisplays() throws Throwable{
+        MemorySegment temp = (MemorySegment) SDL_GetDisplays.invoke(tempIntAddress);
+        if (temp == MemorySegment.NULL) {
+            return null;
+        } else {
+            int arraySize = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
+            return new SdlDisplayIdArray(temp, arraySize);
+        }
+    }
+    public int getPrimaryDisplay() throws Throwable{
+        return (int) SDL_GetPrimaryDisplay.invoke();
     }
     public static NativeSdlVideoFuncs getInstance(Arena allocator) {
         NativeSdlVideoFuncs result = INSTANCE;

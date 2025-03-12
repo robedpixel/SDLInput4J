@@ -47,4 +47,24 @@ public class SdlVideo {
     public SdlSystemTheme getSystemTheme() throws Throwable{
         return SdlSystemTheme.fromInt(SdlFuncs.getSystemTheme());
     }
+
+    /**
+     * Get a list of currently connected displays.
+     * @return Returns an array of display instance IDs or null on failure; call SdlError.getError() for more information.
+     * @throws Throwable
+     */
+    public SdlDisplayIdArray getDisplays() throws Throwable{
+        return SdlFuncs.getDisplays();
+    }
+
+    /**
+     * Return the primary display.
+     * @return Returns the instance ID of the primary display on success or 0 on failure; call SdlError.getError() for more information.
+     * @throws Throwable
+     */
+    public SdlDisplayId getPrimaryDisplay() throws Throwable{
+        SdlDisplayId returnObject = new SdlDisplayId();
+        returnObject.setValue(SdlFuncs.getPrimaryDisplay());
+        return returnObject;
+    }
 }
