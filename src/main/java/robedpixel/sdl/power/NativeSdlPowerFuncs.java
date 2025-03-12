@@ -3,7 +3,7 @@ package robedpixel.sdl.power;
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 
-public class NativeSdlPowerFuncs {
+class NativeSdlPowerFuncs {
   private static volatile NativeSdlPowerFuncs INSTANCE;
   private static final Object mutex = new Object();
   private final MethodHandle SDL_GetPowerInfo;

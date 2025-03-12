@@ -45,8 +45,7 @@ public class SdlTouch {
    *
    * @param touchId The Id of a touch device.
    * @return Returns a 2d array of SdlFinger objects or nullptr on failure; call SdlError.getError()
-   *     for more information. This is a single allocation that should be freed with sdlFree() when
-   *     it is no longer needed.
+   *     for more information.
    * @throws Throwable
    */
   public SdlFinger2dArray getTouchFingers(SdlTouchId touchId) throws Throwable {

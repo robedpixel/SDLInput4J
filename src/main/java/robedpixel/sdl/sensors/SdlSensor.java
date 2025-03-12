@@ -17,7 +17,7 @@ public class SdlSensor {
    * Get a list of currently connected sensors.
    *
    * @return Returns an array of sensor instance IDs or null on failure; call SdlError.getError()
-   *     for more information. This should be freed with sdlFree() when it is no longer needed.
+   *     for more information.
    * @throws Throwable
    */
   public SdlSensorIdArray getSensors() throws Throwable {

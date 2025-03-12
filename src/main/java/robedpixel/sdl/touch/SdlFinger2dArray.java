@@ -7,11 +7,10 @@ import java.lang.invoke.VarHandle;
 import lombok.Getter;
 import robedpixel.sdl.NativeSdlLib;
 
-public class SdlFinger2dArray implements AutoCloseable {
+public class SdlFinger2dArray {
   @Getter SdlFinger[][] data;
-  MemorySegment dataAddress;
 
-  public SdlFinger2dArray(MemorySegment dataAddress, int count) {
+  public SdlFinger2dArray(MemorySegment dataAddress, int count) throws Throwable {
     // TODO: find out how to get length and width of array that is null terminated
     int width = 0;
     for (int i = 0; i < count; i++) {
@@ -41,15 +40,6 @@ public class SdlFinger2dArray implements AutoCloseable {
         data[i][j] = new SdlFinger(id, x, y, pressure);
       }
     }
-    this.dataAddress = dataAddress;
-  }
-
-  @Override
-  public void close() throws Exception {
-    try {
-      NativeSdlLib.sdlFree(dataAddress);
-    } catch (Throwable e) {
-      throw new RuntimeException(e);
-    }
+    NativeSdlLib.sdlFree(dataAddress);
   }
 }

@@ -3,7 +3,7 @@ package robedpixel.sdl.touch;
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 
-public class NativeSdlTouchFuncs {
+class NativeSdlTouchFuncs {
   private static volatile NativeSdlTouchFuncs INSTANCE;
   private static final Object mutex = new Object();
   private final MethodHandle SDL_GetTouchDevices;
