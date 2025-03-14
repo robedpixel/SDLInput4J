@@ -21,10 +21,10 @@ public enum SdlPropertyType {
         this.value = value;
     }
 
-    private static final ImmutableMap<Integer, SdlPowerState> reverseLookup =
-            Maps.uniqueIndex(List.of(SdlPowerState.values()), SdlPowerState::getValue);
+    private static final ImmutableMap<Integer, SdlPropertyType> reverseLookup =
+            Maps.uniqueIndex(List.of(SdlPropertyType.values()), SdlPropertyType::getValue);
 
-    public static SdlPowerState fromInt(final int id) {
+    public static SdlPropertyType fromInt(final int id) {
         return reverseLookup.get(id);
     }
 }
