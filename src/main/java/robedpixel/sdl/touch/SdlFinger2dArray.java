@@ -11,7 +11,6 @@ public class SdlFinger2dArray {
   @Getter SdlFinger[][] data;
 
   public SdlFinger2dArray(MemorySegment dataAddress, int count) throws Throwable {
-    // TODO: find out how to get length and width of array that is null terminated
     int width = 0;
     for (int i = 0; i < count; i++) {
       if (dataAddress.get(ValueLayout.ADDRESS, i) != MemorySegment.NULL) {

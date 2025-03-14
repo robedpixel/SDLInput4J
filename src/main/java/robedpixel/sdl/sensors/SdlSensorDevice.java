@@ -1,11 +1,24 @@
 package robedpixel.sdl.sensors;
 
-import robedpixel.sdl.SdlDevice;
+import lombok.Getter;
 
 import java.lang.foreign.MemorySegment;
 
-public class SdlSensorDevice extends SdlDevice {
-  public SdlSensorDevice(MemorySegment address) {
-    super(address);
+public class SdlSensorDevice implements AutoCloseable{
+  @Getter
+  private final MemorySegment address;
+  private NativeSdlSensorsFuncs funcs;
+  public SdlSensorDevice(MemorySegment address, NativeSdlSensorsFuncs funcs) {
+    this.address = address;
+    this.funcs = funcs;
+  }
+
+  @Override
+  public void close() throws Exception {
+      try {
+          funcs.closeSensor(address);
+      } catch (Throwable e) {
+          throw new RuntimeException(e);
+      }
   }
 }

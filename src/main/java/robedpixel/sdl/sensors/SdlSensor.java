@@ -70,7 +70,7 @@ public class SdlSensor {
     if (address == MemorySegment.NULL) {
       return null;
     } else {
-      return new SdlSensorDevice(address);
+      return new SdlSensorDevice(address,SdlFuncs);
     }
   }
 
@@ -162,16 +162,6 @@ public class SdlSensor {
       }
     }
     return result;
-  }
-
-  /**
-   * Close a sensor previously opened with SDL_OpenSensor().
-   *
-   * @param sensor An opened SdlSensorDevice
-   * @throws Throwable
-   */
-  public void closeSensor(SdlSensorDevice sensor) throws Throwable {
-    SdlFuncs.closeSensor(sensor.getAddress());
   }
 
   /**
