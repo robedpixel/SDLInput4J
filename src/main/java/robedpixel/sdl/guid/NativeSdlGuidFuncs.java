@@ -55,18 +55,9 @@ class NativeSdlGuidFuncs {
   // TODO: test, may not be correct
   public synchronized NativeSdlGuidModel stringToGuid(Arena localAllocator, String pchGuid)
       throws Throwable {
-    NativeSdlGuidModel returnObject = new NativeSdlGuidModel();
     MemorySegment stringAddress = localAllocator.allocateFrom(pchGuid);
     MemorySegment guidAddress = (MemorySegment) SDL_StringToGUID.invoke(stringAddress);
-    VarHandle dataArray =
-        NativeSdlGuidModel.getStructLayout()
-            .arrayElementVarHandle(
-                MemoryLayout.PathElement.sequenceElement(),
-                MemoryLayout.PathElement.groupElement("data"));
-    for (int i = 0; i < 16; i++) {
-      returnObject.getData()[i] = (short) dataArray.get(guidAddress, i);
-    }
-    return returnObject;
+    return NativeSdlGuidModel.fromSegment(guidAddress);
   }
 
   public static NativeSdlGuidFuncs getInstance(Arena allocator) {

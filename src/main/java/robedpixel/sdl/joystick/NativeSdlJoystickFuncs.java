@@ -1,5 +1,7 @@
 package robedpixel.sdl.joystick;
 
+import robedpixel.sdl.guid.NativeSdlGuidModel;
+
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 
@@ -13,6 +15,7 @@ public class NativeSdlJoystickFuncs {
   private final MethodHandle SDL_GetJoystickNameForID;
   private final MethodHandle SDL_GetJoystickPathForID;
   private final MethodHandle SDL_GetJoystickPlayerIndexForID;
+  private final MethodHandle SDL_GetJoystickGUIDForID;
   private final MethodHandle SDL_CloseJoystick;
 
   private final Arena objectAllocator = Arena.ofAuto();
@@ -52,6 +55,11 @@ public class NativeSdlJoystickFuncs {
             .downcallHandle(
                 library.find("SDL_GetJoystickPlayerIndexForID").orElseThrow(),
                 FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT));
+    SDL_GetJoystickGUIDForID =
+            Linker.nativeLinker()
+                    .downcallHandle(
+                            library.find("SDL_GetJoystickGUIDForID").orElseThrow(),
+                            FunctionDescriptor.of(NativeSdlGuidModel.getStructLayout(), ValueLayout.JAVA_INT));
     SDL_CloseJoystick =
         Linker.nativeLinker()
             .downcallHandle(
@@ -101,7 +109,11 @@ public class NativeSdlJoystickFuncs {
   }
 
   public synchronized int getJoystickPlayerIndexForId(int instanceId) throws Throwable {
-    return (int) SDL_GetJoystickNameForID.invoke(instanceId);
+    return (int) SDL_GetJoystickPlayerIndexForID.invoke(instanceId);
+  }
+  public synchronized  NativeSdlGuidModel getJoystickGUIDForID(int instanceId) throws Throwable {
+    MemorySegment guidAddress = (MemorySegment) SDL_GetJoystickGUIDForID.invoke(instanceId);
+    return NativeSdlGuidModel.fromSegment(guidAddress);
   }
 
   public synchronized void closeJoystick(MemorySegment sensor) throws Throwable {

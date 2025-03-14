@@ -1,5 +1,7 @@
 package robedpixel.sdl.joystick;
 
+import robedpixel.sdl.guid.NativeSdlGuidModel;
+
 import java.lang.foreign.Arena;
 
 public class SdlJoystick {
@@ -70,6 +72,16 @@ public class SdlJoystick {
    */
   public String getJoystickPathForId(SdlJoystickId instanceId) throws Throwable {
     return SdlFuncs.getJoystickPathForId(instanceId.getValue());
+  }
+
+  /**
+   * Get the implementation-dependent GUID of a joystick.
+   * @param instanceId The joystick instance ID.
+   * @return Returns the GUID of the selected joystick. If called with an invalid instanceId, this function returns a zero GUID.
+   * @throws Throwable
+   */
+  public NativeSdlGuidModel getJoystickGUIDForID(SdlJoystickId instanceId) throws Throwable {
+    return SdlFuncs.getJoystickGUIDForID(instanceId.getValue());
   }
 
   /**
