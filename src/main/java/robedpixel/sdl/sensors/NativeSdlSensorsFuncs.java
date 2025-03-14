@@ -106,7 +106,7 @@ class NativeSdlSensorsFuncs {
       return null;
     } else {
       int arraySize = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
-      temp = temp.reinterpret(arraySize*ValueLayout.JAVA_INT.byteSize());
+      temp = temp.reinterpret(arraySize * ValueLayout.JAVA_INT.byteSize());
       return new SdlSensorIdArray(temp, arraySize);
     }
   }

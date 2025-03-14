@@ -5,9 +5,7 @@ import java.lang.foreign.ValueLayout;
 import lombok.Getter;
 import robedpixel.sdl.NativeSdlLib;
 
-/**
- * Contains an array of SdlSensorIds
- */
+/** Contains an array of SdlSensorIds */
 public class SdlSensorIdArray {
   @Getter SdlSensorId[] data;
 

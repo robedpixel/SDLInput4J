@@ -130,6 +130,7 @@ public class NativeSdlLib implements AutoCloseable {
       return SdlFuncs.getAppMetadataProperty(arena, name);
     }
   }
+
   /**
    * Get the SDL Sensor module
    *
@@ -174,6 +175,7 @@ public class NativeSdlLib implements AutoCloseable {
   public SdlPower getSdlPower() {
     return new SdlPower(SdlFuncs.getGlobalAllocator());
   }
+
   /**
    * Get the SDL Misc module
    *
@@ -182,6 +184,7 @@ public class NativeSdlLib implements AutoCloseable {
   public SdlMisc getSdlMisc() {
     return new SdlMisc(SdlFuncs.getGlobalAllocator());
   }
+
   /**
    * Get the SDL Misc module
    *
@@ -190,7 +193,6 @@ public class NativeSdlLib implements AutoCloseable {
   public SdlVideo getSdlVideo() {
     return new SdlVideo(SdlFuncs.getGlobalAllocator());
   }
-
 
   public static void sdlFree(MemorySegment pointer) throws Throwable {
     NativeSdlLibFuncs.getInstance().sdlFree(pointer);

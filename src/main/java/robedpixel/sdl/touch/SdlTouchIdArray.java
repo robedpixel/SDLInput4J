@@ -4,11 +4,8 @@ import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import lombok.Getter;
 import robedpixel.sdl.NativeSdlLib;
-import robedpixel.sdl.sensors.SdlSensorId;
 
-/**
- * Contains an array of SdlTouchIds
- */
+/** Contains an array of SdlTouchIds */
 public class SdlTouchIdArray {
   @Getter SdlTouchId[] data;
 

@@ -1,10 +1,16 @@
 plugins {
     id 'java'
+    id 'com.diffplug.spotless' version '7.0.2'
 }
 
 def sdlVersion = '3.2.4'
 group = 'robedpixel.sdl'
 version = sdlVersion + '-' +'1.0-SNAPSHOT'
+spotless{
+    java{
+        googleJavaFormat()
+    }
+}
 java{
     sourceCompatibility = JavaVersion.VERSION_23
 }

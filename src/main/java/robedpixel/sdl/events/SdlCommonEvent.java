@@ -17,11 +17,12 @@ public class SdlCommonEvent {
   @Getter int type;
   @Getter long reserved;
   @Getter long timestamp;
-  private static final VarHandle typeHandle = objectLayout.varHandle(MemoryLayout.PathElement.groupElement("type"));
+  private static final VarHandle typeHandle =
+      objectLayout.varHandle(MemoryLayout.PathElement.groupElement("type"));
   private static final VarHandle reservedHandle =
-          objectLayout.varHandle(MemoryLayout.PathElement.groupElement("reserved"));
+      objectLayout.varHandle(MemoryLayout.PathElement.groupElement("reserved"));
   private static final VarHandle timestampHandle =
-          objectLayout.varHandle(MemoryLayout.PathElement.groupElement("timestamp"));
+      objectLayout.varHandle(MemoryLayout.PathElement.groupElement("timestamp"));
 
   public static SdlCommonEvent getEventFromMemorySegment(MemorySegment segment) {
     SdlCommonEvent retEvent = new SdlCommonEvent();
