@@ -7,6 +7,7 @@ import robedpixel.sdl.guid.SdlGuid;
 import robedpixel.sdl.hints.SdlHints;
 import robedpixel.sdl.misc.SdlMisc;
 import robedpixel.sdl.power.SdlPower;
+import robedpixel.sdl.sensors.SdlSensor;
 
 // linux library is libSDL3.so
 // windows library is SDL3.dll
@@ -127,6 +128,14 @@ public class NativeSdlLib implements AutoCloseable {
     try (Arena arena = Arena.ofConfined()) {
       return SdlFuncs.getAppMetadataProperty(arena, name);
     }
+  }
+  /**
+   * Get the SDL Sensor module
+   *
+   * @return Hints module for SDL
+   */
+  public SdlSensor getSdlSensor() {
+    return new SdlSensor(SdlFuncs.getGlobalAllocator());
   }
 
   /**
