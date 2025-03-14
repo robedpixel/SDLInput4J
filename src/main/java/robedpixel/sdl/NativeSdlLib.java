@@ -8,6 +8,7 @@ import robedpixel.sdl.hints.SdlHints;
 import robedpixel.sdl.misc.SdlMisc;
 import robedpixel.sdl.power.SdlPower;
 import robedpixel.sdl.sensors.SdlSensor;
+import robedpixel.sdl.video.SdlVideo;
 
 // linux library is libSDL3.so
 // windows library is SDL3.dll
@@ -181,6 +182,15 @@ public class NativeSdlLib implements AutoCloseable {
   public SdlMisc getSdlMisc() {
     return new SdlMisc(SdlFuncs.getGlobalAllocator());
   }
+  /**
+   * Get the SDL Misc module
+   *
+   * @return Power module for SDL
+   */
+  public SdlVideo getSdlVideo() {
+    return new SdlVideo(SdlFuncs.getGlobalAllocator());
+  }
+
 
   public static void sdlFree(MemorySegment pointer) throws Throwable {
     NativeSdlLibFuncs.getInstance().sdlFree(pointer);

@@ -16,7 +16,7 @@ public class SdlTouchIdArray {
     this.data = new SdlTouchId[count];
     for (int i = 0; i < count; i++) {
       this.data[i] = new SdlTouchId();
-      this.data[i].setValue(dataAddress.get(ValueLayout.JAVA_INT, i));
+      this.data[i].setValue(dataAddress.getAtIndex(ValueLayout.JAVA_INT, i));
     }
     NativeSdlLib.sdlFree(dataAddress);
   }

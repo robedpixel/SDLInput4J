@@ -1,7 +1,6 @@
 package robedpixel.sdl.joystick;
 
 
-import robedpixel.sdl.hints.NativeSdlHintsFuncs;
 
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;

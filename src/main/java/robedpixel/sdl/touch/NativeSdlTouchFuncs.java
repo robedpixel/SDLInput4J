@@ -44,6 +44,7 @@ class NativeSdlTouchFuncs {
       return null;
     } else {
       int arraySize = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
+      temp = temp.reinterpret(arraySize*ValueLayout.JAVA_INT.byteSize());
       return new SdlTouchIdArray(temp, arraySize);
     }
   }
@@ -53,7 +54,7 @@ class NativeSdlTouchFuncs {
     if (charAddress == MemorySegment.NULL) {
       return null;
     } else {
-      return charAddress.getString(0);
+      return charAddress.reinterpret(Integer.MAX_VALUE).getString(0);
     }
   }
 
@@ -68,6 +69,7 @@ class NativeSdlTouchFuncs {
       return null;
     } else {
       int arraySize = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
+      temp = temp.reinterpret(arraySize*ValueLayout.ADDRESS.byteSize());
       return new SdlFinger2dArray(temp, arraySize);
     }
   }

@@ -15,7 +15,7 @@ public class SdlSensorIdArray {
     this.data = new SdlSensorId[count];
     for (int i = 0; i < count; i++) {
       this.data[i] = new SdlSensorId();
-      this.data[i].setValue(dataAddress.get(ValueLayout.JAVA_INT, i));
+      this.data[i].setValue(dataAddress.getAtIndex(ValueLayout.JAVA_INT, i));
     }
     NativeSdlLib.sdlFree(dataAddress);
   }

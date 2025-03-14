@@ -13,7 +13,7 @@ public class SdlFinger2dArray {
   public SdlFinger2dArray(MemorySegment dataAddress, int count) throws Throwable {
     int width = 0;
     for (int i = 0; i < count; i++) {
-      if (dataAddress.get(ValueLayout.ADDRESS, i) != MemorySegment.NULL) {
+      if (dataAddress.getAtIndex(ValueLayout.ADDRESS, i) != MemorySegment.NULL) {
         width++;
       } else {
         break;
@@ -30,7 +30,7 @@ public class SdlFinger2dArray {
     VarHandle pressureHandle =
         SdlFinger.objectLayout.varHandle(MemoryLayout.PathElement.groupElement("pressure"));
     for (int i = 0; i < width; i++) {
-      MemorySegment secondAddress = dataAddress.get(ValueLayout.ADDRESS, i);
+      MemorySegment secondAddress = dataAddress.getAtIndex(ValueLayout.ADDRESS, i);
       for (int j = 0; j < length; j++) {
         long id = (long) idHandle.get(secondAddress);
         float x = (float) xHandle.get(secondAddress);

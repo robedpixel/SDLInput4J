@@ -1,6 +1,8 @@
 package robedpixel.sdl.video;
 
 
+import robedpixel.sdl.properties.SdlPropertiesId;
+
 import java.lang.foreign.Arena;
 
 public class SdlVideo {
@@ -66,5 +68,20 @@ public class SdlVideo {
         SdlDisplayId returnObject = new SdlDisplayId();
         returnObject.setValue(SdlFuncs.getPrimaryDisplay());
         return returnObject;
+    }
+
+    /**
+     * Get the properties associated with a display.
+     * @param displayId The instance ID of the display to query.
+     * @return Returns a valid property ID on success or 0 on failure; call SDLError.getError() for more information.
+     * @throws Throwable
+     */
+    public SdlPropertiesId getDisplayProperties(SdlDisplayId displayId) throws Throwable {
+        SdlPropertiesId returnObject = new SdlPropertiesId();
+        returnObject.setValue(SdlFuncs.getDisplayProperties(displayId.getValue()));
+        return returnObject;
+    }
+    public String getDisplayName(SdlDisplayId displayId) throws Throwable {
+        return SdlFuncs.getDisplayName(displayId.getValue());
     }
 }

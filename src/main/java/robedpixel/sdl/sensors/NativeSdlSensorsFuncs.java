@@ -106,6 +106,7 @@ class NativeSdlSensorsFuncs {
       return null;
     } else {
       int arraySize = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
+      temp = temp.reinterpret(arraySize*ValueLayout.JAVA_INT.byteSize());
       return new SdlSensorIdArray(temp, arraySize);
     }
   }
@@ -115,7 +116,7 @@ class NativeSdlSensorsFuncs {
     if (charArrayAddress == MemorySegment.NULL) {
       return null;
     } else {
-      return charArrayAddress.getString(0);
+      return charArrayAddress.reinterpret(Integer.MAX_VALUE).getString(0);
     }
   }
 
@@ -144,7 +145,7 @@ class NativeSdlSensorsFuncs {
     if (charArrayAddress == MemorySegment.NULL) {
       return null;
     } else {
-      return charArrayAddress.getString(0);
+      return charArrayAddress.reinterpret(Integer.MAX_VALUE).getString(0);
     }
   }
 

@@ -185,7 +185,7 @@ class NativeSdlPropertiesFuncs {
         if (charArrayAddress == MemorySegment.NULL) {
             return null;
         } else {
-            return charArrayAddress.getString(0);
+            return charArrayAddress.reinterpret(Integer.MAX_VALUE).getString(0);
         }
     }
     public long getNumberProperty(Arena localAllocator, int props, String name, long defaultValue) throws Throwable {
