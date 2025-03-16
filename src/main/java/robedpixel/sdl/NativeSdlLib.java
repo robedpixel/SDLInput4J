@@ -7,6 +7,7 @@ import robedpixel.sdl.guid.SdlGuid;
 import robedpixel.sdl.hints.SdlHints;
 import robedpixel.sdl.misc.SdlMisc;
 import robedpixel.sdl.power.SdlPower;
+import robedpixel.sdl.rect.SdlRect;
 import robedpixel.sdl.sensors.SdlSensor;
 import robedpixel.sdl.video.SdlVideo;
 
@@ -179,19 +180,28 @@ public class NativeSdlLib implements AutoCloseable {
   /**
    * Get the SDL Misc module
    *
-   * @return Power module for SDL
+   * @return Misc module for SDL
    */
   public SdlMisc getSdlMisc() {
     return new SdlMisc(SdlFuncs.getGlobalAllocator());
   }
 
   /**
-   * Get the SDL Misc module
+   * Get the SDL Video module
    *
-   * @return Power module for SDL
+   * @return Video module for SDL
    */
   public SdlVideo getSdlVideo() {
     return new SdlVideo(SdlFuncs.getGlobalAllocator());
+  }
+
+  /**
+   * Get the SDL Rect module
+   *
+   * @return Rect module for SDL
+   */
+  public SdlRect getSdlRect() {
+    return new SdlRect(SdlFuncs.getGlobalAllocator());
   }
 
   public static void sdlFree(MemorySegment pointer) throws Throwable {

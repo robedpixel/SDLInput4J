@@ -47,7 +47,7 @@ class NativeSdlGuidFuncs {
     SDL_GUIDToString.invoke(structAddress, arrayAddress, chGuid);
     // Load in arrayAddress to chararray
     for (int i = 0; i < chGuid; i++) {
-      byteArray[i] = arrayAddress.get(ValueLayout.JAVA_BYTE, i);
+      byteArray[i] = arrayAddress.getAtIndex(ValueLayout.JAVA_BYTE, i);
     }
     return new String(byteArray, StandardCharsets.US_ASCII);
   }

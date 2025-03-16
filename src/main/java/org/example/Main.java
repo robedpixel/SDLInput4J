@@ -2,8 +2,9 @@ package org.example;
 
 import robedpixel.sdl.NativeSdlLib;
 import robedpixel.sdl.SdlInitFlagsFactory;
-import robedpixel.sdl.video.SdlDisplayIdArray;
-import robedpixel.sdl.video.SdlVideo;
+import robedpixel.sdl.rect.SdlFRectModel;
+import robedpixel.sdl.rect.SdlRect;
+import robedpixel.sdl.rect.SdlRectModel;
 
 // TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -16,11 +17,23 @@ public class Main {
             SdlInitFlagsFactory.SDLFlagValue.SDL_INIT_GAMEPAD,
             SdlInitFlagsFactory.SDLFlagValue.SDL_INIT_VIDEO)) {
       System.out.println(sdlLib.isMainThread());
-      SdlVideo video = sdlLib.getSdlVideo();
-      SdlDisplayIdArray array = video.getDisplays();
-      for (int i = 0; i < array.getData().length; i++) {
-        System.out.println(video.getDisplayName(array.getData()[i]));
-      }
+      SdlRect rect = sdlLib.getSdlRect();
+      SdlRectModel rectModel = new SdlRectModel();
+      SdlFRectModel fRectModel = new SdlFRectModel();
+      rectModel.setX(2);
+      rectModel.setY(2);
+      rectModel.setW(2);
+      rectModel.setH(2);
+      System.out.println(rectModel.getX());
+      System.out.println(rectModel.getY());
+      System.out.println(rectModel.getW());
+      System.out.println(rectModel.getH());
+      rect.rectToFRect(rectModel, fRectModel);
+      System.out.println(fRectModel.getX());
+      System.out.println(fRectModel.getY());
+      System.out.println(fRectModel.getW());
+      System.out.println(fRectModel.getH());
+
     } catch (Throwable e) {
       throw new RuntimeException(e);
     }

@@ -38,13 +38,13 @@ public class SdlDisplayEvent {
 
   public static SdlDisplayEvent getEventFromMemorySegment(MemorySegment segment) {
     SdlDisplayEvent retEvent = new SdlDisplayEvent();
-    retEvent.type = (int) typeHandle.get(segment);
-    retEvent.reserved = (int) reservedHandle.get(segment);
-    retEvent.timestamp = (long) timestampHandle.get(segment);
+    retEvent.type = (int) typeHandle.get(segment,0);
+    retEvent.reserved = (int) reservedHandle.get(segment,0);
+    retEvent.timestamp = (long) timestampHandle.get(segment,0);
     retEvent.displayId = new SdlDisplayId();
-    retEvent.displayId.setValue((int) displayIdHandle.get(segment));
-    retEvent.data1 = (int) data1Handle.get(segment);
-    retEvent.data2 = (int) data2Handle.get(segment);
+    retEvent.displayId.setValue((int) displayIdHandle.get(segment,0));
+    retEvent.data1 = (int) data1Handle.get(segment,0);
+    retEvent.data2 = (int) data2Handle.get(segment,0);
     return retEvent;
   }
 }

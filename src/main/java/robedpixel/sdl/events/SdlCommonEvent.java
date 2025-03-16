@@ -26,9 +26,9 @@ public class SdlCommonEvent {
 
   public static SdlCommonEvent getEventFromMemorySegment(MemorySegment segment) {
     SdlCommonEvent retEvent = new SdlCommonEvent();
-    retEvent.type = (int) typeHandle.get(segment);
-    retEvent.reserved = (int) reservedHandle.get(segment);
-    retEvent.timestamp = (long) timestampHandle.get(segment);
+    retEvent.type = (int) typeHandle.get(segment,0);
+    retEvent.reserved = (int) reservedHandle.get(segment,0);
+    retEvent.timestamp = (long) timestampHandle.get(segment,0);
     return retEvent;
   }
 }
