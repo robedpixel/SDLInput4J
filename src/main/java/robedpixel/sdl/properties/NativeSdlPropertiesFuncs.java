@@ -3,7 +3,6 @@ package robedpixel.sdl.properties;
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 
-// TODO: note, the name char arrays can be freed after they are passed to the function
 class NativeSdlPropertiesFuncs {
   private static volatile NativeSdlPropertiesFuncs INSTANCE;
   private static final Object mutex = new Object();

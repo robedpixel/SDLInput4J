@@ -1,5 +1,7 @@
 package robedpixel.sdl.rect;
 
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.lang.foreign.*;
 import java.lang.invoke.VarHandle;
 import lombok.Getter;
@@ -13,6 +15,8 @@ public class SdlFRectModel {
               ValueLayout.JAVA_FLOAT.withName("w"),
               ValueLayout.JAVA_FLOAT.withName("h"))
           .withName("SDL_FRect");
+  @Getter
+  private Rectangle2D.Float data;
 
   private static VarHandle xHandle =
       structLayout.varHandle(MemoryLayout.PathElement.groupElement("x"));
@@ -22,52 +26,62 @@ public class SdlFRectModel {
       structLayout.varHandle(MemoryLayout.PathElement.groupElement("w"));
   private static VarHandle hHandle =
       structLayout.varHandle(MemoryLayout.PathElement.groupElement("h"));
-  @Getter MemorySegment dataAddress;
+  @Getter private MemorySegment dataAddress;
   Arena allocator = Arena.ofAuto();
 
   public SdlFRectModel() {
+    data = new Rectangle2D.Float();
     dataAddress = allocator.allocate(structLayout);
-    xHandle.set(dataAddress, 0,0f);
-    yHandle.set(dataAddress, 0,0f);
-    wHandle.set(dataAddress, 0,0f);
-    hHandle.set(dataAddress, 0,0f);
+    xHandle.set(dataAddress, 0,data.x);
+    yHandle.set(dataAddress, 0,data.y);
+    wHandle.set(dataAddress, 0,data.width);
+    hHandle.set(dataAddress, 0,data.height);
   }
 
   public static SdlFRectModel fromMemorySegment(MemorySegment segment) {
     SdlFRectModel model = new SdlFRectModel();
     model.dataAddress = segment;
+    model.data = new Rectangle2D.Float();
+    model.data.x = (float)xHandle.get(model.dataAddress, 0);
+    model.data.y = (float)yHandle.get(model.dataAddress, 0);
+    model.data.width = (float)wHandle.get(model.dataAddress, 0);
+    model.data.height = (float)hHandle.get(model.dataAddress, 0);
     return model;
   }
 
   public float getX() {
-    return (float) xHandle.get(dataAddress,0);
+    return data.x;
   }
 
   public float getY() {
-    return (float) yHandle.get(dataAddress,0);
+    return data.y;
   }
 
   public float getW() {
-    return (float) wHandle.get(dataAddress,0);
+    return data.width;
   }
 
   public float getH() {
-    return (float) hHandle.get(dataAddress,0);
+    return data.height;
   }
 
   public void setX(float newValue) {
-    xHandle.set(dataAddress, 0,newValue);
+    data.x = newValue;
+    xHandle.set(dataAddress, 0,data.x);
   }
 
   public void setY(float newValue) {
-    yHandle.set(dataAddress, 0,newValue);
+    data.y = newValue;
+    yHandle.set(dataAddress, 0,data.y);
   }
 
   public void setW(float newValue) {
-    wHandle.set(dataAddress, 0,newValue);
+    data.width = newValue;
+    wHandle.set(dataAddress, 0,data.width);
   }
 
   public void setH(float newValue) {
-    hHandle.set(dataAddress, 0,newValue);
+    data.height = newValue;
+    hHandle.set(dataAddress, 0,data.height);
   }
 }

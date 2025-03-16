@@ -17,23 +17,6 @@ public class Main {
             SdlInitFlagsFactory.SDLFlagValue.SDL_INIT_GAMEPAD,
             SdlInitFlagsFactory.SDLFlagValue.SDL_INIT_VIDEO)) {
       System.out.println(sdlLib.isMainThread());
-      SdlRect rect = sdlLib.getSdlRect();
-      SdlRectModel rectModel = new SdlRectModel();
-      SdlFRectModel fRectModel = new SdlFRectModel();
-      rectModel.setX(2);
-      rectModel.setY(2);
-      rectModel.setW(2);
-      rectModel.setH(2);
-      System.out.println(rectModel.getX());
-      System.out.println(rectModel.getY());
-      System.out.println(rectModel.getW());
-      System.out.println(rectModel.getH());
-      rect.rectToFRect(rectModel, fRectModel);
-      System.out.println(fRectModel.getX());
-      System.out.println(fRectModel.getY());
-      System.out.println(fRectModel.getW());
-      System.out.println(fRectModel.getH());
-
     } catch (Throwable e) {
       throw new RuntimeException(e);
     }
