@@ -47,6 +47,12 @@ public class SdlRectModel {
     model.data.height = (int)hHandle.get(model.dataAddress, 0);
     return model;
   }
+  void updateValues(){
+    data.x = (int)xHandle.get(dataAddress, 0);
+    data.y = (int)yHandle.get(dataAddress, 0);
+    data.width = (int)wHandle.get(dataAddress, 0);
+    data.height = (int)hHandle.get(dataAddress, 0);
+  }
 
   public int getX() {
     return data.x;

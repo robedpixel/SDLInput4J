@@ -62,4 +62,31 @@ public class SdlRect {
   public boolean hasRectIntersection(SdlRectModel A, SdlRectModel B) throws Throwable {
     return SdlFuncs.hasRectIntersection(A.getDataAddress(),B.getDataAddress());
   }
+
+  /**
+   * Calculate the intersection of two rectangles.
+   * @param A An SdlRectModel representing the first rectangle.
+   * @param B An SdlRectModel representing the second rectangle.
+   * @param result an SdlRectModel filled in with the intersection of rectangles A and B.
+   * @return Returns true if there is an intersection, false otherwise.
+   * @throws Throwable
+   */
+  public boolean getRectIntersection(SdlRectModel A, SdlRectModel B, SdlRectModel result) throws Throwable{
+    boolean returnObject = SdlFuncs.getRectIntersection(A.getDataAddress(),B.getDataAddress(),result.getDataAddress());
+    result.updateValues();
+    return returnObject;
+  }
+  /**
+   * Calculate the union of two rectangles.
+   * @param A An SdlRectModel representing the first rectangle.
+   * @param B An SdlRectModel representing the second rectangle.
+   * @param result an SdlRectModel filled in with the union of rectangles A and B.
+   * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+   * @throws Throwable
+   */
+  public boolean getRectUnion(SdlRectModel A, SdlRectModel B, SdlRectModel result) throws Throwable{
+    boolean returnObject = SdlFuncs.getRectUnion(A.getDataAddress(),B.getDataAddress(),result.getDataAddress());
+    result.updateValues();
+    return returnObject;
+  }
 }
