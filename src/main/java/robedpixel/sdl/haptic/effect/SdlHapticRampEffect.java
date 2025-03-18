@@ -105,21 +105,21 @@ public class SdlHapticRampEffect implements SdlHapticEffect {
   private void createMemorySegment() {
     segment = allocator.allocate(SdlHapticEffectMemoryLayout.layout);
     if (type != null) {
-      typeHandle.set(segment, type);
+      typeHandle.set(segment,0, type);
     }
     if (direction != null) {
-      directionHandle.set(segment, direction);
+      directionHandle.set(segment,0, direction);
     }
-    lengthHandle.set(segment, direction);
-    delayHandle.set(segment, delay);
-    buttonHandle.set(segment, button);
-    intervalHandle.set(segment, interval);
-    startHandle.set(segment, start);
-    endHandle.set(segment, end);
-    attackLengthHandle.set(segment, attackLength);
-    attackLevelHandle.set(segment, attackLevel);
-    fadeLengthHandle.set(segment, fadeLength);
-    fadeLevelHandle.set(segment, fadeLevel);
+    lengthHandle.set(segment,0, direction);
+    delayHandle.set(segment,0, delay);
+    buttonHandle.set(segment,0, button);
+    intervalHandle.set(segment,0, interval);
+    startHandle.set(segment,0, start);
+    endHandle.set(segment,0, end);
+    attackLengthHandle.set(segment,0, attackLength);
+    attackLevelHandle.set(segment,0, attackLevel);
+    fadeLengthHandle.set(segment,0, fadeLength);
+    fadeLevelHandle.set(segment,0, fadeLevel);
   }
 
   @Override

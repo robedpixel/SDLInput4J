@@ -48,11 +48,11 @@ class SdlHapticLeftRightEffect implements SdlHapticEffect {
   private void createMemorySegment() {
     segment = allocator.allocate(SdlHapticEffectMemoryLayout.layout);
     if (type != null) {
-      typeHandle.set(segment, type);
+      typeHandle.set(segment, 0,type);
     }
-    lengthHandle.set(segment, length);
-    largeMagnitudeHandle.set(segment, largeMagnitude);
-    smallMagnitudeHandle.set(segment, smallMagnitude);
+    lengthHandle.set(segment, 0,length);
+    largeMagnitudeHandle.set(segment, 0,largeMagnitude);
+    smallMagnitudeHandle.set(segment, 0,smallMagnitude);
   }
 
   @Override

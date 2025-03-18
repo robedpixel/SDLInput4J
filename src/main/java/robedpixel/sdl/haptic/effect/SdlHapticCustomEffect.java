@@ -152,19 +152,19 @@ public class SdlHapticCustomEffect {
   private void createMemorySegment() {
     segment = allocator.allocate(SdlHapticEffectMemoryLayout.layout);
     if (type != null) {
-      typeHandle.set(segment, type);
+      typeHandle.set(segment,0, type);
     }
     if (direction != null) {
-      directionHandle.set(segment, direction);
+      directionHandle.set(segment,0, direction);
     }
-    lengthHandle.set(segment, direction);
-    delayHandle.set(segment, delay);
-    buttonHandle.set(segment, button);
-    intervalHandle.set(segment, interval);
-    intervalHandle.set(segment, interval);
-    attackLengthHandle.set(segment, attackLength);
-    attackLevelHandle.set(segment, attackLevel);
-    fadeLengthHandle.set(segment, fadeLength);
-    fadeLevelHandle.set(segment, fadeLevel);
+    lengthHandle.set(segment,0, direction);
+    delayHandle.set(segment,0, delay);
+    buttonHandle.set(segment,0, button);
+    intervalHandle.set(segment,0, interval);
+    intervalHandle.set(segment,0, interval);
+    attackLengthHandle.set(segment,0, attackLength);
+    attackLevelHandle.set(segment,0, attackLevel);
+    fadeLengthHandle.set(segment,0, fadeLength);
+    fadeLevelHandle.set(segment,0, fadeLevel);
   }
 }
