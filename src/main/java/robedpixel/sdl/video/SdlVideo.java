@@ -2,10 +2,8 @@ package robedpixel.sdl.video;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
-
 import robedpixel.sdl.properties.SdlPropertiesId;
 import robedpixel.sdl.rect.SdlPointModel;
-import robedpixel.sdl.rect.SdlRect;
 import robedpixel.sdl.rect.SdlRectModel;
 
 public class SdlVideo {
@@ -98,8 +96,10 @@ public class SdlVideo {
 
   /**
    * Get the name of a display in UTF-8 encoding.
+   *
    * @param displayId The instance ID of the display to query.
-   * @return Returns the name of a display or null on failure; call SdlError.getError() for more information.
+   * @return Returns the name of a display or null on failure; call SdlError.getError() for more
+   *     information.
    * @throws Throwable
    */
   public String getDisplayName(SdlDisplayId displayId) throws Throwable {
@@ -108,117 +108,157 @@ public class SdlVideo {
 
   /**
    * Get the desktop area represented by a display.
+   *
    * @param displayId The instance Id of the display to query.
    * @param rect the SdlRectModel filled in with the display bounds.
-   * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+   * @return Returns true on success or false on failure; call SdlError.getError() for more
+   *     information.
    * @throws Throwable
    */
-  public boolean getDisplayBounds(SdlDisplayId displayId, SdlRectModel rect) throws Throwable{
-    return SdlFuncs.getDisplayBounds(displayId.getValue(),rect.getDataAddress());
+  public boolean getDisplayBounds(SdlDisplayId displayId, SdlRectModel rect) throws Throwable {
+    return SdlFuncs.getDisplayBounds(displayId.getValue(), rect.getDataAddress());
   }
 
   /**
    * Get the usable desktop area represented by a display, in screen coordinates.
+   *
    * @param displayId The instance Id of the display to query.
    * @param rect the SdlRectModel filled in with the display bounds.
-   * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+   * @return Returns true on success or false on failure; call SdlError.getError() for more
+   *     information.
    * @throws Throwable
    */
-  public boolean getDisplayUsableBounds(SdlDisplayId displayId, SdlRectModel rect) throws Throwable{
-    return SdlFuncs.getDisplayUsableBounds(displayId.getValue(),rect.getDataAddress());
+  public boolean getDisplayUsableBounds(SdlDisplayId displayId, SdlRectModel rect)
+      throws Throwable {
+    return SdlFuncs.getDisplayUsableBounds(displayId.getValue(), rect.getDataAddress());
   }
 
   /**
    * Get the orientation of a display when it is unrotated.
+   *
    * @param displayId The instance Id of the display to query.
-   * @return Returns the SDL_DisplayOrientation value of the display, or SDL_ORIENTATION_UNKNOWN if it isn't available.
+   * @return Returns the SDL_DisplayOrientation value of the display, or SDL_ORIENTATION_UNKNOWN if
+   *     it isn't available.
    * @throws Throwable
    */
-  public SdlDisplayOrientation getNaturalDisplayOrientation(SdlDisplayId displayId) throws Throwable{
-    return SdlDisplayOrientation.fromInt(SdlFuncs.getNaturalDisplayOrientation(displayId.getValue()));
+  public SdlDisplayOrientation getNaturalDisplayOrientation(SdlDisplayId displayId)
+      throws Throwable {
+    return SdlDisplayOrientation.fromInt(
+        SdlFuncs.getNaturalDisplayOrientation(displayId.getValue()));
   }
 
   /**
    * Get the orientation of a display.
+   *
    * @param displayId The instance Id of the display to query.
-   * @return Returns the SDL_DisplayOrientation value of the display, or SDL_ORIENTATION_UNKNOWN if it isn't available.
+   * @return Returns the SDL_DisplayOrientation value of the display, or SDL_ORIENTATION_UNKNOWN if
+   *     it isn't available.
    * @throws Throwable
    */
-  public SdlDisplayOrientation getCurrentDisplayOrientation(SdlDisplayId displayId) throws Throwable{
-    return SdlDisplayOrientation.fromInt(SdlFuncs.getCurrentDisplayOrientation(displayId.getValue()));
+  public SdlDisplayOrientation getCurrentDisplayOrientation(SdlDisplayId displayId)
+      throws Throwable {
+    return SdlDisplayOrientation.fromInt(
+        SdlFuncs.getCurrentDisplayOrientation(displayId.getValue()));
   }
 
   /**
    * Get the content scale of a display.
+   *
    * @param displayId The instance Id of the display to query.
-   * @return Returns the content scale of the display, or 0.0f on failure; call SdlError.getError() for more information.
+   * @return Returns the content scale of the display, or 0.0f on failure; call SdlError.getError()
+   *     for more information.
    * @throws Throwable
    */
-  public float getDisplayContentScale(SdlDisplayId displayId) throws Throwable{
+  public float getDisplayContentScale(SdlDisplayId displayId) throws Throwable {
     return SdlFuncs.getDisplayContentScale(displayId.getValue());
   }
 
   /**
    * Get a list of fullscreen display modes available on a display.
+   *
    * @param displayId the instance Id of the display to query.
-   * @return Returns an array of display mode objects or null on failure; call SdlError.getError() for more information
+   * @return Returns an array of display mode objects or null on failure; call SdlError.getError()
+   *     for more information
    * @throws Throwable
    */
-  public SdlDisplayModeArray getFullscreenDisplayModes(SdlDisplayId displayId) throws Throwable{
+  public SdlDisplayModeArray getFullscreenDisplayModes(SdlDisplayId displayId) throws Throwable {
     return SdlFuncs.getFullscreenDisplayModes(displayId.getValue());
   }
 
   /**
    * Get the closest match to the requested display mode.
+   *
    * @param displayId The instance Id of the display to query.
    * @param width The width in pixels of the desired display mode.
    * @param height The height in pixels of the desired display mode.
-   * @param refreshRate The refresh rate of the desired display mode, or 0.0f for the desktop refresh rate.
+   * @param refreshRate The refresh rate of the desired display mode, or 0.0f for the desktop
+   *     refresh rate.
    * @param includeHighDensityModes boolean to include high density modes in the search.
-   * @param displayMode a displayMode object filled in with the closest display mode equal to or larger than the desired mode.
+   * @param displayMode a displayMode object filled in with the closest display mode equal to or
+   *     larger than the desired mode.
    * @return true on success or false on failure; call SdlError.getError() for more information.
    * @throws Throwable
    */
-  public boolean getClosestFullscreenDisplayMode(SdlDisplayId displayId, int width, int height, float refreshRate, boolean includeHighDensityModes, SdlDisplayMode displayMode) throws Throwable{
-    boolean returnObject = SdlFuncs.getClosestFullscreenDisplayMode(displayId.getValue(),width,height,refreshRate,includeHighDensityModes,displayMode.getDataAddress());
+  public boolean getClosestFullscreenDisplayMode(
+      SdlDisplayId displayId,
+      int width,
+      int height,
+      float refreshRate,
+      boolean includeHighDensityModes,
+      SdlDisplayMode displayMode)
+      throws Throwable {
+    boolean returnObject =
+        SdlFuncs.getClosestFullscreenDisplayMode(
+            displayId.getValue(),
+            width,
+            height,
+            refreshRate,
+            includeHighDensityModes,
+            displayMode.getDataAddress());
     displayMode.updateValues();
     return returnObject;
   }
 
   /**
    * Get information about the desktop's display mode.
+   *
    * @param displayId The instance Id of the display to query.
-   * @return Returns an object to the desktop display mode or null on failure; call SdlError.getError() for more information.
+   * @return Returns an object to the desktop display mode or null on failure; call
+   *     SdlError.getError() for more information.
    * @throws Throwable
    */
   public SdlDisplayMode getDesktopDisplayMode(SdlDisplayId displayId) throws Throwable {
     MemorySegment segment = SdlFuncs.getDesktopDisplayMode(displayId.getValue());
-    if (segment == MemorySegment.NULL){
+    if (segment == MemorySegment.NULL) {
       return null;
-    }else {
+    } else {
       return SdlDisplayMode.fromMemorySegment(segment);
     }
   }
 
   /**
    * Get information about the current display mode.
+   *
    * @param displayId The instance Id of the display to query.
-   * @return Returns an object to the current display mode or null on failure; call SdlError.getError() for more information.
+   * @return Returns an object to the current display mode or null on failure; call
+   *     SdlError.getError() for more information.
    * @throws Throwable
    */
-  public SdlDisplayMode getCurrentDisplayMode(SdlDisplayId displayId) throws Throwable{
+  public SdlDisplayMode getCurrentDisplayMode(SdlDisplayId displayId) throws Throwable {
     MemorySegment segment = SdlFuncs.getCurrentDisplayMode(displayId.getValue());
-    if (segment == MemorySegment.NULL){
+    if (segment == MemorySegment.NULL) {
       return null;
-    }else {
+    } else {
       return SdlDisplayMode.fromMemorySegment(segment);
     }
   }
 
   /**
    * Get the display containing a point.
+   *
    * @param point The point to query
-   * @return Returns the instance Id of the display containing the point or 0 on failure; call SdlError.getError() for more information.
+   * @return Returns the instance Id of the display containing the point or 0 on failure; call
+   *     SdlError.getError() for more information.
    * @throws Throwable
    */
   public SdlDisplayId getDisplayForPoint(SdlPointModel point) throws Throwable {
@@ -229,11 +269,14 @@ public class SdlVideo {
 
   /**
    * Get the display primarily containing a rect.
+   *
    * @param rect The rect to query.
-   * @return Returns the instance Id of the display entirely containing the rect or closest to the center of the rect on success or 0 on failure; call SdlError.getError() for more information.
+   * @return Returns the instance Id of the display entirely containing the rect or closest to the
+   *     center of the rect on success or 0 on failure; call SdlError.getError() for more
+   *     information.
    * @throws Throwable
    */
-  public SdlDisplayId getDisplayForRect(SdlRectModel rect) throws Throwable{
+  public SdlDisplayId getDisplayForRect(SdlRectModel rect) throws Throwable {
     SdlDisplayId returnObject = new SdlDisplayId();
     returnObject.setValue(SdlFuncs.getDisplayForPoint(rect.getDataAddress()));
     return returnObject;
@@ -241,28 +284,33 @@ public class SdlVideo {
 
   /**
    * Check whether the screensaver is currently enabled.
+   *
    * @return Returns true if the screensaver is enabled, false if it is disabled.
    * @throws Throwable
    */
-  public boolean screenSaverEnabled() throws Throwable{
+  public boolean screenSaverEnabled() throws Throwable {
     return SdlFuncs.screenSaverEnabled();
   }
 
   /**
    * Allow the screen to be blanked by a screen saver.
-   * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+   *
+   * @return Returns true on success or false on failure; call SdlError.getError() for more
+   *     information.
    * @throws Throwable
    */
-  public boolean enableScreenSaver() throws Throwable{
+  public boolean enableScreenSaver() throws Throwable {
     return SdlFuncs.enableScreenSaver();
   }
 
   /**
    * Prevent the screen from being blanked by a screen saver.
-   * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+   *
+   * @return Returns true on success or false on failure; call SdlError.getError() for more
+   *     information.
    * @throws Throwable
    */
-  public boolean disableScreenSaver() throws Throwable{
+  public boolean disableScreenSaver() throws Throwable {
     return SdlFuncs.disableScreenSaver();
   }
 }

@@ -18,28 +18,24 @@ public class SdlDisplayEvent {
               ValueLayout.JAVA_INT.withName("data1"),
               ValueLayout.JAVA_INT.withName("data2"))
           .withName("SDL_DisplayEvent");
-  /**
-   * SDL_DISPLAYEVENT_*
-   */
+
+  /** SDL_DISPLAYEVENT_* */
   @Getter int type;
+
   @Getter int reserved;
-  /**
-   * (Unsigned Int64) In nanoseconds, populated using SDL_GetTicksNS()
-   */
+
+  /** (Unsigned Int64) In nanoseconds, populated using SDL_GetTicksNS() */
   @Getter long timestamp;
-  /**
-   * The associated display
-   */
-  @Getter
-  SdlDisplayId displayId;
-  /**
-   * event dependent data
-   */
+
+  /** The associated display */
+  @Getter SdlDisplayId displayId;
+
+  /** event dependent data */
   @Getter int data1;
-  /**
-   * event dependent data
-   */
+
+  /** event dependent data */
   @Getter int data2;
+
   private static final VarHandle typeHandle =
       objectLayout.varHandle(MemoryLayout.PathElement.groupElement("type"));
   private static final VarHandle reservedHandle =
@@ -55,13 +51,13 @@ public class SdlDisplayEvent {
 
   public static SdlDisplayEvent getEventFromMemorySegment(MemorySegment segment) {
     SdlDisplayEvent retEvent = new SdlDisplayEvent();
-    retEvent.type = (int) typeHandle.get(segment,0);
-    retEvent.reserved = (int) reservedHandle.get(segment,0);
-    retEvent.timestamp = (long) timestampHandle.get(segment,0);
+    retEvent.type = (int) typeHandle.get(segment, 0);
+    retEvent.reserved = (int) reservedHandle.get(segment, 0);
+    retEvent.timestamp = (long) timestampHandle.get(segment, 0);
     retEvent.displayId = new SdlDisplayId();
-    retEvent.displayId.setValue((int) displayIdHandle.get(segment,0));
-    retEvent.data1 = (int) data1Handle.get(segment,0);
-    retEvent.data2 = (int) data2Handle.get(segment,0);
+    retEvent.displayId.setValue((int) displayIdHandle.get(segment, 0));
+    retEvent.data1 = (int) data1Handle.get(segment, 0);
+    retEvent.data2 = (int) data2Handle.get(segment, 0);
     return retEvent;
   }
 }

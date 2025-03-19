@@ -2,9 +2,6 @@ package org.example;
 
 import robedpixel.sdl.NativeSdlLib;
 import robedpixel.sdl.SdlInitFlagsFactory;
-import robedpixel.sdl.rect.SdlFRectModel;
-import robedpixel.sdl.rect.SdlRect;
-import robedpixel.sdl.rect.SdlRectModel;
 
 // TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.

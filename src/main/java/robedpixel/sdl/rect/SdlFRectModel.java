@@ -15,8 +15,8 @@ public class SdlFRectModel {
               ValueLayout.JAVA_FLOAT.withName("w"),
               ValueLayout.JAVA_FLOAT.withName("h"))
           .withName("SDL_FRect");
-  @Getter
-  private Rectangle2D.Float data;
+
+  @Getter private Rectangle2D.Float data;
 
   private static VarHandle xHandle =
       structLayout.varHandle(MemoryLayout.PathElement.groupElement("x"));
@@ -32,20 +32,20 @@ public class SdlFRectModel {
   public SdlFRectModel() {
     data = new Rectangle2D.Float();
     dataAddress = allocator.allocate(structLayout);
-    xHandle.set(dataAddress, 0,data.x);
-    yHandle.set(dataAddress, 0,data.y);
-    wHandle.set(dataAddress, 0,data.width);
-    hHandle.set(dataAddress, 0,data.height);
+    xHandle.set(dataAddress, 0, data.x);
+    yHandle.set(dataAddress, 0, data.y);
+    wHandle.set(dataAddress, 0, data.width);
+    hHandle.set(dataAddress, 0, data.height);
   }
 
   public static SdlFRectModel fromMemorySegment(MemorySegment segment) {
     SdlFRectModel model = new SdlFRectModel();
     model.dataAddress = segment;
     model.data = new Rectangle2D.Float();
-    model.data.x = (float)xHandle.get(model.dataAddress, 0);
-    model.data.y = (float)yHandle.get(model.dataAddress, 0);
-    model.data.width = (float)wHandle.get(model.dataAddress, 0);
-    model.data.height = (float)hHandle.get(model.dataAddress, 0);
+    model.data.x = (float) xHandle.get(model.dataAddress, 0);
+    model.data.y = (float) yHandle.get(model.dataAddress, 0);
+    model.data.width = (float) wHandle.get(model.dataAddress, 0);
+    model.data.height = (float) hHandle.get(model.dataAddress, 0);
     return model;
   }
 
@@ -67,21 +67,21 @@ public class SdlFRectModel {
 
   public void setX(float newValue) {
     data.x = newValue;
-    xHandle.set(dataAddress, 0,data.x);
+    xHandle.set(dataAddress, 0, data.x);
   }
 
   public void setY(float newValue) {
     data.y = newValue;
-    yHandle.set(dataAddress, 0,data.y);
+    yHandle.set(dataAddress, 0, data.y);
   }
 
   public void setW(float newValue) {
     data.width = newValue;
-    wHandle.set(dataAddress, 0,data.width);
+    wHandle.set(dataAddress, 0, data.width);
   }
 
   public void setH(float newValue) {
     data.height = newValue;
-    hHandle.set(dataAddress, 0,data.height);
+    hHandle.set(dataAddress, 0, data.height);
   }
 }

@@ -4,7 +4,5 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class SdlWindowId {
-    @Getter
-    @Setter
-    private int value;
+  @Getter @Setter private int value;
 }

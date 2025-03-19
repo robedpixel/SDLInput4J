@@ -106,15 +106,15 @@ public class SdlHapticConditionEffect implements SdlHapticEffect {
   private void createMemorySegment() {
     segment = allocator.allocate(SdlHapticEffectMemoryLayout.layout);
     if (type != null) {
-      typeHandle.set(segment,0, type);
+      typeHandle.set(segment, 0, type);
     }
     if (direction != null) {
-      directionHandle.set(segment, 0,direction);
+      directionHandle.set(segment, 0, direction);
     }
-    lengthHandle.set(segment, 0,direction);
-    delayHandle.set(segment, 0,delay);
-    buttonHandle.set(segment, 0,button);
-    intervalHandle.set(segment, 0,interval);
+    lengthHandle.set(segment, 0, direction);
+    delayHandle.set(segment, 0, delay);
+    buttonHandle.set(segment, 0, button);
+    intervalHandle.set(segment, 0, interval);
     for (int i = 0; i < rightSat.length; i++) {
       rightSatHandle.set(segment, i, rightSat[i]);
     }

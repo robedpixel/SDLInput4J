@@ -14,8 +14,8 @@ public class SdlRectModel {
               ValueLayout.JAVA_INT.withName("w"),
               ValueLayout.JAVA_INT.withName("h"))
           .withName("SDL_Rect");
-  @Getter
-  private Rectangle data;
+
+  @Getter private Rectangle data;
 
   private static VarHandle xHandle =
       structLayout.varHandle(MemoryLayout.PathElement.groupElement("x"));
@@ -31,27 +31,28 @@ public class SdlRectModel {
   public SdlRectModel() {
     dataAddress = allocator.allocate(structLayout);
     data = new Rectangle();
-    xHandle.set(dataAddress, 0,data.x);
-    yHandle.set(dataAddress, 0,data.y);
-    wHandle.set(dataAddress, 0,data.width);
-    hHandle.set(dataAddress, 0,data.height);
+    xHandle.set(dataAddress, 0, data.x);
+    yHandle.set(dataAddress, 0, data.y);
+    wHandle.set(dataAddress, 0, data.width);
+    hHandle.set(dataAddress, 0, data.height);
   }
 
   public static SdlRectModel fromMemorySegment(MemorySegment segment) {
     SdlRectModel model = new SdlRectModel();
     model.dataAddress = segment;
     model.data = new Rectangle();
-    model.data.x = (int)xHandle.get(model.dataAddress, 0);
-    model.data.y = (int)yHandle.get(model.dataAddress, 0);
-    model.data.width = (int)wHandle.get(model.dataAddress, 0);
-    model.data.height = (int)hHandle.get(model.dataAddress, 0);
+    model.data.x = (int) xHandle.get(model.dataAddress, 0);
+    model.data.y = (int) yHandle.get(model.dataAddress, 0);
+    model.data.width = (int) wHandle.get(model.dataAddress, 0);
+    model.data.height = (int) hHandle.get(model.dataAddress, 0);
     return model;
   }
-  void updateValues(){
-    data.x = (int)xHandle.get(dataAddress, 0);
-    data.y = (int)yHandle.get(dataAddress, 0);
-    data.width = (int)wHandle.get(dataAddress, 0);
-    data.height = (int)hHandle.get(dataAddress, 0);
+
+  void updateValues() {
+    data.x = (int) xHandle.get(dataAddress, 0);
+    data.y = (int) yHandle.get(dataAddress, 0);
+    data.width = (int) wHandle.get(dataAddress, 0);
+    data.height = (int) hHandle.get(dataAddress, 0);
   }
 
   public int getX() {
@@ -59,7 +60,7 @@ public class SdlRectModel {
   }
 
   public int getY() {
-    return  data.y;
+    return data.y;
   }
 
   public int getW() {
@@ -72,21 +73,21 @@ public class SdlRectModel {
 
   public void setX(int newValue) {
     data.x = newValue;
-    xHandle.set(dataAddress, 0,data.x);
+    xHandle.set(dataAddress, 0, data.x);
   }
 
   public void setY(int newValue) {
     data.y = newValue;
-    yHandle.set(dataAddress, 0,data.y);
+    yHandle.set(dataAddress, 0, data.y);
   }
 
   public void setW(int newValue) {
     data.width = newValue;
-    wHandle.set(dataAddress, 0,data.width);
+    wHandle.set(dataAddress, 0, data.width);
   }
 
   public void setH(int newValue) {
     data.height = newValue;
-    hHandle.set(dataAddress, 0,data.height);
+    hHandle.set(dataAddress, 0, data.height);
   }
 }

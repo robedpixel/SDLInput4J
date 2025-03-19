@@ -98,40 +98,40 @@ public class SdlHapticConstantEffect implements SdlHapticEffect {
   private void createMemorySegment() {
     segment = allocator.allocate(SdlHapticEffectMemoryLayout.layout);
     if (type != null) {
-      typeHandle.set(segment,0, type);
+      typeHandle.set(segment, 0, type);
     }
     if (direction != null) {
-      directionHandle.set(segment,0, direction);
+      directionHandle.set(segment, 0, direction);
     }
-    lengthHandle.set(segment,0, direction);
-    delayHandle.set(segment,0, delay);
-    buttonHandle.set(segment,0, button);
-    intervalHandle.set(segment,0, interval);
-    levelHandle.set(segment,0, level);
-    attackLengthHandle.set(segment,0, attackLength);
-    attackLevelHandle.set(segment,0, attackLevel);
-    fadeLengthHandle.set(segment,0, fadeLength);
-    fadeLevelHandle.set(segment,0, fadeLevel);
+    lengthHandle.set(segment, 0, direction);
+    delayHandle.set(segment, 0, delay);
+    buttonHandle.set(segment, 0, button);
+    intervalHandle.set(segment, 0, interval);
+    levelHandle.set(segment, 0, level);
+    attackLengthHandle.set(segment, 0, attackLength);
+    attackLevelHandle.set(segment, 0, attackLevel);
+    fadeLengthHandle.set(segment, 0, fadeLength);
+    fadeLevelHandle.set(segment, 0, fadeLevel);
   }
 
   @Override
   public MemorySegment getMemorySegment() {
     MemorySegment segment = allocator.allocate(objectLayout);
     if (type != null) {
-      typeHandle.set(segment,0, type);
+      typeHandle.set(segment, 0, type);
     }
     if (direction != null) {
-      directionHandle.set(segment,0, direction);
+      directionHandle.set(segment, 0, direction);
     }
-    lengthHandle.set(segment,0, direction);
-    delayHandle.set(segment,0, delay);
-    buttonHandle.set(segment,0, button);
-    intervalHandle.set(segment,0, interval);
-    levelHandle.set(segment,0, level);
-    attackLengthHandle.set(segment,0, attackLength);
-    attackLevelHandle.set(segment,0, attackLevel);
-    fadeLengthHandle.set(segment,0, fadeLength);
-    fadeLevelHandle.set(segment,0, fadeLevel);
+    lengthHandle.set(segment, 0, direction);
+    delayHandle.set(segment, 0, delay);
+    buttonHandle.set(segment, 0, button);
+    intervalHandle.set(segment, 0, interval);
+    levelHandle.set(segment, 0, level);
+    attackLengthHandle.set(segment, 0, attackLength);
+    attackLevelHandle.set(segment, 0, attackLevel);
+    fadeLengthHandle.set(segment, 0, fadeLength);
+    fadeLevelHandle.set(segment, 0, fadeLevel);
     return segment;
   }
 }

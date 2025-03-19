@@ -131,89 +131,92 @@ class NativeSdlHapticFuncs {
                 FunctionDescriptor.of(
                     ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.ADDRESS));
     SDL_UpdateHapticEffect =
-            Linker.nativeLinker()
-                    .downcallHandle(
-                            library.find("SDL_UpdateHapticEffect").orElseThrow(),
-                            FunctionDescriptor.of(
-                                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS,ValueLayout.JAVA_INT, ValueLayout.ADDRESS));
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_UpdateHapticEffect").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_BOOLEAN,
+                    ValueLayout.ADDRESS,
+                    ValueLayout.JAVA_INT,
+                    ValueLayout.ADDRESS));
 
     SDL_RunHapticEffect =
-            Linker.nativeLinker()
-                    .downcallHandle(
-                            library.find("SDL_RunHapticEffect").orElseThrow(),
-                            FunctionDescriptor.of(
-                                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS,ValueLayout.JAVA_INT,ValueLayout.JAVA_INT));
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_RunHapticEffect").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_BOOLEAN,
+                    ValueLayout.ADDRESS,
+                    ValueLayout.JAVA_INT,
+                    ValueLayout.JAVA_INT));
     SDL_StopHapticEffect =
-            Linker.nativeLinker()
-                    .downcallHandle(
-                            library.find("SDL_StopHapticEffect").orElseThrow(),
-                            FunctionDescriptor.of(
-                                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS,ValueLayout.JAVA_INT));
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_StopHapticEffect").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS, ValueLayout.JAVA_INT));
     SDL_DestroyHapticEffect =
-            Linker.nativeLinker()
-                    .downcallHandle(
-                            library.find("SDL_DestroyHapticEffect").orElseThrow(),
-                            FunctionDescriptor.ofVoid(ValueLayout.ADDRESS,ValueLayout.JAVA_INT));
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_DestroyHapticEffect").orElseThrow(),
+                FunctionDescriptor.ofVoid(ValueLayout.ADDRESS, ValueLayout.JAVA_INT));
     SDL_GetHapticEffectStatus =
-            Linker.nativeLinker()
-                    .downcallHandle(
-                            library.find("SDL_GetHapticEffectStatus").orElseThrow(),
-                            FunctionDescriptor.of(
-                                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS,ValueLayout.JAVA_INT));
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetHapticEffectStatus").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS, ValueLayout.JAVA_INT));
     SDL_SetHapticGain =
-            Linker.nativeLinker()
-                    .downcallHandle(
-                            library.find("SDL_SetHapticGain").orElseThrow(),
-                            FunctionDescriptor.of(
-                                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS,ValueLayout.JAVA_INT));
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_SetHapticGain").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS, ValueLayout.JAVA_INT));
     SDL_SetHapticAutocenter =
-            Linker.nativeLinker()
-                    .downcallHandle(
-                            library.find("SDL_SetHapticAutocenter").orElseThrow(),
-                            FunctionDescriptor.of(
-                                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS,ValueLayout.JAVA_INT));
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_SetHapticAutocenter").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS, ValueLayout.JAVA_INT));
     SDL_PauseHaptic =
-            Linker.nativeLinker()
-                    .downcallHandle(
-                            library.find("SDL_PauseHaptic").orElseThrow(),
-                            FunctionDescriptor.of(
-                                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS));
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_PauseHaptic").orElseThrow(),
+                FunctionDescriptor.of(ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS));
     SDL_ResumeHaptic =
-            Linker.nativeLinker()
-                    .downcallHandle(
-                            library.find("SDL_ResumeHaptic").orElseThrow(),
-                            FunctionDescriptor.of(
-                                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS));
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_ResumeHaptic").orElseThrow(),
+                FunctionDescriptor.of(ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS));
     SDL_StopHapticEffects =
-            Linker.nativeLinker()
-                    .downcallHandle(
-                            library.find("SDL_StopHapticEffects").orElseThrow(),
-                            FunctionDescriptor.of(
-                                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS));
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_StopHapticEffects").orElseThrow(),
+                FunctionDescriptor.of(ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS));
     SDL_HapticRumbleSupported =
-            Linker.nativeLinker()
-                    .downcallHandle(
-                            library.find("SDL_HapticRumbleSupported").orElseThrow(),
-                            FunctionDescriptor.of(
-                                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS));
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_HapticRumbleSupported").orElseThrow(),
+                FunctionDescriptor.of(ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS));
     SDL_InitHapticRumble =
-            Linker.nativeLinker()
-                    .downcallHandle(
-                            library.find("SDL_InitHapticRumble").orElseThrow(),
-                            FunctionDescriptor.of(
-                                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS));
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_InitHapticRumble").orElseThrow(),
+                FunctionDescriptor.of(ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS));
     SDL_PlayHapticRumble =
-            Linker.nativeLinker()
-                    .downcallHandle(
-                            library.find("SDL_PlayHapticRumble").orElseThrow(),
-                            FunctionDescriptor.of(
-                                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS,ValueLayout.JAVA_FLOAT,ValueLayout.JAVA_INT));
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_PlayHapticRumble").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_BOOLEAN,
+                    ValueLayout.ADDRESS,
+                    ValueLayout.JAVA_FLOAT,
+                    ValueLayout.JAVA_INT));
     SDL_StopHapticRumble =
-            Linker.nativeLinker()
-                    .downcallHandle(
-                            library.find("SDL_StopHapticRumble").orElseThrow(),
-                            FunctionDescriptor.of(
-                                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS));
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_StopHapticRumble").orElseThrow(),
+                FunctionDescriptor.of(ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS));
   }
 
   public synchronized SdlHapticIdArray getHaptics() throws Throwable {
@@ -302,48 +305,68 @@ class NativeSdlHapticFuncs {
       throws Throwable {
     return (int) SDL_CreateHapticEffect.invoke(haptic, effect);
   }
-  public synchronized boolean updateHapticEffect(MemorySegment haptic, int effect, MemorySegment data) throws Throwable {
-    return (boolean) SDL_UpdateHapticEffect.invoke(haptic,effect,data);
+
+  public synchronized boolean updateHapticEffect(
+      MemorySegment haptic, int effect, MemorySegment data) throws Throwable {
+    return (boolean) SDL_UpdateHapticEffect.invoke(haptic, effect, data);
   }
-  public synchronized boolean runHapticEffect(MemorySegment haptic, int effect, int iterations) throws Throwable {
-    return (boolean) SDL_RunHapticEffect.invoke(haptic,effect,iterations);
+
+  public synchronized boolean runHapticEffect(MemorySegment haptic, int effect, int iterations)
+      throws Throwable {
+    return (boolean) SDL_RunHapticEffect.invoke(haptic, effect, iterations);
   }
+
   public synchronized boolean stopHapticEffect(MemorySegment haptic, int effect) throws Throwable {
-    return (boolean) SDL_StopHapticEffect.invoke(haptic,effect);
+    return (boolean) SDL_StopHapticEffect.invoke(haptic, effect);
   }
+
   public synchronized void destroyHapticEffect(MemorySegment haptic, int effect) throws Throwable {
-    SDL_DestroyHapticEffect.invoke(haptic,effect);
+    SDL_DestroyHapticEffect.invoke(haptic, effect);
   }
-  public synchronized boolean getHapticEffectStatus(MemorySegment haptic, int effect) throws Throwable{
-    return (boolean)SDL_GetHapticEffectStatus.invoke(haptic,effect);
+
+  public synchronized boolean getHapticEffectStatus(MemorySegment haptic, int effect)
+      throws Throwable {
+    return (boolean) SDL_GetHapticEffectStatus.invoke(haptic, effect);
   }
-  public synchronized boolean setHapticGain(MemorySegment haptic, int gain) throws Throwable{
-    return (boolean) SDL_SetHapticGain.invoke(haptic,gain);
+
+  public synchronized boolean setHapticGain(MemorySegment haptic, int gain) throws Throwable {
+    return (boolean) SDL_SetHapticGain.invoke(haptic, gain);
   }
-  public synchronized boolean setHapticAutocenter(MemorySegment haptic, int autocenter) throws Throwable{
-    return (boolean) SDL_SetHapticAutocenter.invoke(haptic,autocenter);
+
+  public synchronized boolean setHapticAutocenter(MemorySegment haptic, int autocenter)
+      throws Throwable {
+    return (boolean) SDL_SetHapticAutocenter.invoke(haptic, autocenter);
   }
-  public synchronized  boolean pauseHaptic(MemorySegment haptic) throws Throwable{
+
+  public synchronized boolean pauseHaptic(MemorySegment haptic) throws Throwable {
     return (boolean) SDL_PauseHaptic.invoke(haptic);
   }
-  public synchronized boolean resumeHaptic(MemorySegment haptic) throws Throwable{
+
+  public synchronized boolean resumeHaptic(MemorySegment haptic) throws Throwable {
     return (boolean) SDL_ResumeHaptic.invoke(haptic);
   }
-  public synchronized boolean stopHapticEffects(MemorySegment haptic) throws Throwable{
+
+  public synchronized boolean stopHapticEffects(MemorySegment haptic) throws Throwable {
     return (boolean) SDL_StopHapticEffects.invoke(haptic);
   }
-  public synchronized boolean hapticRumbleSupported(MemorySegment haptic) throws Throwable{
+
+  public synchronized boolean hapticRumbleSupported(MemorySegment haptic) throws Throwable {
     return (boolean) SDL_HapticRumbleSupported.invoke(haptic);
   }
-  public synchronized boolean initHapticRumble(MemorySegment haptic) throws Throwable{
+
+  public synchronized boolean initHapticRumble(MemorySegment haptic) throws Throwable {
     return (boolean) SDL_InitHapticRumble.invoke(haptic);
   }
-  public synchronized boolean playHapticRumble(MemorySegment haptic, int strength, int length) throws Throwable{
-    return (boolean) SDL_PlayHapticRumble.invoke(haptic,strength,length);
+
+  public synchronized boolean playHapticRumble(MemorySegment haptic, int strength, int length)
+      throws Throwable {
+    return (boolean) SDL_PlayHapticRumble.invoke(haptic, strength, length);
   }
-  public synchronized boolean stopHapticRumble(MemorySegment haptic) throws Throwable{
+
+  public synchronized boolean stopHapticRumble(MemorySegment haptic) throws Throwable {
     return (boolean) SDL_StopHapticRumble.invoke(haptic);
   }
+
   public static NativeSdlHapticFuncs getInstance(Arena allocator) {
     NativeSdlHapticFuncs result = INSTANCE;
     if (result == null) {

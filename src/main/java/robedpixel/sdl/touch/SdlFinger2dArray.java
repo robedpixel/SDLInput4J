@@ -32,10 +32,10 @@ public class SdlFinger2dArray {
     for (int i = 0; i < width; i++) {
       MemorySegment secondAddress = dataAddress.getAtIndex(ValueLayout.ADDRESS, i);
       for (int j = 0; j < length; j++) {
-        long id = (long) idHandle.get(secondAddress,0);
-        float x = (float) xHandle.get(secondAddress,0);
-        float y = (float) yHandle.get(secondAddress,0);
-        float pressure = (float) pressureHandle.get(secondAddress,0);
+        long id = (long) idHandle.get(secondAddress, 0);
+        float x = (float) xHandle.get(secondAddress, 0);
+        float y = (float) yHandle.get(secondAddress, 0);
+        float pressure = (float) pressureHandle.get(secondAddress, 0);
         data[i][j] = new SdlFinger(id, x, y, pressure);
       }
     }

@@ -14,15 +14,15 @@ public class SdlCommonEvent {
               ValueLayout.JAVA_INT.withName("reserved"),
               ValueLayout.JAVA_LONG.withName("timestamp"))
           .withName("SDL_CommonEvent");
-  /**
-   * Event type, shared with all events
-   */
+
+  /** Event type, shared with all events */
   @Getter int type;
+
   @Getter long reserved;
-  /**
-   * (Unsigned Int64) In nanoseconds, populated using SDL_GetTicksNS()
-   */
+
+  /** (Unsigned Int64) In nanoseconds, populated using SDL_GetTicksNS() */
   @Getter long timestamp;
+
   private static final VarHandle typeHandle =
       objectLayout.varHandle(MemoryLayout.PathElement.groupElement("type"));
   private static final VarHandle reservedHandle =
@@ -32,9 +32,9 @@ public class SdlCommonEvent {
 
   public static SdlCommonEvent getEventFromMemorySegment(MemorySegment segment) {
     SdlCommonEvent retEvent = new SdlCommonEvent();
-    retEvent.type = (int) typeHandle.get(segment,0);
-    retEvent.reserved = (int) reservedHandle.get(segment,0);
-    retEvent.timestamp = (long) timestampHandle.get(segment,0);
+    retEvent.type = (int) typeHandle.get(segment, 0);
+    retEvent.reserved = (int) reservedHandle.get(segment, 0);
+    retEvent.timestamp = (long) timestampHandle.get(segment, 0);
     return retEvent;
   }
 }

@@ -223,9 +223,11 @@ public class SdlHaptic {
 
   /**
    * Create a new haptic effect on a specified device.
+   *
    * @param haptic An SdlHapticDevice to create the effect on.
    * @param effect An SdlHapticEffect object containing the properties of the effect to create.
-   * @return Returns the Id of the effect on success or -1 on failure; call SdlError.getError() for more information.
+   * @return Returns the Id of the effect on success or -1 on failure; call SdlError.getError() for
+   *     more information.
    * @throws Throwable
    */
   public int createHapticEffect(SdlHapticDevice haptic, SdlHapticEffect effect) throws Throwable {
@@ -234,151 +236,183 @@ public class SdlHaptic {
 
   /**
    * Update the properties of an effect.
+   *
    * @param haptic The SdlHapticDevice that has the effect.
    * @param effect The identifier of the effect to update.
    * @param data An SdlHapticEffect object containing the new effect properties to use.
-   * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+   * @return Returns true on success or false on failure; call SdlError.getError() for more
+   *     information.
    * @throws Throwable
    */
-  public boolean updateHapticEffect(SdlHapticDevice haptic, int effect, SdlHapticEffect data) throws Throwable{
-    return SdlFuncs.updateHapticEffect(haptic.getAddress(),effect,data.getMemorySegment());
+  public boolean updateHapticEffect(SdlHapticDevice haptic, int effect, SdlHapticEffect data)
+      throws Throwable {
+    return SdlFuncs.updateHapticEffect(haptic.getAddress(), effect, data.getMemorySegment());
   }
 
   /**
    * Run the haptic effect on its associated haptic device.
+   *
    * @param haptic The SdlHapticDevice to run the effect on.
    * @param effect The Id of the haptic effect to run.
-   * @param iterations The number of iterations to run the effect; use SDL_HAPTIC_INFINITY to repeat forever.
-   * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+   * @param iterations The number of iterations to run the effect; use SDL_HAPTIC_INFINITY to repeat
+   *     forever.
+   * @return Returns true on success or false on failure; call SdlError.getError() for more
+   *     information.
    * @throws Throwable
    */
-  public boolean runHapticEffect(SdlHapticDevice haptic, int effect, int iterations) throws Throwable {
-    return SdlFuncs.runHapticEffect(haptic.getAddress(),effect,iterations);
+  public boolean runHapticEffect(SdlHapticDevice haptic, int effect, int iterations)
+      throws Throwable {
+    return SdlFuncs.runHapticEffect(haptic.getAddress(), effect, iterations);
   }
 
   /**
    * Stop the haptic effect on its associated haptic device.
+   *
    * @param haptic The SdlHapticDevice to stop the effect on.
    * @param effect The Id of the haptic effect to stop.
-   * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+   * @return Returns true on success or false on failure; call SdlError.getError() for more
+   *     information.
    * @throws Throwable
    */
-  public boolean stopHapticEffect(SdlHapticDevice haptic, int effect) throws Throwable{
-    return SdlFuncs.stopHapticEffect(haptic.getAddress(),effect);
+  public boolean stopHapticEffect(SdlHapticDevice haptic, int effect) throws Throwable {
+    return SdlFuncs.stopHapticEffect(haptic.getAddress(), effect);
   }
 
   /**
    * Destroy a haptic effect on the device.
+   *
    * @param haptic the SdlHapticDevice to destroy the effect on.
    * @param effect the Id of the haptic effect to destroy.
    * @throws Throwable
    */
-  public void destroyHapticEffect(SdlHapticDevice haptic, int effect) throws Throwable{
-    SdlFuncs.destroyHapticEffect(haptic.getAddress(),effect);
+  public void destroyHapticEffect(SdlHapticDevice haptic, int effect) throws Throwable {
+    SdlFuncs.destroyHapticEffect(haptic.getAddress(), effect);
   }
 
   /**
    * Get the status of the current effect on the specified haptic device.
+   *
    * @param haptic The SdlHapticDevice to query for the effect status on.
    * @param effect The Id of the haptic effect to query its status.
-   * @return Returns true if it is playing, false if it isn't playing or haptic status isn't supported.
+   * @return Returns true if it is playing, false if it isn't playing or haptic status isn't
+   *     supported.
    * @throws Throwable
    */
-  public synchronized boolean getHapticEffectStatus(SdlHapticDevice haptic, int effect) throws Throwable{
-    return SdlFuncs.getHapticEffectStatus(haptic.getAddress(),effect);
+  public synchronized boolean getHapticEffectStatus(SdlHapticDevice haptic, int effect)
+      throws Throwable {
+    return SdlFuncs.getHapticEffectStatus(haptic.getAddress(), effect);
   }
 
   /**
    * Set the global gain of the specified haptic device.
+   *
    * @param haptic The SdlHapticDevice to set the gain on.
    * @param gain value to set the gain to, should be between 0 and 100 (0 - 100).
-   * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+   * @return Returns true on success or false on failure; call SdlError.getError() for more
+   *     information.
    * @throws Throwable
    */
-  public synchronized boolean setHapticGain(SdlHapticDevice haptic, int gain) throws Throwable{
-    return SdlFuncs.setHapticGain(haptic.getAddress(),gain);
+  public synchronized boolean setHapticGain(SdlHapticDevice haptic, int gain) throws Throwable {
+    return SdlFuncs.setHapticGain(haptic.getAddress(), gain);
   }
 
   /**
    * Set the global autocenter of the device.
+   *
    * @param haptic The SdlHapticDevice to set autocentering on.
    * @param autocenter value to set autocenter to (0-100).
-   * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+   * @return Returns true on success or false on failure; call SdlError.getError() for more
+   *     information.
    * @throws Throwable
    */
-  public synchronized boolean setHapticAutocenter(SdlHapticDevice haptic, int autocenter) throws Throwable{
-    return SdlFuncs.setHapticAutocenter(haptic.getAddress(),autocenter);
+  public synchronized boolean setHapticAutocenter(SdlHapticDevice haptic, int autocenter)
+      throws Throwable {
+    return SdlFuncs.setHapticAutocenter(haptic.getAddress(), autocenter);
   }
 
   /**
    * Pause a haptic device.
+   *
    * @param haptic The SdlHapticDevice to pause.
-   * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+   * @return Returns true on success or false on failure; call SdlError.getError() for more
+   *     information.
    * @throws Throwable
    */
-  public synchronized  boolean pauseHaptic(SdlHapticDevice haptic) throws Throwable{
+  public synchronized boolean pauseHaptic(SdlHapticDevice haptic) throws Throwable {
     return SdlFuncs.pauseHaptic(haptic.getAddress());
   }
 
   /**
    * Resume a haptic device.
+   *
    * @param haptic The SdlHapticDevice to unpause.
-   * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+   * @return Returns true on success or false on failure; call SdlError.getError() for more
+   *     information.
    * @throws Throwable
    */
-  public synchronized boolean resumeHaptic(SdlHapticDevice haptic) throws Throwable{
+  public synchronized boolean resumeHaptic(SdlHapticDevice haptic) throws Throwable {
     return SdlFuncs.resumeHaptic(haptic.getAddress());
   }
 
   /**
    * Stop all the currently playing effects on a haptic device.
+   *
    * @param haptic The SdlHapticDevice to stop.
-   * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+   * @return Returns true on success or false on failure; call SdlError.getError() for more
+   *     information.
    * @throws Throwable
    */
-  public synchronized boolean stopHapticEffects(SdlHapticDevice haptic) throws Throwable{
+  public synchronized boolean stopHapticEffects(SdlHapticDevice haptic) throws Throwable {
     return SdlFuncs.stopHapticEffects(haptic.getAddress());
   }
 
   /**
    * Check whether rumble is supported on a haptic device.
+   *
    * @param haptic haptic device to check for rumble support.
    * @return Returns true if the effect is supported or false if it isn't.
    * @throws Throwable
    */
-  public synchronized boolean hapticRumbleSupported(SdlHapticDevice haptic) throws Throwable{
+  public synchronized boolean hapticRumbleSupported(SdlHapticDevice haptic) throws Throwable {
     return SdlFuncs.hapticRumbleSupported(haptic.getAddress());
   }
 
   /**
    * Initialize a haptic device for simple rumble playback.
+   *
    * @param haptic The haptic device to initialize for simple rumble playback.
-   * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+   * @return Returns true on success or false on failure; call SdlError.getError() for more
+   *     information.
    * @throws Throwable
    */
-  public synchronized boolean initHapticRumble(SdlHapticDevice haptic) throws Throwable{
+  public synchronized boolean initHapticRumble(SdlHapticDevice haptic) throws Throwable {
     return SdlFuncs.initHapticRumble(haptic.getAddress());
   }
 
   /**
    * Run a simple rumble effect on a haptic device.
+   *
    * @param haptic The haptic device to play the rumble effect on.
    * @param strength Strength of the rumble to play as a 0-1 float value.
    * @param length Length of the rumble to play in milliseconds.
-   * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+   * @return Returns true on success or false on failure; call SdlError.getError() for more
+   *     information.
    * @throws Throwable
    */
-  public synchronized boolean playHapticRumble(SdlHapticDevice haptic, int strength, int length) throws Throwable{
-    return SdlFuncs.playHapticRumble(haptic.getAddress(),strength,length);
+  public synchronized boolean playHapticRumble(SdlHapticDevice haptic, int strength, int length)
+      throws Throwable {
+    return SdlFuncs.playHapticRumble(haptic.getAddress(), strength, length);
   }
 
   /**
    * Stop the simple rumble on a haptic device.
+   *
    * @param haptic The haptic device to stop the rumble effect on.
-   * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+   * @return Returns true on success or false on failure; call SdlError.getError() for more
+   *     information.
    * @throws Throwable
    */
-  public synchronized boolean stopHapticRumble(SdlHapticDevice haptic) throws Throwable{
+  public synchronized boolean stopHapticRumble(SdlHapticDevice haptic) throws Throwable {
     return SdlFuncs.stopHapticRumble(haptic.getAddress());
   }
 }
