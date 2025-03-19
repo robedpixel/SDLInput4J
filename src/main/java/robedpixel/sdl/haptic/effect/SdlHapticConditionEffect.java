@@ -64,27 +64,33 @@ public class SdlHapticConditionEffect implements SdlHapticEffect {
   private static final VarHandle rightSatHandle =
       SdlHapticEffectMemoryLayout.layout.varHandle(
           MemoryLayout.PathElement.groupElement("condition"),
-          MemoryLayout.PathElement.groupElement("right_sat"));
+          MemoryLayout.PathElement.groupElement("right_sat"),
+          MemoryLayout.PathElement.sequenceElement());
   private static final VarHandle leftSatHandle =
       SdlHapticEffectMemoryLayout.layout.varHandle(
           MemoryLayout.PathElement.groupElement("condition"),
-          MemoryLayout.PathElement.groupElement("left_sat"));
+          MemoryLayout.PathElement.groupElement("left_sat"),
+          MemoryLayout.PathElement.sequenceElement());
   private static final VarHandle rightCoeffHandle =
       SdlHapticEffectMemoryLayout.layout.varHandle(
           MemoryLayout.PathElement.groupElement("condition"),
-          MemoryLayout.PathElement.groupElement("right_coeff"));
+          MemoryLayout.PathElement.groupElement("right_coeff"),
+          MemoryLayout.PathElement.sequenceElement());
   private static final VarHandle leftCoeffHandle =
       SdlHapticEffectMemoryLayout.layout.varHandle(
           MemoryLayout.PathElement.groupElement("condition"),
-          MemoryLayout.PathElement.groupElement("left_coeff"));
+          MemoryLayout.PathElement.groupElement("left_coeff"),
+          MemoryLayout.PathElement.sequenceElement());
   private static final VarHandle deadbandHandle =
       SdlHapticEffectMemoryLayout.layout.varHandle(
           MemoryLayout.PathElement.groupElement("condition"),
-          MemoryLayout.PathElement.groupElement("deadband"));
+          MemoryLayout.PathElement.groupElement("deadband"),
+          MemoryLayout.PathElement.sequenceElement());
   private static final VarHandle centerHandle =
       SdlHapticEffectMemoryLayout.layout.varHandle(
           MemoryLayout.PathElement.groupElement("condition"),
-          MemoryLayout.PathElement.groupElement("center"));
+          MemoryLayout.PathElement.groupElement("center"),
+          MemoryLayout.PathElement.sequenceElement());
 
   SdlHapticConditionEffect(SdlHapticConditionEffectBuilder builder) {
     this.type = builder.type;
@@ -116,22 +122,22 @@ public class SdlHapticConditionEffect implements SdlHapticEffect {
     buttonHandle.set(segment, 0, button);
     intervalHandle.set(segment, 0, interval);
     for (int i = 0; i < rightSat.length; i++) {
-      rightSatHandle.set(segment, i, rightSat[i]);
+      rightSatHandle.set(segment, 0, i, rightSat[i]);
     }
     for (int i = 0; i < leftSat.length; i++) {
-      leftSatHandle.set(segment, i, leftSat[i]);
+      leftSatHandle.set(segment, 0, i, leftSat[i]);
     }
     for (int i = 0; i < rightCoeff.length; i++) {
-      rightCoeffHandle.set(segment, i, rightCoeff[i]);
+      rightCoeffHandle.set(segment, 0, i, rightCoeff[i]);
     }
     for (int i = 0; i < leftCoeff.length; i++) {
-      leftCoeffHandle.set(segment, i, leftCoeff[i]);
+      leftCoeffHandle.set(segment, 0, i, leftCoeff[i]);
     }
     for (int i = 0; i < deadband.length; i++) {
-      deadbandHandle.set(segment, i, deadband[i]);
+      deadbandHandle.set(segment, 0, i, deadband[i]);
     }
     for (int i = 0; i < center.length; i++) {
-      centerHandle.set(segment, i, center[i]);
+      centerHandle.set(segment, 0, i, center[i]);
     }
   }
 

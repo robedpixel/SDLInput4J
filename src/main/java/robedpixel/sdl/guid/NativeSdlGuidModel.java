@@ -23,11 +23,11 @@ public class NativeSdlGuidModel {
     NativeSdlGuidModel returnObject = new NativeSdlGuidModel();
     VarHandle dataArray =
         NativeSdlGuidModel.getStructLayout()
-            .arrayElementVarHandle(
-                MemoryLayout.PathElement.sequenceElement(),
-                MemoryLayout.PathElement.groupElement("data"));
+            .varHandle(
+                MemoryLayout.PathElement.groupElement("data"),
+                MemoryLayout.PathElement.sequenceElement());
     for (int i = 0; i < 16; i++) {
-      returnObject.getData()[i] = (short) dataArray.get(segment, i);
+      returnObject.getData()[i] = (short) dataArray.get(segment, 0, i);
     }
     return returnObject;
   }

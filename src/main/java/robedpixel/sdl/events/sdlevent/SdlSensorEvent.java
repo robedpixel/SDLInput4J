@@ -48,8 +48,8 @@ public class SdlSensorEvent {
       objectLayout.varHandle(MemoryLayout.PathElement.groupElement("which"));
   private static final VarHandle dataHandle =
       objectLayout.varHandle(
-          MemoryLayout.PathElement.sequenceElement(),
-          MemoryLayout.PathElement.groupElement("data"));
+          MemoryLayout.PathElement.groupElement("data"),
+          MemoryLayout.PathElement.sequenceElement());
   private static final VarHandle sensorTimestampHandle =
       objectLayout.varHandle(MemoryLayout.PathElement.groupElement("sensor_timestamp"));
 
@@ -62,7 +62,7 @@ public class SdlSensorEvent {
     retEvent.which.setValue((int) whichHandle.get(segment, 0));
     retEvent.data = new float[6];
     for (int i = 0; i < retEvent.data.length; i++) {
-      retEvent.data[i] = (float) dataHandle.get(segment, i);
+      retEvent.data[i] = (float) dataHandle.get(segment, 0, i);
     }
     retEvent.sensorTimestamp = (long) sensorTimestampHandle.get(segment, 0);
     return retEvent;

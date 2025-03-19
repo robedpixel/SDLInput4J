@@ -38,11 +38,11 @@ class NativeSdlGuidFuncs {
     MemorySegment arrayAddress = localAllocator.allocateFrom(ValueLayout.JAVA_BYTE, byteArray);
     VarHandle dataArray =
         NativeSdlGuidModel.getStructLayout()
-            .arrayElementVarHandle(
-                MemoryLayout.PathElement.sequenceElement(),
-                MemoryLayout.PathElement.groupElement("data"));
+            .varHandle(
+                MemoryLayout.PathElement.groupElement("data"),
+                MemoryLayout.PathElement.sequenceElement());
     for (int i = 0; i < guid.getData().length; i++) {
-      dataArray.set(structAddress, i, guid.getData()[i]);
+      dataArray.set(structAddress, 0, i, guid.getData()[i]);
     }
     SDL_GUIDToString.invoke(structAddress, arrayAddress, chGuid);
     // Load in arrayAddress to chararray

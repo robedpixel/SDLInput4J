@@ -2,6 +2,7 @@ package org.example;
 
 import robedpixel.sdl.NativeSdlLib;
 import robedpixel.sdl.SdlInitFlagsFactory;
+import robedpixel.sdl.haptic.SdlHapticDirection;
 
 // TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -14,6 +15,7 @@ public class Main {
             SdlInitFlagsFactory.SDLFlagValue.SDL_INIT_GAMEPAD,
             SdlInitFlagsFactory.SDLFlagValue.SDL_INIT_VIDEO)) {
       System.out.println(sdlLib.isMainThread());
+      SdlHapticDirection direction = new SdlHapticDirection((byte) 5, 5, 5, 5);
     } catch (Throwable e) {
       throw new RuntimeException(e);
     }
