@@ -6,23 +6,23 @@ import java.util.List;
 import lombok.Getter;
 
 public enum SdlSensorType {
-  SDL_SENSOR_INVALID(-1),
   /** < Returned for an invalid sensor */
-  SDL_SENSOR_UNKNOWN(0),
+  SDL_SENSOR_INVALID(-1),
   /** < Unknown sensor type */
-  SDL_SENSOR_ACCEL(1),
+  SDL_SENSOR_UNKNOWN(0),
   /** < Accelerometer */
-  SDL_SENSOR_GYRO(2),
+  SDL_SENSOR_ACCEL(1),
   /** < Gyroscope */
-  SDL_SENSOR_ACCEL_L(3),
+  SDL_SENSOR_GYRO(2),
   /** < Accelerometer for left Joy-Con controller and Wii nunchuk */
-  SDL_SENSOR_GYRO_L(4),
+  SDL_SENSOR_ACCEL_L(3),
   /** < Gyroscope for left Joy-Con controller */
-  SDL_SENSOR_ACCEL_R(5),
+  SDL_SENSOR_GYRO_L(4),
   /** < Accelerometer for right Joy-Con controller */
+  SDL_SENSOR_ACCEL_R(5),
+  /** < Gyroscope for right Joy-Con controller */
   SDL_SENSOR_GYRO_R(6);
 
-  /** < Gyroscope for right Joy-Con controller */
   @Getter private final int value;
 
   SdlSensorType(final int value) {
