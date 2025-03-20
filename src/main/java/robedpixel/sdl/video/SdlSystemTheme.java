@@ -8,23 +8,9 @@ import lombok.Getter;
 public enum SdlSystemTheme {
 
   /** < Unknown system theme */
-  SDL_SYSTEM_THEME_UNKNOWN(0),
+  SDL_SYSTEM_THEME_UNKNOWN,
   /** < Light colored system theme */
-  SDL_SYSTEM_THEME_LIGHT(1),
+  SDL_SYSTEM_THEME_LIGHT,
   /** < Dark colored system theme */
-  SDL_SYSTEM_THEME_DARK(2);
-
-  /** < Plugged in, battery charged */
-  @Getter private final int value;
-
-  SdlSystemTheme(final int value) {
-    this.value = value;
-  }
-
-  private static final ImmutableMap<Integer, SdlSystemTheme> reverseLookup =
-      Maps.uniqueIndex(List.of(SdlSystemTheme.values()), SdlSystemTheme::getValue);
-
-  public static SdlSystemTheme fromInt(final int id) {
-    return reverseLookup.get(id);
-  }
+  SDL_SYSTEM_THEME_DARK;
 }

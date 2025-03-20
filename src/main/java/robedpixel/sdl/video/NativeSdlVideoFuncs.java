@@ -157,16 +157,16 @@ class NativeSdlVideoFuncs {
                 FunctionDescriptor.of(ValueLayout.JAVA_BOOLEAN));
   }
 
-  public int getNumVideoDrivers() throws Throwable {
+  public synchronized int getNumVideoDrivers() throws Throwable {
     return (int) SDL_GetNumVideoDrivers.invoke();
   }
 
-  public String getVideoDriver(int index) throws Throwable {
+  public synchronized String getVideoDriver(int index) throws Throwable {
     MemorySegment charAddress = (MemorySegment) SDL_GetVideoDriver.invoke(index);
     return charAddress.reinterpret(Integer.MAX_VALUE).getString(0);
   }
 
-  public String getCurrentVideoDriver() throws Throwable {
+  public synchronized String getCurrentVideoDriver() throws Throwable {
     MemorySegment charAddress = (MemorySegment) SDL_GetCurrentVideoDriver.invoke();
     if (charAddress == MemorySegment.NULL) {
       return null;
@@ -175,11 +175,11 @@ class NativeSdlVideoFuncs {
     }
   }
 
-  public int getSystemTheme() throws Throwable {
+  public synchronized int getSystemTheme() throws Throwable {
     return (int) SDL_GetSystemTheme.invoke();
   }
 
-  public SdlDisplayIdArray getDisplays() throws Throwable {
+  public synchronized SdlDisplayIdArray getDisplays() throws Throwable {
     MemorySegment temp = (MemorySegment) SDL_GetDisplays.invoke(tempIntAddress);
     if (temp == MemorySegment.NULL) {
       return null;
@@ -190,15 +190,15 @@ class NativeSdlVideoFuncs {
     }
   }
 
-  public int getPrimaryDisplay() throws Throwable {
+  public synchronized int getPrimaryDisplay() throws Throwable {
     return (int) SDL_GetPrimaryDisplay.invoke();
   }
 
-  public int getDisplayProperties(int displayId) throws Throwable {
+  public synchronized int getDisplayProperties(int displayId) throws Throwable {
     return (int) SDL_GetDisplayProperties.invoke(displayId);
   }
 
-  public String getDisplayName(int displayId) throws Throwable {
+  public synchronized String getDisplayName(int displayId) throws Throwable {
     MemorySegment charAddress = (MemorySegment) SDL_GetDisplayName.invoke(displayId);
     if (charAddress == MemorySegment.NULL) {
       return null;
@@ -207,28 +207,28 @@ class NativeSdlVideoFuncs {
     }
   }
 
-  public boolean getDisplayBounds(int displayId, MemorySegment rect) throws Throwable {
+  public synchronized boolean getDisplayBounds(int displayId, MemorySegment rect) throws Throwable {
     return (boolean) SDL_GetDisplayBounds.invoke(displayId, rect);
   }
 
-  public boolean getDisplayUsableBounds(int displayId, MemorySegment rect) throws Throwable {
+  public synchronized boolean getDisplayUsableBounds(int displayId, MemorySegment rect) throws Throwable {
     return (boolean) SDL_GetDisplayUsableBounds.invoke(displayId, rect);
   }
 
-  public int getNaturalDisplayOrientation(int displayId) throws Throwable {
+  public synchronized int getNaturalDisplayOrientation(int displayId) throws Throwable {
     return (int) SDL_GetNaturalDisplayOrientation.invoke(displayId);
   }
 
-  public int getCurrentDisplayOrientation(int displayId) throws Throwable {
+  public synchronized int getCurrentDisplayOrientation(int displayId) throws Throwable {
     return (int) SDL_GetCurrentDisplayOrientation.invoke(displayId);
   }
 
-  public float getDisplayContentScale(int displayId) throws Throwable {
+  public synchronized float getDisplayContentScale(int displayId) throws Throwable {
     return (float) SDL_GetDisplayContentScale.invoke(displayId);
   }
 
   // TODO: need test
-  public SdlDisplayModeArray getFullscreenDisplayModes(int displayId) throws Throwable {
+  public synchronized SdlDisplayModeArray getFullscreenDisplayModes(int displayId) throws Throwable {
     MemorySegment temp =
         (MemorySegment) SDL_GetFullscreenDisplayModes.invoke(displayId, tempIntAddress);
     if (temp == MemorySegment.NULL) {
@@ -240,7 +240,7 @@ class NativeSdlVideoFuncs {
     }
   }
 
-  public boolean getClosestFullscreenDisplayMode(
+  public synchronized boolean getClosestFullscreenDisplayMode(
       int displayId,
       int width,
       int height,
@@ -253,31 +253,31 @@ class NativeSdlVideoFuncs {
             displayId, width, height, refreshRate, includeHighDensityModes, closest);
   }
 
-  public MemorySegment getDesktopDisplayMode(int displayId) throws Throwable {
+  public synchronized MemorySegment getDesktopDisplayMode(int displayId) throws Throwable {
     return (MemorySegment) SDL_GetDesktopDisplayMode.invoke(displayId);
   }
 
-  public MemorySegment getCurrentDisplayMode(int displayId) throws Throwable {
+  public synchronized MemorySegment getCurrentDisplayMode(int displayId) throws Throwable {
     return (MemorySegment) SDL_GetCurrentDisplayMode.invoke(displayId);
   }
 
-  public int getDisplayForPoint(MemorySegment point) throws Throwable {
+  public synchronized int getDisplayForPoint(MemorySegment point) throws Throwable {
     return (int) SDL_GetDisplayForPoint.invoke(point);
   }
 
-  public int getDisplayForRect(MemorySegment rect) throws Throwable {
+  public synchronized int getDisplayForRect(MemorySegment rect) throws Throwable {
     return (int) SDL_GetDisplayForRect.invoke(rect);
   }
 
-  public boolean screenSaverEnabled() throws Throwable {
+  public synchronized boolean screenSaverEnabled() throws Throwable {
     return (boolean) SDL_ScreenSaverEnabled.invoke();
   }
 
-  public boolean enableScreenSaver() throws Throwable {
+  public synchronized boolean enableScreenSaver() throws Throwable {
     return (boolean) SDL_EnableScreenSaver.invoke();
   }
 
-  public boolean disableScreenSaver() throws Throwable {
+  public synchronized boolean disableScreenSaver() throws Throwable {
     return (boolean) SDL_DisableScreenSaver.invoke();
   }
 

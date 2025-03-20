@@ -2,212 +2,214 @@ package robedpixel.sdl.events;
 
 import lombok.Getter;
 
-// TODO: enumerate types
+
 public enum SdlEventType {
   SDL_EVENT_FIRST(0),
-  SDL_EVENT_QUIT(0x100),
   /** User-requested quit */
-  SDL_EVENT_TERMINATING(0x101),
+  SDL_EVENT_QUIT(0x100),
   /**
    * The application is being terminated by the OS. This event must be handled in a callback set
    * with SDL_AddEventWatch(). Called on iOS in applicationWillTerminate() Called on Android in
    * onDestroy()
    */
-  SDL_EVENT_LOW_MEMORY(0x102),
+  SDL_EVENT_TERMINATING(0x101),
   /**
    * < The application is low on memory, free memory if possible. This event must be handled in a
    * callback set with SDL_AddEventWatch(). Called on iOS in applicationDidReceiveMemoryWarning()
    * Called on Android in onTrimMemory()
    */
-  SDL_EVENT_WILL_ENTER_BACKGROUND(0x103),
+  SDL_EVENT_LOW_MEMORY(0x102),
   /**
    * < The application is about to enter the background. This event must be handled in a callback
    * set with SDL_AddEventWatch(). Called on iOS in applicationWillResignActive() Called on Android
    * in onPause()
    */
-  SDL_EVENT_DID_ENTER_BACKGROUND(0x104),
+  SDL_EVENT_WILL_ENTER_BACKGROUND(0x103),
   /**
    * < The application did enter the background and may not get CPU for some time. This event must
    * be handled in a callback set with SDL_AddEventWatch(). Called on iOS in
    * applicationDidEnterBackground() Called on Android in onPause()
    */
-  SDL_EVENT_WILL_ENTER_FOREGROUND(0x105),
+  SDL_EVENT_DID_ENTER_BACKGROUND(0x104),
   /**
    * < The application is about to enter the foreground. This event must be handled in a callback
    * set with SDL_AddEventWatch(). Called on iOS in applicationWillEnterForeground() Called on
    * Android in onResume()
    */
-  SDL_EVENT_DID_ENTER_FOREGROUND(0x106),
+  SDL_EVENT_WILL_ENTER_FOREGROUND(0x105),
   /**
    * < The application is now interactive. This event must be handled in a callback set with
    * SDL_AddEventWatch(). Called on iOS in applicationDidBecomeActive() Called on Android in
    * onResume()
    */
-  SDL_EVENT_LOCALE_CHANGED(0x107),
+  SDL_EVENT_DID_ENTER_FOREGROUND(0x106),
   /** < The user's locale preferences have changed. */
-  SDL_EVENT_SYSTEM_THEME_CHANGED(0x108),
+  SDL_EVENT_LOCALE_CHANGED(0x107),
   /** < The system theme changed */
+  SDL_EVENT_SYSTEM_THEME_CHANGED(0x108),
 
   /* Display events */
   /* 0x150 was SDL_DISPLAYEVENT, reserve the number for sdl2-compat */
-  SDL_EVENT_DISPLAY_ORIENTATION(0x151),
   /** < Display orientation has changed to data1 */
-  SDL_EVENT_DISPLAY_ADDED(0x152),
+  SDL_EVENT_DISPLAY_ORIENTATION(0x151),
   /** < Display has been added to the system */
-  SDL_EVENT_DISPLAY_REMOVED(0x153),
+  SDL_EVENT_DISPLAY_ADDED(0x152),
   /** < Display has been removed from the system */
-  SDL_EVENT_DISPLAY_MOVED(0x154),
+  SDL_EVENT_DISPLAY_REMOVED(0x153),
   /** < Display has changed position */
-  SDL_EVENT_DISPLAY_DESKTOP_MODE_CHANGED(0x155),
+  SDL_EVENT_DISPLAY_MOVED(0x154),
   /** < Display has changed desktop mode */
-  SDL_EVENT_DISPLAY_CURRENT_MODE_CHANGED(0x156),
+  SDL_EVENT_DISPLAY_DESKTOP_MODE_CHANGED(0x155),
   /** < Display has changed current mode */
-  SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED(0x157),
+  SDL_EVENT_DISPLAY_CURRENT_MODE_CHANGED(0x156),
   /** < Display has changed content scale */
+  SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED(0x157),
+
   SDL_EVENT_DISPLAY_FIRST(SDL_EVENT_DISPLAY_ORIENTATION.value),
   SDL_EVENT_DISPLAY_LAST(SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED.value),
 
   /* Window events */
   /* 0x200 was SDL_WINDOWEVENT, reserve the number for sdl2-compat */
   /* 0x201 was SDL_SYSWMEVENT, reserve the number for sdl2-compat */
-  SDL_EVENT_WINDOW_SHOWN(0x202),
   /** < Window has been shown */
-  SDL_EVENT_WINDOW_HIDDEN(0x203),
+  SDL_EVENT_WINDOW_SHOWN(0x202),
   /** < Window has been hidden */
-  SDL_EVENT_WINDOW_EXPOSED(0x204),
+  SDL_EVENT_WINDOW_HIDDEN(0x203),
   /**
    * < Window has been exposed and should be redrawn, and can be redrawn directly from event
    * watchers for this event
    */
-  SDL_EVENT_WINDOW_MOVED(0x205),
+  SDL_EVENT_WINDOW_EXPOSED(0x204),
   /** < Window has been moved to data1, data2 */
-  SDL_EVENT_WINDOW_RESIZED(0x206),
+  SDL_EVENT_WINDOW_MOVED(0x205),
   /** < Window has been resized to data1xdata2 */
-  SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED(0x207),
+  SDL_EVENT_WINDOW_RESIZED(0x206),
   /** < The pixel size of the window has changed to data1xdata2 */
-  SDL_EVENT_WINDOW_METAL_VIEW_RESIZED(0x208),
+  SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED(0x207),
   /** < The pixel size of a Metal view associated with the window has changed */
-  SDL_EVENT_WINDOW_MINIMIZED(0x209),
+  SDL_EVENT_WINDOW_METAL_VIEW_RESIZED(0x208),
   /** < Window has been minimized */
-  SDL_EVENT_WINDOW_MAXIMIZED(0x20a),
+  SDL_EVENT_WINDOW_MINIMIZED(0x209),
   /** < Window has been maximized */
-  SDL_EVENT_WINDOW_RESTORED(0x20b),
+  SDL_EVENT_WINDOW_MAXIMIZED(0x20a),
   /** < Window has been restored to normal size and position */
-  SDL_EVENT_WINDOW_MOUSE_ENTER(0x20c),
+  SDL_EVENT_WINDOW_RESTORED(0x20b),
   /** < Window has gained mouse focus */
-  SDL_EVENT_WINDOW_MOUSE_LEAVE(0x20d),
+  SDL_EVENT_WINDOW_MOUSE_ENTER(0x20c),
   /** < Window has lost mouse focus */
-  SDL_EVENT_WINDOW_FOCUS_GAINED(0x20e),
+  SDL_EVENT_WINDOW_MOUSE_LEAVE(0x20d),
   /** < Window has gained keyboard focus */
-  SDL_EVENT_WINDOW_FOCUS_LOST(0x20f),
+  SDL_EVENT_WINDOW_FOCUS_GAINED(0x20e),
   /** < Window has lost keyboard focus */
-  SDL_EVENT_WINDOW_CLOSE_REQUESTED(0x210),
+  SDL_EVENT_WINDOW_FOCUS_LOST(0x20f),
   /** < The window manager requests that the window be closed */
-  SDL_EVENT_WINDOW_HIT_TEST(0x211),
+  SDL_EVENT_WINDOW_CLOSE_REQUESTED(0x210),
   /** < Window had a hit test that wasn't SDL_HITTEST_NORMAL */
-  SDL_EVENT_WINDOW_ICCPROF_CHANGED(0x212),
+  SDL_EVENT_WINDOW_HIT_TEST(0x211),
   /** < The ICC profile of the window's display has changed */
-  SDL_EVENT_WINDOW_DISPLAY_CHANGED(0x213),
+  SDL_EVENT_WINDOW_ICCPROF_CHANGED(0x212),
   /** < Window has been moved to display data1 */
-  SDL_EVENT_WINDOW_DISPLAY_SCALE_CHANGED(0x214),
+  SDL_EVENT_WINDOW_DISPLAY_CHANGED(0x213),
   /** < Window display scale has been changed */
-  SDL_EVENT_WINDOW_SAFE_AREA_CHANGED(0x215),
+  SDL_EVENT_WINDOW_DISPLAY_SCALE_CHANGED(0x214),
   /** < The window safe area has been changed */
-  SDL_EVENT_WINDOW_OCCLUDED(0x216),
+  SDL_EVENT_WINDOW_SAFE_AREA_CHANGED(0x215),
   /** < The window has been occluded */
-  SDL_EVENT_WINDOW_ENTER_FULLSCREEN(0x217),
+  SDL_EVENT_WINDOW_OCCLUDED(0x216),
   /** < The window has entered fullscreen mode */
-  SDL_EVENT_WINDOW_LEAVE_FULLSCREEN(0x218),
+  SDL_EVENT_WINDOW_ENTER_FULLSCREEN(0x217),
   /** < The window has left fullscreen mode */
-  SDL_EVENT_WINDOW_DESTROYED(0x219),
+  SDL_EVENT_WINDOW_LEAVE_FULLSCREEN(0x218),
   /**
    * < The window with the associated ID is being or has been destroyed. If this message is being
    * handled in an event watcher, the window handle is still valid and can still be used to retrieve
    * any properties associated with the window. Otherwise, the handle has already been destroyed and
    * all resources associated with it are invalid
    */
-  SDL_EVENT_WINDOW_HDR_STATE_CHANGED(0x21a),
+  SDL_EVENT_WINDOW_DESTROYED(0x219),
   /** < Window HDR properties have changed */
+  SDL_EVENT_WINDOW_HDR_STATE_CHANGED(0x21a),
+
   SDL_EVENT_WINDOW_FIRST(SDL_EVENT_WINDOW_SHOWN.value),
   SDL_EVENT_WINDOW_LAST(SDL_EVENT_WINDOW_HDR_STATE_CHANGED.value),
 
   /* Keyboard events */
-  SDL_EVENT_KEY_DOWN(0x300),
   /** < Key pressed */
-  SDL_EVENT_KEY_UP(0x301),
+  SDL_EVENT_KEY_DOWN(0x300),
   /** < Key released */
-  SDL_EVENT_TEXT_EDITING(0x302),
+  SDL_EVENT_KEY_UP(0x301),
   /** < Keyboard text editing (composition) */
-  SDL_EVENT_TEXT_INPUT(0x303),
+  SDL_EVENT_TEXT_EDITING(0x302),
   /** < Keyboard text input */
-  SDL_EVENT_KEYMAP_CHANGED(0x304),
+  SDL_EVENT_TEXT_INPUT(0x303),
   /** < Keymap changed due to a system event such as an input language or keyboard layout change. */
-  SDL_EVENT_KEYBOARD_ADDED(0x305),
+  SDL_EVENT_KEYMAP_CHANGED(0x304),
   /** < A new keyboard has been inserted into the system */
-  SDL_EVENT_KEYBOARD_REMOVE(0x306),
+  SDL_EVENT_KEYBOARD_ADDED(0x305),
   /** < A keyboard has been removed */
-  SDL_EVENT_TEXT_EDITING_CANDIDATES(0x307),
+  SDL_EVENT_KEYBOARD_REMOVE(0x306),
   /** < Keyboard text editing candidates */
+  SDL_EVENT_TEXT_EDITING_CANDIDATES(0x307),
 
   /* Mouse events */
-  SDL_EVENT_MOUSE_MOTION(0x400),
   /** < Mouse moved */
-  SDL_EVENT_MOUSE_BUTTON_DOWN(0x401),
+  SDL_EVENT_MOUSE_MOTION(0x400),
   /** < Mouse button pressed */
-  SDL_EVENT_MOUSE_BUTTON_UP(0x402),
+  SDL_EVENT_MOUSE_BUTTON_DOWN(0x401),
   /** < Mouse button released */
-  SDL_EVENT_MOUSE_WHEEL(0x403),
+  SDL_EVENT_MOUSE_BUTTON_UP(0x402),
   /** < Mouse wheel motion */
-  SDL_EVENT_MOUSE_ADDED(0x404),
+  SDL_EVENT_MOUSE_WHEEL(0x403),
   /** < A new mouse has been inserted into the system */
-  SDL_EVENT_MOUSE_REMOVED(0x405),
+  SDL_EVENT_MOUSE_ADDED(0x404),
   /** < A mouse has been removed */
+  SDL_EVENT_MOUSE_REMOVED(0x405),
 
   /* Joystick events */
-  SDL_EVENT_JOYSTICK_AXIS_MOTION(0x600),
   /** < Joystick axis motion */
-  SDL_EVENT_JOYSTICK_BALL_MOTION(0x601),
+  SDL_EVENT_JOYSTICK_AXIS_MOTION(0x600),
   /** < Joystick trackball motion */
-  SDL_EVENT_JOYSTICK_HAT_MOTION(0x602),
+  SDL_EVENT_JOYSTICK_BALL_MOTION(0x601),
   /** < Joystick hat position change */
-  SDL_EVENT_JOYSTICK_BUTTON_DOWN(0x603),
+  SDL_EVENT_JOYSTICK_HAT_MOTION(0x602),
   /** < Joystick button pressed */
-  SDL_EVENT_JOYSTICK_BUTTON_UP(0x604),
+  SDL_EVENT_JOYSTICK_BUTTON_DOWN(0x603),
   /** < Joystick button released */
-  SDL_EVENT_JOYSTICK_ADDED(0x605),
+  SDL_EVENT_JOYSTICK_BUTTON_UP(0x604),
   /** < A new joystick has been inserted into the system */
-  SDL_EVENT_JOYSTICK_REMOVED(0x606),
+  SDL_EVENT_JOYSTICK_ADDED(0x605),
   /** < An opened joystick has been removed */
-  SDL_EVENT_JOYSTICK_BATTERY_UPDATED(0x607),
+  SDL_EVENT_JOYSTICK_REMOVED(0x606),
   /** < Joystick battery level change */
-  SDL_EVENT_JOYSTICK_UPDATE_COMPLETE(0x608),
+  SDL_EVENT_JOYSTICK_BATTERY_UPDATED(0x607),
   /** < Joystick update is complete */
+  SDL_EVENT_JOYSTICK_UPDATE_COMPLETE(0x608),
 
   /* Gamepad events */
-  SDL_EVENT_GAMEPAD_AXIS_MOTION(0x650),
   /** < Gamepad axis motion */
-  SDL_EVENT_GAMEPAD_BUTTON_DOWN(0x651),
+  SDL_EVENT_GAMEPAD_AXIS_MOTION(0x650),
   /** < Gamepad button pressed */
-  SDL_EVENT_GAMEPAD_BUTTON_UP(0x652),
+  SDL_EVENT_GAMEPAD_BUTTON_DOWN(0x651),
   /** < Gamepad button released */
-  SDL_EVENT_GAMEPAD_ADDED(0x653),
+  SDL_EVENT_GAMEPAD_BUTTON_UP(0x652),
   /** < A new gamepad has been inserted into the system */
-  SDL_EVENT_GAMEPAD_REMOVED(0x654),
+  SDL_EVENT_GAMEPAD_ADDED(0x653),
   /** < A gamepad has been removed */
-  SDL_EVENT_GAMEPAD_REMAPPED(0x655),
+  SDL_EVENT_GAMEPAD_REMOVED(0x654),
   /** < The gamepad mapping was updated */
-  SDL_EVENT_GAMEPAD_TOUCHPAD_DOWN(0x656),
+  SDL_EVENT_GAMEPAD_REMAPPED(0x655),
   /** < Gamepad touchpad was touched */
-  SDL_EVENT_GAMEPAD_TOUCHPAD_MOTION(0x657),
+  SDL_EVENT_GAMEPAD_TOUCHPAD_DOWN(0x656),
   /** < Gamepad touchpad finger was moved */
-  SDL_EVENT_GAMEPAD_TOUCHPAD_UP(0x658),
+  SDL_EVENT_GAMEPAD_TOUCHPAD_MOTION(0x657),
   /** < Gamepad touchpad finger was lifted */
-  SDL_EVENT_GAMEPAD_SENSOR_UPDATE(0x659),
+  SDL_EVENT_GAMEPAD_TOUCHPAD_UP(0x658),
   /** < Gamepad sensor was updated */
-  SDL_EVENT_GAMEPAD_UPDATE_COMPLETE(0x65a),
+  SDL_EVENT_GAMEPAD_SENSOR_UPDATE(0x659),
   /** < Gamepad update is complete */
-  SDL_EVENT_GAMEPAD_STEAM_HANDLE_UPDATED(0x65b),
+  SDL_EVENT_GAMEPAD_UPDATE_COMPLETE(0x65a),
   /** < Gamepad Steam handle has changed */
+  SDL_EVENT_GAMEPAD_STEAM_HANDLE_UPDATED(0x65b),
 
   /* Touch events */
   SDL_EVENT_FINGER_DOWN(0x700),
@@ -218,68 +220,68 @@ public enum SdlEventType {
   /* 0x800, 0x801, and 0x802 were the Gesture events from SDL2. Do not reuse these values! sdl2-compat needs them! */
 
   /* Clipboard events */
-  SDL_EVENT_CLIPBOARD_UPDATE(0x900),
   /** < The clipboard or primary selection changed */
+  SDL_EVENT_CLIPBOARD_UPDATE(0x900),
 
   /* Drag and drop events */
-  SDL_EVENT_DROP_FILE(0x1000),
   /** < The system requests a file open */
-  SDL_EVENT_DROP_TEXT(0x1001),
+  SDL_EVENT_DROP_FILE(0x1000),
   /** < text/plain drag-and-drop event */
-  SDL_EVENT_DROP_BEGIN(0x1002),
+  SDL_EVENT_DROP_TEXT(0x1001),
   /** < A new set of drops is beginning (NULL filename) */
-  SDL_EVENT_DROP_COMPLETE(0x1003),
+  SDL_EVENT_DROP_BEGIN(0x1002),
   /** < Current set of drops is now complete (NULL filename) */
-  SDL_EVENT_DROP_POSITION(0x1004),
+  SDL_EVENT_DROP_COMPLETE(0x1003),
   /** < Position while moving over the window */
+  SDL_EVENT_DROP_POSITION(0x1004),
 
   /* Audio hotplug events */
-  SDL_EVENT_AUDIO_DEVICE_ADDED(0x1100),
   /** < A new audio device is available */
-  SDL_EVENT_AUDIO_DEVICE_REMOVED(0x1101),
+  SDL_EVENT_AUDIO_DEVICE_ADDED(0x1100),
   /** < An audio device has been removed. */
-  SDL_EVENT_AUDIO_DEVICE_FORMAT_CHANGED(0x1102),
+  SDL_EVENT_AUDIO_DEVICE_REMOVED(0x1101),
   /** < An audio device's format has been changed by the system. */
+  SDL_EVENT_AUDIO_DEVICE_FORMAT_CHANGED(0x1102),
 
   /* Sensor events */
-  SDL_EVENT_SENSOR_UPDATE(0x1200),
   /** < A sensor was updated */
+  SDL_EVENT_SENSOR_UPDATE(0x1200),
 
   /* Pressure-sensitive pen events */
-  SDL_EVENT_PEN_PROXIMITY_IN(0x1300),
   /** < Pressure-sensitive pen has become available */
-  SDL_EVENT_PEN_PROXIMITY_OUT(0x1301),
+  SDL_EVENT_PEN_PROXIMITY_IN(0x1300),
   /** < Pressure-sensitive pen has become unavailable */
-  SDL_EVENT_PEN_DOWN(0x1302),
+  SDL_EVENT_PEN_PROXIMITY_OUT(0x1301),
   /** < Pressure-sensitive pen touched drawing surface */
-  SDL_EVENT_PEN_UP(0x1303),
+  SDL_EVENT_PEN_DOWN(0x1302),
   /** < Pressure-sensitive pen stopped touching drawing surface */
-  SDL_EVENT_PEN_BUTTON_DOWN(0x1304),
+  SDL_EVENT_PEN_UP(0x1303),
   /** < Pressure-sensitive pen button pressed */
-  SDL_EVENT_PEN_BUTTON_UP(0x1305),
+  SDL_EVENT_PEN_BUTTON_DOWN(0x1304),
   /** < Pressure-sensitive pen button released */
-  SDL_EVENT_PEN_MOTION(0x1306),
+  SDL_EVENT_PEN_BUTTON_UP(0x1305),
   /** < Pressure-sensitive pen is moving on the tablet */
-  SDL_EVENT_PEN_AXIS(0x1307),
+  SDL_EVENT_PEN_MOTION(0x1306),
   /** < Pressure-sensitive pen angle/pressure/etc changed */
+  SDL_EVENT_PEN_AXIS(0x1307),
 
   /* Camera hotplug events */
-  SDL_EVENT_CAMERA_DEVICE_ADDED(0x1400),
   /** < A new camera device is available */
-  SDL_EVENT_CAMERA_DEVICE_REMOVED(0x1401),
+  SDL_EVENT_CAMERA_DEVICE_ADDED(0x1400),
   /** < A camera device has been removed. */
-  SDL_EVENT_CAMERA_DEVICE_APPROVED(0x1402),
+  SDL_EVENT_CAMERA_DEVICE_REMOVED(0x1401),
   /** < A camera device has been approved for use by the user. */
-  SDL_EVENT_CAMERA_DEVICE_DENIED(0x1403),
+  SDL_EVENT_CAMERA_DEVICE_APPROVED(0x1402),
   /** < A camera device has been denied for use by the user. */
+  SDL_EVENT_CAMERA_DEVICE_DENIED(0x1403),
 
   /* Render events */
-  SDL_EVENT_RENDER_TARGETS_RESET(0x2000),
   /** < The render targets have been reset and their contents need to be updated */
-  SDL_EVENT_RENDER_DEVICE_RESET(0x2001),
+  SDL_EVENT_RENDER_TARGETS_RESET(0x2000),
   /** < The device has been reset and all textures need to be recreated */
-  SDL_EVENT_RENDER_DEVICE_LOST(0x2002),
+  SDL_EVENT_RENDER_DEVICE_RESET(0x2001),
   /** < The device has been lost and can't be recovered. */
+  SDL_EVENT_RENDER_DEVICE_LOST(0x2002),
 
   /* Reserved events for private platforms */
   SDL_EVENT_PRIVATE0(0x4000),
@@ -288,8 +290,8 @@ public enum SdlEventType {
   SDL_EVENT_PRIVATE3(0x4003),
 
   /* Internal events */
-  SDL_EVENT_POLL_SENTINEL(0x7F00),
   /** < Signals the end of an event poll cycle */
+  SDL_EVENT_POLL_SENTINEL(0x7F00),
 
   /**
    * Events SDL_EVENT_USER through SDL_EVENT_LAST are for your use, and should be allocated with
@@ -300,7 +302,7 @@ public enum SdlEventType {
   /** This last event is only for bounding internal arrays */
   SDL_EVENT_LAST(0xFFFF),
 
-  /* This just makes sure the enum is the size of Uint32 */
+  /** This just makes sure the enum is the size of Uint32 */
   SDL_EVENT_ENUM_PADDING(0x7FFFFFFF);
   @Getter private final int value;
 

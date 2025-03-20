@@ -9,17 +9,18 @@ public abstract class SdlMainThreadCallback implements AutoCloseable {
   @Getter private final Arena callbackAllocator = Arena.ofConfined();
   @Getter private final MemorySegment userData;
   @Getter MemorySegment callbackAddress;
+  private static final FunctionDescriptor callbackHandleDescriptor =
+      FunctionDescriptor.ofVoid(ValueLayout.ADDRESS);
+  private final MethodHandle callbackHandle;
 
   public SdlMainThreadCallback(MemorySegment userData) {
     this.userData = userData;
-    FunctionDescriptor callbackHandleDescriptor = FunctionDescriptor.ofVoid(ValueLayout.ADDRESS);
-    MethodHandle callbackHandle;
     try {
       callbackHandle =
           MethodHandles.publicLookup()
               .bind(this, "callback", callbackHandleDescriptor.toMethodType());
     } catch (Exception e) {
-      throw new AssertionError("Problem creating callback handle", e);
+      throw new AssertionError("Error creating callback handle", e);
     }
     callbackAddress =
         Linker.nativeLinker()

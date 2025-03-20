@@ -49,11 +49,11 @@ public class SdlVideo {
   /**
    * Get the current system theme.
    *
-   * @return Returns the current system theme, light, dark, or unknown.
+   * @return Returns the current system theme as an ordinal of SdlSystemTheme, light, dark, or unknown.
    * @throws Throwable
    */
-  public SdlSystemTheme getSystemTheme() throws Throwable {
-    return SdlSystemTheme.fromInt(SdlFuncs.getSystemTheme());
+  public int getSystemTheme() throws Throwable {
+    return SdlFuncs.getSystemTheme();
   }
 
   /**
@@ -137,28 +137,27 @@ public class SdlVideo {
    * Get the orientation of a display when it is unrotated.
    *
    * @param displayId The instance Id of the display to query.
-   * @return Returns the SDL_DisplayOrientation value of the display, or SDL_ORIENTATION_UNKNOWN if
+   * @return Returns the SDLDisplayOrientation ordinal value of the display, or SDL_ORIENTATION_UNKNOWN if
    *     it isn't available.
    * @throws Throwable
    */
-  public SdlDisplayOrientation getNaturalDisplayOrientation(SdlDisplayId displayId)
+  public int getNaturalDisplayOrientation(SdlDisplayId displayId)
       throws Throwable {
-    return SdlDisplayOrientation.fromInt(
-        SdlFuncs.getNaturalDisplayOrientation(displayId.getValue()));
+    return
+        SdlFuncs.getNaturalDisplayOrientation(displayId.getValue());
   }
 
   /**
    * Get the orientation of a display.
    *
    * @param displayId The instance Id of the display to query.
-   * @return Returns the SDL_DisplayOrientation value of the display, or SDL_ORIENTATION_UNKNOWN if
+   * @return Returns the SDLDisplayOrientation ordinal value of the display, or SDL_ORIENTATION_UNKNOWN if
    *     it isn't available.
    * @throws Throwable
    */
-  public SdlDisplayOrientation getCurrentDisplayOrientation(SdlDisplayId displayId)
+  public int getCurrentDisplayOrientation(SdlDisplayId displayId)
       throws Throwable {
-    return SdlDisplayOrientation.fromInt(
-        SdlFuncs.getCurrentDisplayOrientation(displayId.getValue()));
+        return SdlFuncs.getCurrentDisplayOrientation(displayId.getValue());
   }
 
   /**
@@ -278,7 +277,7 @@ public class SdlVideo {
    */
   public SdlDisplayId getDisplayForRect(SdlRectModel rect) throws Throwable {
     SdlDisplayId returnObject = new SdlDisplayId();
-    returnObject.setValue(SdlFuncs.getDisplayForPoint(rect.getDataAddress()));
+    returnObject.setValue(SdlFuncs.getDisplayForRect(rect.getDataAddress()));
     return returnObject;
   }
 
