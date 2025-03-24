@@ -22,7 +22,7 @@ public class SdlTouch {
   /**
    * Get the touch device name as reported from the driver.
    *
-   * @param touchId the touch device instance Id.
+   * @param touchId the touch device instance ID.
    * @return Returns touch device name, or null on failure; call SdlError.getError() for more
    *     information.
    */
@@ -33,7 +33,7 @@ public class SdlTouch {
   /**
    * Get the type of the given touch device.
    *
-   * @param touchId the Id of a touch device.
+   * @param touchId the ID of a touch device.
    * @return Returns touch device type.
    */
   public SdlTouchDeviceType getTouchDeviceType(SdlTouchId touchId) throws Throwable {
@@ -43,7 +43,7 @@ public class SdlTouch {
   /**
    * Get a list of active fingers for a given touch device.
    *
-   * @param touchId The Id of a touch device.
+   * @param touchId The ID of a touch device.
    * @return Returns a 2d array of SdlFinger objects or nullptr on failure; call SdlError.getError()
    *     for more information.
    * @throws Throwable

@@ -20,7 +20,6 @@ public enum SdlPowerState {
   /** < Plugged in, battery charged */
   SDL_POWERSTATE_CHARGED(4);
 
-
   @Getter private final int value;
 
   SdlPowerState(final int value) {

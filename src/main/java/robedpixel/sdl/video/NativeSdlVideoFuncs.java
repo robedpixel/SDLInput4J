@@ -211,7 +211,8 @@ class NativeSdlVideoFuncs {
     return (boolean) SDL_GetDisplayBounds.invoke(displayId, rect);
   }
 
-  public synchronized boolean getDisplayUsableBounds(int displayId, MemorySegment rect) throws Throwable {
+  public synchronized boolean getDisplayUsableBounds(int displayId, MemorySegment rect)
+      throws Throwable {
     return (boolean) SDL_GetDisplayUsableBounds.invoke(displayId, rect);
   }
 
@@ -228,7 +229,8 @@ class NativeSdlVideoFuncs {
   }
 
   // TODO: need test
-  public synchronized SdlDisplayModeArray getFullscreenDisplayModes(int displayId) throws Throwable {
+  public synchronized SdlDisplayModeArray getFullscreenDisplayModes(int displayId)
+      throws Throwable {
     MemorySegment temp =
         (MemorySegment) SDL_GetFullscreenDisplayModes.invoke(displayId, tempIntAddress);
     if (temp == MemorySegment.NULL) {

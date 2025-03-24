@@ -2,7 +2,6 @@ package robedpixel.sdl.guid;
 
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
 import java.nio.charset.StandardCharsets;
 
 class NativeSdlGuidFuncs {
@@ -11,8 +10,6 @@ class NativeSdlGuidFuncs {
   private final MethodHandle SDL_GUIDToString;
   private final MethodHandle SDL_StringToGUID;
   private final Arena objectAllocator = Arena.ofAuto();
-  private MemorySegment structAddress =
-      objectAllocator.allocate(NativeSdlGuidModel.getStructLayout());
 
   public NativeSdlGuidFuncs(Arena allocator) {
     SymbolLookup library = SymbolLookup.libraryLookup("SDL3", allocator);
@@ -31,25 +28,15 @@ class NativeSdlGuidFuncs {
                 FunctionDescriptor.of(NativeSdlGuidModel.getStructLayout(), ValueLayout.ADDRESS));
   }
 
-  // TODO: test, may not be correct
-  public synchronized String guidToString(Arena localAllocator, NativeSdlGuidModel guid, int chGuid)
-      throws Throwable {
-    byte[] byteArray = new byte[chGuid];
-    MemorySegment arrayAddress = localAllocator.allocateFrom(ValueLayout.JAVA_BYTE, byteArray);
-    VarHandle dataArray =
-        NativeSdlGuidModel.getStructLayout()
-            .varHandle(
-                MemoryLayout.PathElement.groupElement("data"),
-                MemoryLayout.PathElement.sequenceElement());
-    for (int i = 0; i < guid.getData().length; i++) {
-      dataArray.set(structAddress, 0, i, guid.getData()[i]);
-    }
-    SDL_GUIDToString.invoke(structAddress, arrayAddress, chGuid);
+  public synchronized String guidToString(
+      Arena localAllocator, NativeSdlGuidModel guid, SdlGuidByteArray byteArray) throws Throwable {
+    SDL_GUIDToString.invoke(
+        guid.getDataAddress(), byteArray.getDataAddress(), byteArray.getArrayLength());
     // Load in arrayAddress to chararray
-    for (int i = 0; i < chGuid; i++) {
-      byteArray[i] = arrayAddress.getAtIndex(ValueLayout.JAVA_BYTE, i);
+    for (int i = 0; i < byteArray.getArrayLength(); i++) {
+      byteArray.setData(i, byteArray.getDataAddress().getAtIndex(ValueLayout.JAVA_BYTE, i));
     }
-    return new String(byteArray, StandardCharsets.US_ASCII);
+    return byteArray.getStringFromByteArray(StandardCharsets.US_ASCII);
   }
 
   // TODO: test, may not be correct

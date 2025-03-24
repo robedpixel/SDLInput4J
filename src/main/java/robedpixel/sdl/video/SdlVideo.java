@@ -49,7 +49,8 @@ public class SdlVideo {
   /**
    * Get the current system theme.
    *
-   * @return Returns the current system theme as an ordinal of SdlSystemTheme, light, dark, or unknown.
+   * @return Returns the current system theme as an ordinal of SdlSystemTheme, light, dark, or
+   *     unknown.
    * @throws Throwable
    */
   public int getSystemTheme() throws Throwable {
@@ -109,7 +110,7 @@ public class SdlVideo {
   /**
    * Get the desktop area represented by a display.
    *
-   * @param displayId The instance Id of the display to query.
+   * @param displayId The instance ID of the display to query.
    * @param rect the SdlRectModel filled in with the display bounds.
    * @return Returns true on success or false on failure; call SdlError.getError() for more
    *     information.
@@ -122,7 +123,7 @@ public class SdlVideo {
   /**
    * Get the usable desktop area represented by a display, in screen coordinates.
    *
-   * @param displayId The instance Id of the display to query.
+   * @param displayId The instance ID of the display to query.
    * @param rect the SdlRectModel filled in with the display bounds.
    * @return Returns true on success or false on failure; call SdlError.getError() for more
    *     information.
@@ -136,34 +137,31 @@ public class SdlVideo {
   /**
    * Get the orientation of a display when it is unrotated.
    *
-   * @param displayId The instance Id of the display to query.
-   * @return Returns the SDLDisplayOrientation ordinal value of the display, or SDL_ORIENTATION_UNKNOWN if
-   *     it isn't available.
+   * @param displayId The instance ID of the display to query.
+   * @return Returns the SDLDisplayOrientation ordinal value of the display, or
+   *     SDL_ORIENTATION_UNKNOWN if it isn't available.
    * @throws Throwable
    */
-  public int getNaturalDisplayOrientation(SdlDisplayId displayId)
-      throws Throwable {
-    return
-        SdlFuncs.getNaturalDisplayOrientation(displayId.getValue());
+  public int getNaturalDisplayOrientation(SdlDisplayId displayId) throws Throwable {
+    return SdlFuncs.getNaturalDisplayOrientation(displayId.getValue());
   }
 
   /**
    * Get the orientation of a display.
    *
-   * @param displayId The instance Id of the display to query.
-   * @return Returns the SDLDisplayOrientation ordinal value of the display, or SDL_ORIENTATION_UNKNOWN if
-   *     it isn't available.
+   * @param displayId The instance ID of the display to query.
+   * @return Returns the SDLDisplayOrientation ordinal value of the display, or
+   *     SDL_ORIENTATION_UNKNOWN if it isn't available.
    * @throws Throwable
    */
-  public int getCurrentDisplayOrientation(SdlDisplayId displayId)
-      throws Throwable {
-        return SdlFuncs.getCurrentDisplayOrientation(displayId.getValue());
+  public int getCurrentDisplayOrientation(SdlDisplayId displayId) throws Throwable {
+    return SdlFuncs.getCurrentDisplayOrientation(displayId.getValue());
   }
 
   /**
    * Get the content scale of a display.
    *
-   * @param displayId The instance Id of the display to query.
+   * @param displayId The instance ID of the display to query.
    * @return Returns the content scale of the display, or 0.0f on failure; call SdlError.getError()
    *     for more information.
    * @throws Throwable
@@ -175,7 +173,7 @@ public class SdlVideo {
   /**
    * Get a list of fullscreen display modes available on a display.
    *
-   * @param displayId the instance Id of the display to query.
+   * @param displayId the instance ID of the display to query.
    * @return Returns an array of display mode objects or null on failure; call SdlError.getError()
    *     for more information
    * @throws Throwable
@@ -187,7 +185,7 @@ public class SdlVideo {
   /**
    * Get the closest match to the requested display mode.
    *
-   * @param displayId The instance Id of the display to query.
+   * @param displayId The instance ID of the display to query.
    * @param width The width in pixels of the desired display mode.
    * @param height The height in pixels of the desired display mode.
    * @param refreshRate The refresh rate of the desired display mode, or 0.0f for the desktop
@@ -221,7 +219,7 @@ public class SdlVideo {
   /**
    * Get information about the desktop's display mode.
    *
-   * @param displayId The instance Id of the display to query.
+   * @param displayId The instance ID of the display to query.
    * @return Returns an object to the desktop display mode or null on failure; call
    *     SdlError.getError() for more information.
    * @throws Throwable
@@ -238,7 +236,7 @@ public class SdlVideo {
   /**
    * Get information about the current display mode.
    *
-   * @param displayId The instance Id of the display to query.
+   * @param displayId The instance ID of the display to query.
    * @return Returns an object to the current display mode or null on failure; call
    *     SdlError.getError() for more information.
    * @throws Throwable
@@ -256,7 +254,7 @@ public class SdlVideo {
    * Get the display containing a point.
    *
    * @param point The point to query
-   * @return Returns the instance Id of the display containing the point or 0 on failure; call
+   * @return Returns the instance ID of the display containing the point or 0 on failure; call
    *     SdlError.getError() for more information.
    * @throws Throwable
    */
@@ -270,7 +268,7 @@ public class SdlVideo {
    * Get the display primarily containing a rect.
    *
    * @param rect The rect to query.
-   * @return Returns the instance Id of the display entirely containing the rect or closest to the
+   * @return Returns the instance ID of the display entirely containing the rect or closest to the
    *     center of the rect on success or 0 on failure; call SdlError.getError() for more
    *     information.
    * @throws Throwable

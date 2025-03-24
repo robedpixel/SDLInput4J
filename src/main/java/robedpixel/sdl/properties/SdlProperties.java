@@ -199,7 +199,8 @@ public class SdlProperties {
    *
    * @param props The properties to query.
    * @param name The name of the property to query.
-   * @return Returns the SdlPropertyType ordinal of the property , or SDL_PROPERTY_TYPE_INVALID ordinal if it is not set.
+   * @return Returns the SdlPropertyType ordinal of the property , or SDL_PROPERTY_TYPE_INVALID
+   *     ordinal if it is not set.
    * @throws Throwable
    */
   public int getPropertyType(int props, String name) throws Throwable {

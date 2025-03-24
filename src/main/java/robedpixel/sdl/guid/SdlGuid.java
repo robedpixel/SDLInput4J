@@ -13,13 +13,13 @@ public class SdlGuid {
    * Get an ASCII string representation for a given SDL_GUID.
    *
    * @param guid The SdlGuid you wish to convert to string.
-   * @param chGuid The length of the returned String, should be at least 33
+   * @param buffer ByteArray to store the buffer
    * @return The converted ASCII string
    * @throws Throwable
    */
-  public String guidToString(NativeSdlGuidModel guid, int chGuid) throws Throwable {
+  public String guidToString(NativeSdlGuidModel guid, SdlGuidByteArray buffer) throws Throwable {
     try (Arena arena = Arena.ofConfined()) {
-      return SdlFuncs.guidToString(arena, guid, chGuid);
+      return SdlFuncs.guidToString(arena, guid, buffer);
     }
   }
 

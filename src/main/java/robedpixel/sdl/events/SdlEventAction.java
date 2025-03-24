@@ -1,6 +1,5 @@
 package robedpixel.sdl.events;
 
-
 public enum SdlEventAction {
   /** Add events to the back of the queue. */
   SDL_ADDEVENT,

@@ -38,12 +38,13 @@ class NativeSdlRectFuncs {
                     ValueLayout.ADDRESS));
   }
 
-  public synchronized boolean hasRectIntersection(MemorySegment A, MemorySegment B) throws Throwable {
+  public synchronized boolean hasRectIntersection(MemorySegment A, MemorySegment B)
+      throws Throwable {
     return (boolean) SDL_HasRectIntersection.invoke(A, B);
   }
 
-  public synchronized boolean getRectIntersection(MemorySegment A, MemorySegment B, MemorySegment result)
-      throws Throwable {
+  public synchronized boolean getRectIntersection(
+      MemorySegment A, MemorySegment B, MemorySegment result) throws Throwable {
     return (boolean) SDL_GetRectIntersection.invoke(A, B, result);
   }
 

@@ -234,7 +234,7 @@ class NativeSdlHapticFuncs {
     if (temp == MemorySegment.NULL) {
       return null;
     } else {
-      return temp.getString(0);
+      return temp.reinterpret(Integer.MAX_VALUE).getString(0);
     }
   }
 
@@ -255,7 +255,7 @@ class NativeSdlHapticFuncs {
     if (temp == MemorySegment.NULL) {
       return null;
     } else {
-      return temp.getString(0);
+      return temp.reinterpret(Integer.MAX_VALUE).getString(0);
     }
   }
 

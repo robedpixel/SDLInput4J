@@ -2,7 +2,6 @@ package robedpixel.sdl.events;
 
 import lombok.Getter;
 
-
 public enum SdlEventType {
   SDL_EVENT_FIRST(0),
   /** User-requested quit */
