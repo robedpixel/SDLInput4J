@@ -2,6 +2,9 @@ package robedpixel.sdl.keyboard;
 
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
+
+import robedpixel.sdl.rect.SdlRect;
+import robedpixel.sdl.rect.SdlRectModel;
 import robedpixel.sdl.video.SdlWindow;
 
 public class NativeSdlKeyboardFuncs {
@@ -35,7 +38,7 @@ public class NativeSdlKeyboardFuncs {
 
   private final Arena objectAllocator = Arena.ofAuto();
   private final MemorySegment tempIntAddress = objectAllocator.allocate(ValueLayout.JAVA_INT);
-
+  private final MemorySegment tempShortAddress = objectAllocator.allocate(ValueLayout.JAVA_SHORT);
   public NativeSdlKeyboardFuncs(Arena allocator) {
     SymbolLookup library = SymbolLookup.libraryLookup("SDL3", allocator);
     SDL_HasKeyboard =
@@ -241,22 +244,65 @@ public class NativeSdlKeyboardFuncs {
     return (int) SDL_GetKeyFromScancode.invoke(scanCode, modState, keyEvent);
   }
 
-  public int getScancodeFromKey(int key, MemorySegment modState) {}
+  public int getScancodeFromKey(int key, short modState) throws Throwable {
+    synchronized (addressMutex) {
+      tempShortAddress.set(ValueLayout.JAVA_SHORT, 0, modState);
+      return (int) SDL_GetScancodeFromKey.invoke(key, tempShortAddress);
+    }
+  }
 
-  // SDL_SetScancodeName
-  //        SDL_GetScancodeName
-  // SDL_GetScancodeFromName
-  //        SDL_GetKeyName
-  // SDL_GetKeyFromName
-  //        SDL_StartTextInput
-  // SDL_StartTextInputWithProperties
-  //        SDL_TextInputActive
-  // SDL_StopTextInput
-  //        SDL_ClearComposition
-  // SDL_SetTextInputArea
-  //        SDL_GetTextInputArea
-  // SDL_HasScreenKeyboardSupport
-  //        SDL_ScreenKeyboardShown
+  public boolean setScancodeName(Arena localAllocator, int scanCode,String name) throws Throwable {
+    return (boolean)SDL_SetScancodeName.invoke(scanCode,localAllocator.allocateFrom(name));
+  }
+  public String getScancodeName(int scanCode) throws Throwable {
+    MemorySegment charArrayAddress = (MemorySegment) SDL_GetScancodeName.invoke(scanCode);
+    if (charArrayAddress == MemorySegment.NULL) {
+      return null;
+    } else {
+      return charArrayAddress.reinterpret(Integer.MAX_VALUE).getString(0);
+    }
+  }
+  public int getScancodeFromName(Arena localAllocator,String name) throws Throwable {
+    return (int)SDL_GetScancodeFromName.invoke(localAllocator.allocateFrom(name));
+  }
+  public String getKeyName(int key) throws Throwable {
+      MemorySegment charArrayAddress = (MemorySegment) SDL_GetKeyName.invoke(key);
+      if (charArrayAddress == MemorySegment.NULL) {
+        return null;
+      } else {
+        return charArrayAddress.reinterpret(Integer.MAX_VALUE).getString(0);
+      }
+    }
+  public int getKeyFromName(Arena localAllocator,String name) throws Throwable {
+    return (int)SDL_GetKeyFromName.invoke(localAllocator.allocateFrom(name));
+  }
+  public boolean startTextInput(MemorySegment window) throws Throwable {
+    return (boolean) SDL_StartTextInput.invoke(window);
+  }
+  public boolean startTextInputWithProperties(MemorySegment window,int props) throws Throwable {
+    return (boolean) SDL_StartTextInputWithProperties.invoke(window,props);
+  }
+  public boolean textInputActive(MemorySegment window) throws Throwable {
+    return (boolean) SDL_TextInputActive.invoke(window);
+  }
+  public boolean stopTextInput(MemorySegment window) throws Throwable {
+    return (boolean) SDL_StopTextInput.invoke(window);
+  }
+  public boolean clearComposition(MemorySegment window) throws Throwable {
+    return (boolean) SDL_ClearComposition.invoke(window);
+  }
+  public boolean setTextInputArea(MemorySegment window, MemorySegment rect, int cursor) throws Throwable {
+    return (boolean) SDL_SetTextInputArea.invoke(window,rect,cursor);
+  }
+  public boolean getTextInputArea(MemorySegment window, MemorySegment rect, int cursor) throws Throwable {
+    return  (boolean) SDL_GetTextInputArea.invoke(window,rect,cursor);
+  }
+  public boolean hasScreenKeyboardSupport() throws Throwable {
+    return (boolean) SDL_HasScreenKeyboardSupport.invoke();
+  }
+  public boolean screenKeyboardShown(MemorySegment window) throws Throwable {
+    return (boolean) SDL_ScreenKeyboardShown.invoke(window);
+  }
   public static NativeSdlKeyboardFuncs getInstance(Arena allocator) {
     NativeSdlKeyboardFuncs result = INSTANCE;
     if (result == null) {

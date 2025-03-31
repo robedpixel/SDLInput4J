@@ -48,7 +48,7 @@ public class SdlRectModel {
     return model;
   }
 
-  void updateValues() {
+  public void updateValues() {
     data.x = (int) xHandle.get(dataAddress, 0);
     data.y = (int) yHandle.get(dataAddress, 0);
     data.width = (int) wHandle.get(dataAddress, 0);
