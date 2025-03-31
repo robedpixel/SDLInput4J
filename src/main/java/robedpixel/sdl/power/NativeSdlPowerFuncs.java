@@ -6,6 +6,7 @@ import java.lang.invoke.MethodHandle;
 class NativeSdlPowerFuncs {
   private static volatile NativeSdlPowerFuncs INSTANCE;
   private static final Object mutex = new Object();
+  private static final Object addressMutex = new Object();
   private final MethodHandle SDL_GetPowerInfo;
   private final Arena localAllocator = Arena.ofAuto();
   private final MemorySegment secondAddress = localAllocator.allocate(ValueLayout.JAVA_INT);
@@ -21,11 +22,13 @@ class NativeSdlPowerFuncs {
                     ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.ADDRESS));
   }
 
-  public synchronized void getPowerInfo(SdlPowerSnapshot sdlPowerSnapshot) throws Throwable {
-    int powerState = (int) SDL_GetPowerInfo.invoke(secondAddress, percentAddress);
-    sdlPowerSnapshot.setPowerState(powerState);
-    sdlPowerSnapshot.setSeconds(secondAddress.get(ValueLayout.JAVA_INT, 0));
-    sdlPowerSnapshot.setPercent(percentAddress.get(ValueLayout.JAVA_INT, 0));
+  public void getPowerInfo(SdlPowerSnapshot sdlPowerSnapshot) throws Throwable {
+    synchronized (addressMutex) {
+      int powerState = (int) SDL_GetPowerInfo.invoke(secondAddress, percentAddress);
+      sdlPowerSnapshot.setPowerState(powerState);
+      sdlPowerSnapshot.setSeconds(secondAddress.get(ValueLayout.JAVA_INT, 0));
+      sdlPowerSnapshot.setPercent(percentAddress.get(ValueLayout.JAVA_INT, 0));
+    }
   }
 
   public static NativeSdlPowerFuncs getInstance(Arena allocator) {

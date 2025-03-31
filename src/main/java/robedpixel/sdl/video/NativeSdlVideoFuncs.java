@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 class NativeSdlVideoFuncs {
   private static volatile NativeSdlVideoFuncs INSTANCE;
   private static final Object mutex = new Object();
+  private static final Object addressMutex = new Object();
   private final MethodHandle SDL_GetNumVideoDrivers;
   private final MethodHandle SDL_GetVideoDriver;
   private final MethodHandle SDL_GetCurrentVideoDriver;
@@ -179,14 +180,16 @@ class NativeSdlVideoFuncs {
     return (int) SDL_GetSystemTheme.invoke();
   }
 
-  public synchronized SdlDisplayIdArray getDisplays() throws Throwable {
-    MemorySegment temp = (MemorySegment) SDL_GetDisplays.invoke(tempIntAddress);
-    if (temp == MemorySegment.NULL) {
-      return null;
-    } else {
-      int arraySize = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
-      temp = temp.reinterpret(arraySize * ValueLayout.JAVA_INT.byteSize());
-      return new SdlDisplayIdArray(temp, arraySize);
+  public SdlDisplayIdArray getDisplays() throws Throwable {
+    synchronized (addressMutex) {
+      MemorySegment temp = (MemorySegment) SDL_GetDisplays.invoke(tempIntAddress);
+      if (temp == MemorySegment.NULL) {
+        return null;
+      } else {
+        int arraySize = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
+        temp = temp.reinterpret(arraySize * ValueLayout.JAVA_INT.byteSize());
+        return new SdlDisplayIdArray(temp, arraySize);
+      }
     }
   }
 
@@ -229,16 +232,17 @@ class NativeSdlVideoFuncs {
   }
 
   // TODO: need test
-  public synchronized SdlDisplayModeArray getFullscreenDisplayModes(int displayId)
-      throws Throwable {
-    MemorySegment temp =
-        (MemorySegment) SDL_GetFullscreenDisplayModes.invoke(displayId, tempIntAddress);
-    if (temp == MemorySegment.NULL) {
-      return null;
-    } else {
-      int arraySize = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
-      temp = temp.reinterpret(arraySize * ValueLayout.ADDRESS.byteSize());
-      return new SdlDisplayModeArray(temp, arraySize);
+  public SdlDisplayModeArray getFullscreenDisplayModes(int displayId) throws Throwable {
+    synchronized (addressMutex) {
+      MemorySegment temp =
+          (MemorySegment) SDL_GetFullscreenDisplayModes.invoke(displayId, tempIntAddress);
+      if (temp == MemorySegment.NULL) {
+        return null;
+      } else {
+        int arraySize = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
+        temp = temp.reinterpret(arraySize * ValueLayout.ADDRESS.byteSize());
+        return new SdlDisplayModeArray(temp, arraySize);
+      }
     }
   }
 

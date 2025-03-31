@@ -6,6 +6,7 @@ import java.lang.invoke.MethodHandle;
 class NativeSdlSensorsFuncs {
   private static volatile NativeSdlSensorsFuncs INSTANCE;
   private static final Object mutex = new Object();
+  private static final Object addressMutex = new Object();
   private final MethodHandle SDL_GetSensors;
   private final MethodHandle SDL_GetSensorNameForID;
   private final MethodHandle SDL_GetSensorTypeForID;
@@ -100,14 +101,16 @@ class NativeSdlSensorsFuncs {
                 library.find("SDL_UpdateSensors").orElseThrow(), FunctionDescriptor.ofVoid());
   }
 
-  public synchronized SdlSensorIdArray getSensors() throws Throwable {
-    MemorySegment temp = (MemorySegment) SDL_GetSensors.invoke(tempIntAddress);
-    if (temp == MemorySegment.NULL) {
-      return null;
-    } else {
-      int arraySize = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
-      temp = temp.reinterpret(arraySize * ValueLayout.JAVA_INT.byteSize());
-      return new SdlSensorIdArray(temp, arraySize);
+  public SdlSensorIdArray getSensors() throws Throwable {
+    synchronized (addressMutex) {
+      MemorySegment temp = (MemorySegment) SDL_GetSensors.invoke(tempIntAddress);
+      if (temp == MemorySegment.NULL) {
+        return null;
+      } else {
+        int arraySize = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
+        temp = temp.reinterpret(arraySize * ValueLayout.JAVA_INT.byteSize());
+        return new SdlSensorIdArray(temp, arraySize);
+      }
     }
   }
 

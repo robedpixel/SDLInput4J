@@ -6,6 +6,7 @@ import java.lang.invoke.MethodHandle;
 class NativeSdlTouchFuncs {
   private static volatile NativeSdlTouchFuncs INSTANCE;
   private static final Object mutex = new Object();
+  private static final Object addressMutex = new Object();
   private final MethodHandle SDL_GetTouchDevices;
   private final MethodHandle SDL_GetTouchDeviceName;
   private final MethodHandle SDL_GetTouchDeviceType;
@@ -38,14 +39,16 @@ class NativeSdlTouchFuncs {
                     ValueLayout.ADDRESS, ValueLayout.JAVA_INT, ValueLayout.ADDRESS));
   }
 
-  public synchronized SdlTouchIdArray getTouchDevices() throws Throwable {
-    MemorySegment temp = (MemorySegment) SDL_GetTouchDevices.invoke(tempIntAddress);
-    if (temp == MemorySegment.NULL) {
-      return null;
-    } else {
-      int arraySize = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
-      temp = temp.reinterpret(arraySize * ValueLayout.JAVA_INT.byteSize());
-      return new SdlTouchIdArray(temp, arraySize);
+  public SdlTouchIdArray getTouchDevices() throws Throwable {
+    synchronized (addressMutex) {
+      MemorySegment temp = (MemorySegment) SDL_GetTouchDevices.invoke(tempIntAddress);
+      if (temp == MemorySegment.NULL) {
+        return null;
+      } else {
+        int arraySize = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
+        temp = temp.reinterpret(arraySize * ValueLayout.JAVA_INT.byteSize());
+        return new SdlTouchIdArray(temp, arraySize);
+      }
     }
   }
 
@@ -63,14 +66,16 @@ class NativeSdlTouchFuncs {
   }
 
   // assume return 2d array
-  public synchronized SdlFinger2dArray getTouchFingers(int touchId) throws Throwable {
-    MemorySegment temp = (MemorySegment) SDL_GetTouchFingers.invoke(touchId, tempIntAddress);
-    if (temp == MemorySegment.NULL) {
-      return null;
-    } else {
-      int arraySize = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
-      temp = temp.reinterpret(arraySize * ValueLayout.ADDRESS.byteSize());
-      return new SdlFinger2dArray(temp, arraySize);
+  public SdlFinger2dArray getTouchFingers(int touchId) throws Throwable {
+    synchronized (addressMutex) {
+      MemorySegment temp = (MemorySegment) SDL_GetTouchFingers.invoke(touchId, tempIntAddress);
+      if (temp == MemorySegment.NULL) {
+        return null;
+      } else {
+        int arraySize = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
+        temp = temp.reinterpret(arraySize * ValueLayout.ADDRESS.byteSize());
+        return new SdlFinger2dArray(temp, arraySize);
+      }
     }
   }
 

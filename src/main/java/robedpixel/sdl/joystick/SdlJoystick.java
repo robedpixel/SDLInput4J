@@ -627,17 +627,19 @@ public class SdlJoystick {
    *     array if no values are returned
    * @throws Throwable
    */
-  public short[] getAllJoystickAxisInitialState(SdlJoystickDevice joystick) throws Throwable {
+  public SdlJoystickAxisReading[] getAllJoystickAxisInitialState(SdlJoystickDevice joystick)
+      throws Throwable {
     int numaxes = SdlFuncs.getNumJoystickAxes(joystick.getAddress());
     if (numaxes < 1) {
-      return new short[0];
+      return new SdlJoystickAxisReading[0];
     }
-    short[] returnArray = new short[numaxes];
+    SdlJoystickAxisReading[] returnArray = new SdlJoystickAxisReading[numaxes];
     try (Arena arena = Arena.ofConfined()) {
       MemorySegment axisAddress = arena.allocate(ValueLayout.JAVA_SHORT);
       for (int i = 0; i < numaxes; i++) {
-        SdlFuncs.getJoystickAxisInitialState(joystick.getAddress(), i, axisAddress);
-        returnArray[i] = axisAddress.get(ValueLayout.JAVA_SHORT, 0);
+        SdlJoystickAxisReading reading = new SdlJoystickAxisReading();
+        SdlFuncs.getJoystickAxisInitialState(joystick.getAddress(), i, reading);
+        returnArray[i] = reading;
       }
       return returnArray;
     }
@@ -655,11 +657,7 @@ public class SdlJoystick {
   public boolean getJoystickAxisInitialState(
       SdlJoystickDevice joystick, int axis, SdlJoystickAxisReading state) throws Throwable {
     try (Arena arena = Arena.ofConfined()) {
-      MemorySegment axisAddress = arena.allocate(ValueLayout.JAVA_SHORT);
-      boolean returnObject =
-          SdlFuncs.getJoystickAxisInitialState(joystick.getAddress(), axis, axisAddress);
-      state.setState(axisAddress.get(ValueLayout.JAVA_SHORT, 0));
-      return returnObject;
+      return SdlFuncs.getJoystickAxisInitialState(joystick.getAddress(), axis, state);
     }
   }
 

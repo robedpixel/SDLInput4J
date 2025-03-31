@@ -7,6 +7,7 @@ import robedpixel.sdl.guid.NativeSdlGuidModel;
 class NativeSdlJoystickFuncs {
   private static volatile NativeSdlJoystickFuncs INSTANCE;
   private static final Object mutex = new Object();
+  private static final Object addressMutex = new Object();
   private final MethodHandle SDL_LockJoysticks;
   private final MethodHandle SDL_UnlockJoysticks;
   private final MethodHandle SDL_HasJoystick;
@@ -446,14 +447,16 @@ class NativeSdlJoystickFuncs {
     return (boolean) SDL_HasJoystick.invoke();
   }
 
-  public synchronized SdlJoystickIdArray getJoysticks() throws Throwable {
-    MemorySegment temp = (MemorySegment) SDL_GetJoysticks.invoke(tempIntAddress);
-    if (temp == MemorySegment.NULL) {
-      return null;
-    } else {
-      int arraySize = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
-      temp = temp.reinterpret(arraySize * ValueLayout.JAVA_INT.byteSize());
-      return new SdlJoystickIdArray(temp, arraySize);
+  public SdlJoystickIdArray getJoysticks() throws Throwable {
+    synchronized (addressMutex) {
+      MemorySegment temp = (MemorySegment) SDL_GetJoysticks.invoke(tempIntAddress);
+      if (temp == MemorySegment.NULL) {
+        return null;
+      } else {
+        int arraySize = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
+        temp = temp.reinterpret(arraySize * ValueLayout.JAVA_INT.byteSize());
+        return new SdlJoystickIdArray(temp, arraySize);
+      }
     }
   }
 
@@ -637,14 +640,16 @@ class NativeSdlJoystickFuncs {
     return (int) SDL_GetJoystickType.invoke(joystick);
   }
 
-  public synchronized void getJoystickGuidInfo(MemorySegment guid, SdlJoystickGuidInfo guidInfo)
+  public void getJoystickGuidInfo(MemorySegment guid, SdlJoystickGuidInfo guidInfo)
       throws Throwable {
-    SDL_GetJoystickGUIDInfo.invoke(
-        guid, tempShortAddress, temp2ShortAddress, temp3ShortAddress, temp4ShortAddress);
-    guidInfo.setVendor(tempShortAddress.get(ValueLayout.JAVA_SHORT, 0));
-    guidInfo.setProduct(temp2ShortAddress.get(ValueLayout.JAVA_SHORT, 0));
-    guidInfo.setVersion(temp3ShortAddress.get(ValueLayout.JAVA_SHORT, 0));
-    guidInfo.setCrc16(temp4ShortAddress.get(ValueLayout.JAVA_SHORT, 0));
+    synchronized (addressMutex) {
+      SDL_GetJoystickGUIDInfo.invoke(
+          guid, tempShortAddress, temp2ShortAddress, temp3ShortAddress, temp4ShortAddress);
+      guidInfo.setVendor(tempShortAddress.get(ValueLayout.JAVA_SHORT, 0));
+      guidInfo.setProduct(temp2ShortAddress.get(ValueLayout.JAVA_SHORT, 0));
+      guidInfo.setVersion(temp3ShortAddress.get(ValueLayout.JAVA_SHORT, 0));
+      guidInfo.setCrc16(temp4ShortAddress.get(ValueLayout.JAVA_SHORT, 0));
+    }
   }
 
   public synchronized boolean joystickConnected(MemorySegment joystick) throws Throwable {
@@ -688,8 +693,13 @@ class NativeSdlJoystickFuncs {
   }
 
   public synchronized boolean getJoystickAxisInitialState(
-      MemorySegment joystick, int axis, MemorySegment state) throws Throwable {
-    return (boolean) SDL_GetJoystickAxisInitialState.invoke(joystick, axis, tempShortAddress);
+      MemorySegment joystick, int axis, SdlJoystickAxisReading state) throws Throwable {
+    boolean returnObject =
+        (boolean) SDL_GetJoystickAxisInitialState.invoke(joystick, axis, tempShortAddress);
+    if (returnObject) {
+      state.setState(tempShortAddress.get(ValueLayout.JAVA_SHORT, 0));
+    }
+    return returnObject;
   }
 
   public synchronized boolean getJoystickBall(
@@ -745,12 +755,14 @@ class NativeSdlJoystickFuncs {
     return (int) SDL_GetJoystickConnectionState.invoke(joystick);
   }
 
-  public synchronized void getJoystickPowerInfo(
-      MemorySegment joystick, SdlJoystickPowerSnapshot snapshot) throws Throwable {
-    int powerState = (int) SDL_GetJoystickPowerInfo.invoke(joystick, tempIntAddress);
-    int percent = (int) tempIntAddress.get(ValueLayout.JAVA_INT, 0);
-    snapshot.setPercent(percent);
-    snapshot.setPowerState(powerState);
+  public void getJoystickPowerInfo(MemorySegment joystick, SdlJoystickPowerSnapshot snapshot)
+      throws Throwable {
+    synchronized (addressMutex) {
+      int powerState = (int) SDL_GetJoystickPowerInfo.invoke(joystick, tempIntAddress);
+      int percent = (int) tempIntAddress.get(ValueLayout.JAVA_INT, 0);
+      snapshot.setPercent(percent);
+      snapshot.setPowerState(powerState);
+    }
   }
 
   public static NativeSdlJoystickFuncs getInstance(Arena allocator) {

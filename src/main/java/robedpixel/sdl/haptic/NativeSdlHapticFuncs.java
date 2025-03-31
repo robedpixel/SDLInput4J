@@ -6,6 +6,7 @@ import java.lang.invoke.MethodHandle;
 class NativeSdlHapticFuncs {
   private static volatile NativeSdlHapticFuncs INSTANCE;
   private static final Object mutex = new Object();
+  private static final Object addressMutex = new Object();
   private final MethodHandle SDL_GetHaptics;
   private final MethodHandle SDL_GetHapticNameForID;
   private final MethodHandle SDL_OpenHaptic;
@@ -219,13 +220,15 @@ class NativeSdlHapticFuncs {
                 FunctionDescriptor.of(ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS));
   }
 
-  public synchronized SdlHapticIdArray getHaptics() throws Throwable {
-    MemorySegment temp = (MemorySegment) SDL_GetHaptics.invoke(tempIntAddress);
-    if (temp == MemorySegment.NULL) {
-      return null;
-    } else {
-      int arraySize = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
-      return new SdlHapticIdArray(temp, arraySize);
+  public SdlHapticIdArray getHaptics() throws Throwable {
+    synchronized (addressMutex) {
+      MemorySegment temp = (MemorySegment) SDL_GetHaptics.invoke(tempIntAddress);
+      if (temp == MemorySegment.NULL) {
+        return null;
+      } else {
+        int arraySize = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
+        return new SdlHapticIdArray(temp, arraySize);
+      }
     }
   }
 

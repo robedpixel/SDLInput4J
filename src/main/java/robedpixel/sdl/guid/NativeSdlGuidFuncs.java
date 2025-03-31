@@ -9,7 +9,6 @@ class NativeSdlGuidFuncs {
   private static final Object mutex = new Object();
   private final MethodHandle SDL_GUIDToString;
   private final MethodHandle SDL_StringToGUID;
-  private final Arena objectAllocator = Arena.ofAuto();
 
   public NativeSdlGuidFuncs(Arena allocator) {
     SymbolLookup library = SymbolLookup.libraryLookup("SDL3", allocator);
