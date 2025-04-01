@@ -1,7 +1,6 @@
 package robedpixel.sdl.joystick;
 
 import java.lang.foreign.MemorySegment;
-import lombok.Getter;
 
 public class SdlJoystickDevice implements AutoCloseable {
   private final MemorySegment address;
@@ -11,7 +10,8 @@ public class SdlJoystickDevice implements AutoCloseable {
     this.address = address;
     this.funcs = funcs;
   }
-  public MemorySegment getAddress(){
+
+  public MemorySegment getAddress() {
     return address.asReadOnly();
   }
 

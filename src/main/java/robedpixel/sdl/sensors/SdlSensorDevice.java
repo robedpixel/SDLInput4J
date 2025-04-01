@@ -1,7 +1,6 @@
 package robedpixel.sdl.sensors;
 
 import java.lang.foreign.MemorySegment;
-import lombok.Getter;
 
 public class SdlSensorDevice implements AutoCloseable {
   private final MemorySegment address;
@@ -11,7 +10,8 @@ public class SdlSensorDevice implements AutoCloseable {
     this.address = address;
     this.funcs = funcs;
   }
-  public MemorySegment getAddress(){
+
+  public MemorySegment getAddress() {
     return address.asReadOnly();
   }
 

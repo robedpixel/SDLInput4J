@@ -4,11 +4,14 @@ import java.lang.foreign.*;
 import lombok.extern.slf4j.Slf4j;
 import robedpixel.sdl.error.SdlError;
 import robedpixel.sdl.guid.SdlGuid;
+import robedpixel.sdl.haptic.SdlHaptic;
 import robedpixel.sdl.hints.SdlHints;
 import robedpixel.sdl.misc.SdlMisc;
 import robedpixel.sdl.power.SdlPower;
+import robedpixel.sdl.properties.SdlProperties;
 import robedpixel.sdl.rect.SdlRect;
 import robedpixel.sdl.sensors.SdlSensor;
+import robedpixel.sdl.touch.SdlTouch;
 import robedpixel.sdl.video.SdlVideo;
 
 // linux library is libSDL3.so
@@ -202,6 +205,33 @@ public class NativeSdlLib implements AutoCloseable {
    */
   public SdlRect getSdlRect() {
     return new SdlRect(SdlFuncs.getGlobalAllocator());
+  }
+
+  /**
+   * Get the SDL Haptic module
+   *
+   * @return Haptic module for SDL
+   */
+  public SdlHaptic getSdlHaptic() {
+    return new SdlHaptic(SdlFuncs.getGlobalAllocator());
+  }
+
+  /**
+   * Get the SDL Touch module
+   *
+   * @return Touch module for SDL
+   */
+  public SdlTouch getSdlTouch() {
+    return new SdlTouch(SdlFuncs.getGlobalAllocator());
+  }
+
+  /**
+   * Get the SDL Properties module
+   *
+   * @return Properties module for SDL
+   */
+  public SdlProperties getSdlProperties() {
+    return new SdlProperties(SdlFuncs.getGlobalAllocator());
   }
 
   public static void sdlFree(MemorySegment pointer) throws Throwable {

@@ -133,7 +133,8 @@ public class SdlVideo {
    */
   public boolean getDisplayUsableBounds(SdlDisplayId displayId, SdlRectModel rect)
       throws Throwable {
-    boolean returnObject = SdlFuncs.getDisplayUsableBounds(displayId.getValue(), rect.getDataAddress());
+    boolean returnObject =
+        SdlFuncs.getDisplayUsableBounds(displayId.getValue(), rect.getDataAddress());
     rect.updateValues();
     return returnObject;
   }
