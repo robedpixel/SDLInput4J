@@ -701,11 +701,12 @@ public class SdlJoystick {
   }
 
   /**
-   * @param joystick
-   * @param uLowFrequencyRumble
-   * @param uHighFrequencyRumble
-   * @param uDurationMs
-   * @return
+   * Start a rumble effect.
+   * @param joystick The joystick to vibrate.
+   * @param uLowFrequencyRumble (Unsigned Short) The intensity of the low frequency (left) rumble motor, from 0 to 0xFFFF.
+   * @param uHighFrequencyRumble (Unsigned Short) The intensity of the high frequency (right) rumble motor, from 0 to 0xFFFF.
+   * @param uDurationMs (Unsigned Int)The duration of the rumble effect, in milliseconds.
+   * @return Returns true, or false if rumble isn't supported on this joystick.
    * @throws Throwable
    */
   public boolean rumbleJoystick(
@@ -718,6 +719,15 @@ public class SdlJoystick {
         joystick.getAddress(), uLowFrequencyRumble, uHighFrequencyRumble, uDurationMs);
   }
 
+  /**
+   * Start a rumble effect in the joystick's triggers
+   * @param joystick The joystick to vibrate.
+   * @param uLeftRumble (Unsigned Short) The intensity of the left trigger rumble motor, from 0 to 0xFFFF.
+   * @param uRightRumble (Unsigned Short) The intensity of the right trigger rumble motor, from 0 to 0xFFFF.
+   * @param uDurationMs (Unsigned Short) The duration of the rumble effect, in milliseconds.
+   * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+   * @throws Throwable
+   */
   public boolean rumbleJoystickTriggers(
       SdlJoystickDevice joystick, short uLeftRumble, short uRightRumble, int uDurationMs)
       throws Throwable {
@@ -725,20 +735,49 @@ public class SdlJoystick {
         joystick.getAddress(), uLeftRumble, uRightRumble, uDurationMs);
   }
 
+  /**
+   * Update a joystick's LED color.
+   * @param joystick The joystick to update.
+   * @param uRed (Unsigned Byte) The intensity of the red LED.
+   * @param uGreen (Unsigned Byte) The intensity of the green LED.
+   * @param uBlue (Unsigned Byte) The intensity of the blue LED.
+   * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+   * @throws Throwable
+   */
   public boolean setJoystickLED(SdlJoystickDevice joystick, byte uRed, byte uGreen, byte uBlue)
       throws Throwable {
     return SdlFuncs.setJoystickLED(joystick.getAddress(), uRed, uGreen, uBlue);
   }
 
+  /**
+   * Send a joystick specific effect packet.
+   * @param joystick The joystick to affect.
+   * @param data The data to send to the joystick.
+   * @param size The size of the data to send to the joystick.
+   * @return Returns true on success or false on failure; call SdlError.getError() for more information.
+   * @throws Throwable
+   */
   public boolean sendJoystickEffect(SdlJoystickDevice joystick, MemorySegment data, int size)
       throws Throwable {
     return SdlFuncs.sendJoystickEffect(joystick.getAddress(), data, size);
   }
 
+  /**
+   * Get the connection state of a joystick.
+   * @param joystick The joystick to query.
+   * @return Returns the connection state on success or SDL_JOYSTICK_CONNECTION_INVALID on failure; call SdlError.getError() for more information.
+   * @throws Throwable
+   */
   public int getJoystickConnectionState(SdlJoystickDevice joystick) throws Throwable {
     return SdlFuncs.getJoystickConnectionState(joystick.getAddress());
   }
 
+  /**
+   * Get the battery state of a joystick.
+   * @param joystick The joystick to query.
+   * @param snapshot A Snapshot object to store the battery state of the joystick in
+   * @throws Throwable
+   */
   public void getJoystickPowerInfo(SdlJoystickDevice joystick, SdlJoystickPowerSnapshot snapshot)
       throws Throwable {
     SdlFuncs.getJoystickPowerInfo(joystick.getAddress(), snapshot);
