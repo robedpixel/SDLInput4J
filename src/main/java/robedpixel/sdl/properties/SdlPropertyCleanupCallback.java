@@ -7,8 +7,8 @@ import lombok.Getter;
 
 public abstract class SdlPropertyCleanupCallback implements AutoCloseable {
   @Getter private final Arena callbackAllocator = Arena.ofConfined();
-  @Getter private final MemorySegment userData;
-  @Getter MemorySegment callbackAddress;
+  private final MemorySegment userData;
+  private final MemorySegment callbackAddress;
 
   public SdlPropertyCleanupCallback(MemorySegment userData) {
     this.userData = userData;
@@ -25,6 +25,12 @@ public abstract class SdlPropertyCleanupCallback implements AutoCloseable {
     callbackAddress =
         Linker.nativeLinker()
             .upcallStub(callbackHandle, callbackHandleDescriptor, callbackAllocator);
+  }
+  public MemorySegment getCallbackAddress(){
+    return callbackAddress.asReadOnly();
+  }
+  public MemorySegment getUserData(){
+    return userData.asReadOnly();
   }
 
   /**

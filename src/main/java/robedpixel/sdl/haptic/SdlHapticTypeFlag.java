@@ -133,10 +133,10 @@ public enum SdlHapticTypeFlag {
     this.value = value;
   }
 
-  private static final ImmutableMap<Integer, SdlTouchDeviceType> reverseLookup =
-      Maps.uniqueIndex(List.of(SdlTouchDeviceType.values()), SdlTouchDeviceType::getValue);
+  private static final ImmutableMap<Integer, SdlHapticTypeFlag> reverseLookup =
+      Maps.uniqueIndex(List.of(SdlHapticTypeFlag.values()), SdlHapticTypeFlag::getValue);
 
-  public static SdlTouchDeviceType fromInt(final int id) {
+  public static SdlHapticTypeFlag fromInt(final int id) {
     return reverseLookup.get(id);
   }
 }

@@ -7,15 +7,15 @@ import lombok.Getter;
 
 public abstract class SdlMainThreadCallback implements AutoCloseable {
   @Getter private final Arena callbackAllocator = Arena.ofConfined();
-  @Getter private final MemorySegment userData;
-  @Getter MemorySegment callbackAddress;
+  private final MemorySegment userData;
+  private MemorySegment callbackAddress;
   private static final FunctionDescriptor callbackHandleDescriptor =
       FunctionDescriptor.ofVoid(ValueLayout.ADDRESS);
-  private final MethodHandle callbackHandle;
 
-  public SdlMainThreadCallback(MemorySegment userData) {
+    public SdlMainThreadCallback(MemorySegment userData) {
     this.userData = userData;
-    try {
+        MethodHandle callbackHandle;
+        try {
       callbackHandle =
           MethodHandles.publicLookup()
               .bind(this, "callback", callbackHandleDescriptor.toMethodType());
@@ -25,6 +25,12 @@ public abstract class SdlMainThreadCallback implements AutoCloseable {
     callbackAddress =
         Linker.nativeLinker()
             .upcallStub(callbackHandle, callbackHandleDescriptor, callbackAllocator);
+  }
+  public MemorySegment getCallbackAddress(){
+    return callbackAddress.asReadOnly();
+  }
+  public MemorySegment getUserData(){
+    return userData.asReadOnly();
   }
 
   /**
