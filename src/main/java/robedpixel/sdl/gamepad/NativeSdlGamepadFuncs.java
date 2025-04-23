@@ -1,6 +1,9 @@
 package robedpixel.sdl.gamepad;
 
+import robedpixel.sdl.NativeSdlLib;
 import robedpixel.sdl.guid.NativeSdlGuidModel;
+import robedpixel.sdl.joystick.SdlJoystickId;
+import robedpixel.sdl.keyboard.SdlKeyboardIdArray;
 
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
@@ -8,6 +11,7 @@ import java.lang.invoke.MethodHandle;
 public class NativeSdlGamepadFuncs {
     private static volatile NativeSdlGamepadFuncs INSTANCE;
     private static final Object mutex = new Object();
+    private static final Object addressMutex = new Object();
     private final MethodHandle SDL_AddGamepadMapping;
     private final MethodHandle SDL_AddGamepadMappingsFromFile;
     private final MethodHandle SDL_ReloadGamepadMappings;
@@ -20,6 +24,8 @@ public class NativeSdlGamepadFuncs {
     private final MethodHandle SDL_CloseGamepad;
     private final MethodHandle  SDL_GetGamepadAppleSFSymbolsNameForButton;
     private final MethodHandle  SDL_GetGamepadAppleSFSymbolsNameForAxis;
+    private final Arena objectAllocator = Arena.ofAuto();
+    private final MemorySegment tempIntAddress = objectAllocator.allocate(ValueLayout.JAVA_INT);
     public NativeSdlGamepadFuncs(Arena allocator) {
         SymbolLookup library = SymbolLookup.libraryLookup("SDL3", allocator);
         SDL_AddGamepadMapping =
@@ -96,6 +102,44 @@ public class NativeSdlGamepadFuncs {
     }
     public synchronized boolean reloadGamepadMappings() throws Throwable{
         return (boolean)SDL_ReloadGamepadMappings.invoke();
+    }
+    public SdlGamepadMappingArray getGamepadMappings() throws Throwable {
+        synchronized (addressMutex) {
+            MemorySegment temp = (MemorySegment) SDL_GetGamepadMappings.invoke(tempIntAddress);
+            if (temp == MemorySegment.NULL) {
+                return null;
+            } else {
+                int arraySize = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
+                return new SdlGamepadMappingArray(temp, arraySize);
+            }
+        }
+    }
+    public synchronized String getGamepadMappingForGUID(NativeSdlGuidModel guid) throws Throwable {
+        MemorySegment temp = (MemorySegment) SDL_GetGamepadMappingForGUID.invoke(guid.getDataAddress());
+        if (temp == MemorySegment.NULL) {
+            return null;
+        } else {
+            String returnObject = temp.reinterpret(Integer.MAX_VALUE).getString(0);
+            NativeSdlLib.sdlFree(temp);
+            return returnObject;
+        }
+    }
+    public synchronized String getGamepadMapping(SdlGamepadDevice gamepad) throws Throwable {
+        MemorySegment temp = (MemorySegment) SDL_GetGamepadMapping.invoke(gamepad.getAddress());
+        if (temp == MemorySegment.NULL) {
+            return null;
+        } else {
+            String returnObject = temp.reinterpret(Integer.MAX_VALUE).getString(0);
+            NativeSdlLib.sdlFree(temp);
+            return returnObject;
+        }
+    }
+    public synchronized boolean setGamepadMapping(Arena localAllocator, SdlJoystickId instanceId, String mapping) throws Throwable {
+        if (mapping ==null){
+            return (boolean) SDL_SetGamepadMapping.invoke(instanceId.getValue(), MemorySegment.NULL);
+        }else {
+            return (boolean) SDL_SetGamepadMapping.invoke(instanceId.getValue(), localAllocator.allocateFrom(mapping));
+        }
     }
     public synchronized void closeGamepad(MemorySegment gamepad) throws Throwable {
         SDL_CloseGamepad.invoke(gamepad);
