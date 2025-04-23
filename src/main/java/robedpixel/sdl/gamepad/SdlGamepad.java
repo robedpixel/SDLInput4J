@@ -4,6 +4,7 @@ package robedpixel.sdl.gamepad;
 
 import robedpixel.sdl.guid.NativeSdlGuidModel;
 import robedpixel.sdl.joystick.SdlJoystickId;
+import robedpixel.sdl.joystick.SdlJoystickIdArray;
 
 import java.io.File;
 import java.lang.foreign.Arena;
@@ -58,6 +59,17 @@ public class SdlGamepad {
     }
 
     /**
+     * Get the gamepad mapping string for a given GUID.
+     * @param guid A structure containing the GUID for which a mapping is desired.
+     * @return Returns a mapping string or null on failure; call
+     * SdlError.getError() for more information.
+     * @throws Throwable
+     */
+    public String getGamepadMappingForGUID(NativeSdlGuidModel guid) throws Throwable {
+        return SdlFuncs.getGamepadMappingForGUID(guid);
+    }
+
+    /**
      * Get the current mapping of a gamepad.
      * @param gamepad The gamepad you want to get the current mapping for.
      * @return Returns a string that has the gamepad's mapping or null if no mapping is available; call SdlError.getError() for more information.
@@ -66,7 +78,6 @@ public class SdlGamepad {
     public String getGamepadMapping(SdlGamepadDevice gamepad) throws Throwable {
         return SdlFuncs.getGamepadMapping(gamepad);
     }
-
     /**
      * Set the current mapping of a joystick or gamepad.
      * @param instanceId The joystick instance ID.
@@ -81,13 +92,82 @@ public class SdlGamepad {
     }
 
     /**
-     * Get the gamepad mapping string for a given GUID.
-     * @param guid A structure containing the GUID for which a mapping is desired.
-     * @return Returns a mapping string or null on failure; call
-     * SdlError.getError() for more information.
+     * Check if the given joystick is supported by the gamepad interface.
+     * @param instanceId The joystick instance ID.
+     * @return Returns true if the given joystick is supported by the gamepad interface, false if it isn't or it's an invalid index.
      * @throws Throwable
      */
-    public String getGamepadMappingForGUID(NativeSdlGuidModel guid) throws Throwable {
-        return SdlFuncs.getGamepadMappingForGUID(guid);
+    public boolean isGamepad(SdlJoystickId instanceId) throws Throwable{
+        return SdlFuncs.isGamepad(instanceId);
     }
+
+    /**
+     * Return whether a gamepad is currently connected.
+     * @return Returns true if a gamepad is connected, false otherwise.
+     * @throws Throwable
+     */
+    public boolean hasGamepad()throws Throwable{
+        return SdlFuncs.hasGamepad();
+    }
+
+    /**
+     * Get a list of currently connected gamepads.
+     * @return Returns an array of joystick instance IDs or null on failure; call SdlError.getError() for more information.
+     * @throws Throwable
+     */
+    public SdlJoystickIdArray getGamepads() throws Throwable{
+        return SdlFuncs.getGamepads();
+    }
+
+    /**
+     * Get the implementation dependent name of a gamepad.
+     * @param instanceId The joystick instance ID.
+     * @return Returns the name of the selected gamepad. If no name can be found, this function returns NULL; call SdlError.getError() for more information.
+     * @throws Throwable
+     */
+    public String getGamepadNameForID(SdlJoystickId instanceId) throws Throwable{
+        return SdlFuncs.getGamepadNameForID(instanceId);
+    }
+
+    /**
+     * Get the implementation dependent path of a gamepad.
+     * @param instanceId The joystick instance ID.
+     * @return Returns the path of the selected gamepad. If no path can be found, this function returns null; call SdlError.getError() for more information.
+     * @throws Throwable
+     */
+    public String getGamepadPathForID(SdlJoystickId instanceId) throws Throwable{
+        return SdlFuncs.getGamepadPathForID(instanceId);
+    }
+
+    /**
+     * Get the player index of a gamepad.
+     * @param instanceId The joystick instance ID.
+     * @return Returns the player index of a gamepad, or -1 if it's not available.
+     * @throws Throwable
+     */
+    public int getGamepadPlayerIndexForID(SdlJoystickId instanceId) throws Throwable{
+        return SdlFuncs.getGamepadPlayerIndexForID(instanceId);
+    }
+
+    /**
+     * Get the implementation-dependent GUID of a gamepad.
+     * @param instanceId The joystick instance ID.
+     * @return Returns the GUID of the selected gamepad. If called on an invalid index, this function returns a zero GUID.
+     * @throws Throwable
+     */
+    public NativeSdlGuidModel getGamepadGUIDForID(SdlJoystickId instanceId) throws Throwable{
+        return SdlFuncs.getGamepadGUIDForID(instanceId);
+    }
+
+    /**
+     * Get the USB vendor ID of a gamepad, if available.
+     * @param instanceId The joystick instance ID.
+     * @return (Unsigned Short) Returns the USB vendor ID of the selected gamepad. If called on an invalid index, this function returns zero.
+     * @throws Throwable
+     */
+    public short getGamepadVendorForID(SdlJoystickId instanceId) throws Throwable{
+        return SdlFuncs.getGamepadVendorForID(instanceId);
+    }
+
+
 }

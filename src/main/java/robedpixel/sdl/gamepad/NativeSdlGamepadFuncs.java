@@ -3,6 +3,7 @@ package robedpixel.sdl.gamepad;
 import robedpixel.sdl.NativeSdlLib;
 import robedpixel.sdl.guid.NativeSdlGuidModel;
 import robedpixel.sdl.joystick.SdlJoystickId;
+import robedpixel.sdl.joystick.SdlJoystickIdArray;
 import robedpixel.sdl.keyboard.SdlKeyboardIdArray;
 
 import java.lang.foreign.*;
@@ -20,6 +21,33 @@ public class NativeSdlGamepadFuncs {
     private final MethodHandle SDL_GetGamepadMapping;
     private final MethodHandle SDL_SetGamepadMapping;
     private final MethodHandle SDL_HasGamepad;
+    private final MethodHandle SDL_GetGamepads;
+    private final MethodHandle SDL_IsGamepad;
+    private final MethodHandle SDL_GetGamepadNameForID;
+    private final MethodHandle SDL_GetGamepadPathForID;
+    private final MethodHandle SDL_GetGamepadPlayerIndexForID;
+    private final MethodHandle SDL_GetGamepadGUIDForID;
+    private final MethodHandle SDL_GetGamepadVendorForID;
+    private final MethodHandle SDL_GetGamepadProductForID;
+    private final MethodHandle SDL_GetGamepadProductVersionForID;
+    private final MethodHandle SDL_GetGamepadTypeForID;
+    private final MethodHandle SDL_GetRealGamepadTypeForID;
+    private final MethodHandle SDL_GetGamepadMappingForID;
+    private final MethodHandle SDL_OpenGamepad;
+    private final MethodHandle SDL_GetGamepadFromID;
+    private final MethodHandle SDL_GetGamepadFromPlayerIndex;
+    private final MethodHandle SDL_GetGamepadProperties;
+    private final MethodHandle SDL_GetGamepadID;
+    private final MethodHandle SDL_GetGamepadName;
+    private final MethodHandle SDL_GetGamepadPath;
+    private final MethodHandle SDL_GetGamepadType;
+    private final MethodHandle SDL_GetRealGamepadType;
+    private final MethodHandle SDL_GetGamepadPlayerIndex;
+    private final MethodHandle SDL_SetGamepadPlayerIndex;
+    private final MethodHandle SDL_GetGamepadVendor;
+    private final MethodHandle SDL_GetGamepadProduct;
+    private final MethodHandle SDL_GetGamepadProductVersion;
+    private final MethodHandle SDL_GetGamepadFirmwareVersion;
 
     private final MethodHandle SDL_CloseGamepad;
     private final MethodHandle  SDL_GetGamepadAppleSFSymbolsNameForButton;
@@ -71,6 +99,139 @@ public class NativeSdlGamepadFuncs {
                         .downcallHandle(
                                 library.find("SDL_HasGamepad").orElseThrow(),
                                 FunctionDescriptor.of(ValueLayout.JAVA_BOOLEAN));
+        SDL_GetGamepads =
+                Linker.nativeLinker().downcallHandle(
+                                library.find("SDL_GetGamepads").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.ADDRESS,ValueLayout.ADDRESS));
+        SDL_IsGamepad =
+                Linker.nativeLinker().
+                        downcallHandle(library.find("SDL_IsGamepad").orElseThrow(),
+                        FunctionDescriptor.of(ValueLayout.JAVA_BOOLEAN,ValueLayout.JAVA_INT));
+        SDL_GetGamepadNameForID =
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetGamepadNameForID").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.ADDRESS,ValueLayout.JAVA_INT));
+        SDL_GetGamepadPathForID =
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetGamepadPathForID").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.ADDRESS,ValueLayout.JAVA_INT));
+        SDL_GetGamepadPlayerIndexForID =
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetGamepadPlayerIndexForID").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.JAVA_INT,ValueLayout.JAVA_INT));
+        SDL_GetGamepadGUIDForID =
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetGamepadGUIDForID").orElseThrow(),
+                                FunctionDescriptor.of(NativeSdlGuidModel.getStructLayout(),ValueLayout.JAVA_INT));
+        SDL_GetGamepadVendorForID=
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetGamepadVendorForID").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.JAVA_SHORT,ValueLayout.JAVA_INT));
+        SDL_GetGamepadProductForID=
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetGamepadProductForID").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.JAVA_SHORT,ValueLayout.JAVA_INT));
+        SDL_GetGamepadProductVersionForID=
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetGamepadProductVersionForID").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.JAVA_SHORT,ValueLayout.JAVA_INT));
+        SDL_GetGamepadTypeForID=
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetGamepadTypeForID").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.JAVA_INT,ValueLayout.JAVA_INT));
+        SDL_GetRealGamepadTypeForID=
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetRealGamepadTypeForID").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.JAVA_INT,ValueLayout.JAVA_INT));
+        SDL_GetGamepadMappingForID=
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetGamepadMappingForID").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.ADDRESS,ValueLayout.JAVA_INT));
+        SDL_OpenGamepad=
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_OpenGamepad").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.ADDRESS,ValueLayout.JAVA_INT));
+        SDL_GetGamepadFromID=
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetGamepadFromID").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.ADDRESS,ValueLayout.JAVA_INT));
+        SDL_GetGamepadFromPlayerIndex=
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetGamepadFromPlayerIndex").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.ADDRESS,ValueLayout.JAVA_INT));
+        SDL_GetGamepadProperties=
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetGamepadProperties").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.JAVA_INT,ValueLayout.ADDRESS));
+        SDL_GetGamepadID=
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetGamepadID").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.JAVA_INT,ValueLayout.ADDRESS));
+        SDL_GetGamepadName=
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetGamepadName").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.ADDRESS,ValueLayout.ADDRESS));
+        SDL_GetGamepadPath=
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetGamepadPath").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.ADDRESS,ValueLayout.ADDRESS));
+        SDL_GetGamepadType=
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetGamepadType").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.JAVA_INT,ValueLayout.ADDRESS));
+        SDL_GetRealGamepadType=
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("GetRealGamepadType").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.JAVA_INT,ValueLayout.ADDRESS));
+        SDL_GetGamepadPlayerIndex=
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetGamepadPlayerIndex").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.JAVA_INT,ValueLayout.ADDRESS));
+        SDL_SetGamepadPlayerIndex=
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_SetGamepadPlayerIndex").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.JAVA_BOOLEAN,ValueLayout.ADDRESS,ValueLayout.JAVA_INT));
+        SDL_GetGamepadVendor=
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetGamepadVendor").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.JAVA_SHORT,ValueLayout.ADDRESS));
+        SDL_GetGamepadProduct=
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetGamepadProduct").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.JAVA_SHORT,ValueLayout.ADDRESS));
+        SDL_GetGamepadProductVersion=
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetGamepadProductVersion").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.JAVA_SHORT,ValueLayout.ADDRESS));
+        SDL_GetGamepadFirmwareVersion=
+                Linker.nativeLinker()
+                        .downcallHandle(
+                                library.find("SDL_GetGamepadFirmwareVersion").orElseThrow(),
+                                FunctionDescriptor.of(ValueLayout.JAVA_SHORT,ValueLayout.ADDRESS));
         SDL_CloseGamepad=
                 Linker.nativeLinker()
                         .downcallHandle(
@@ -140,6 +301,49 @@ public class NativeSdlGamepadFuncs {
         }else {
             return (boolean) SDL_SetGamepadMapping.invoke(instanceId.getValue(), localAllocator.allocateFrom(mapping));
         }
+    }
+    public synchronized boolean hasGamepad() throws Throwable{
+        return (boolean) SDL_HasGamepad.invoke();
+    }
+    public SdlJoystickIdArray getGamepads() throws Throwable{
+        synchronized (addressMutex) {
+            MemorySegment temp = (MemorySegment) SDL_GetGamepads.invoke(tempIntAddress);
+            if (temp == MemorySegment.NULL) {
+                return null;
+            } else {
+                int arraySize = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
+                return new SdlJoystickIdArray(temp, arraySize);
+            }
+        }
+    }
+    public synchronized boolean isGamepad(SdlJoystickId instanceId) throws Throwable{
+        return (boolean) SDL_IsGamepad.invoke(instanceId.getValue());
+    }
+    public synchronized String getGamepadNameForID(SdlJoystickId instanceId) throws Throwable{
+        MemorySegment temp = (MemorySegment) SDL_GetGamepadNameForID.invoke(instanceId.getValue());
+        if (temp == MemorySegment.NULL){
+            return null;
+        } else {
+            return temp.reinterpret(Integer.MAX_VALUE).getString(0);
+        }
+    }
+    public synchronized String getGamepadPathForID(SdlJoystickId instanceId) throws Throwable{
+        MemorySegment temp = (MemorySegment) SDL_GetGamepadPathForID.invoke(instanceId.getValue());
+        if (temp == MemorySegment.NULL){
+            return null;
+        } else {
+            return temp.reinterpret(Integer.MAX_VALUE).getString(0);
+        }
+    }
+    public synchronized int getGamepadPlayerIndexForID(SdlJoystickId instanceId) throws Throwable{
+        return (int) SDL_GetGamepadPlayerIndexForID.invoke(instanceId.getValue());
+    }
+    public synchronized NativeSdlGuidModel getGamepadGUIDForID(SdlJoystickId instanceId) throws Throwable{
+        MemorySegment temp = (MemorySegment) SDL_GetGamepadGUIDForID.invoke(instanceId.getValue());
+        return NativeSdlGuidModel.fromSegment(temp);
+    }
+    public synchronized short getGamepadVendorForID(SdlJoystickId instanceId) throws Throwable{
+        return (short) SDL_GetGamepadVendorForID.invoke(instanceId.getValue());
     }
     public synchronized void closeGamepad(MemorySegment gamepad) throws Throwable {
         SDL_CloseGamepad.invoke(gamepad);
