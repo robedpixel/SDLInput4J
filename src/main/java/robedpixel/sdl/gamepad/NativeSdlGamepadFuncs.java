@@ -266,6 +266,222 @@ public class NativeSdlGamepadFuncs {
             .downcallHandle(
                 library.find("SDL_GetGamepadFirmwareVersion").orElseThrow(),
                 FunctionDescriptor.of(ValueLayout.JAVA_SHORT, ValueLayout.ADDRESS));
+    SDL_GetGamepadSerial =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetGamepadSerial").orElseThrow(),
+                FunctionDescriptor.of(ValueLayout.ADDRESS, ValueLayout.ADDRESS));
+    SDL_GetGamepadSteamHandle =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetGamepadSteamHandle").orElseThrow(),
+                FunctionDescriptor.of(ValueLayout.JAVA_LONG, ValueLayout.ADDRESS));
+    SDL_GetGamepadConnectionState =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetGamepadConnectionState").orElseThrow(),
+                FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.ADDRESS));
+    SDL_GetGamepadPowerInfo =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetGamepadPowerInfo").orElseThrow(),
+                FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.ADDRESS));
+    SDL_GamepadConnected =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GamepadConnected").orElseThrow(),
+                FunctionDescriptor.of(ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS));
+    SDL_GetGamepadJoystick =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetGamepadJoystick").orElseThrow(),
+                FunctionDescriptor.of(ValueLayout.ADDRESS, ValueLayout.ADDRESS));
+    SDL_SetGamepadEventsEnabled =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_SetGamepadEventsEnabled").orElseThrow(),
+                FunctionDescriptor.ofVoid(ValueLayout.JAVA_BOOLEAN));
+    SDL_GamepadEventsEnabled =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GamepadEventsEnabled").orElseThrow(),
+                FunctionDescriptor.of(ValueLayout.JAVA_BOOLEAN));
+    SDL_GetGamepadBindings =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetGamepadBindings").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS));
+    SDL_UpdateGamepads =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_UpdateGamepads").orElseThrow(), FunctionDescriptor.ofVoid());
+    SDL_GetGamepadTypeFromString =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetGamepadTypeFromString").orElseThrow(),
+                FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.ADDRESS));
+    SDL_GetGamepadStringForType =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetGamepadStringForType").orElseThrow(),
+                FunctionDescriptor.of(ValueLayout.ADDRESS, ValueLayout.JAVA_INT));
+    SDL_GetGamepadAxisFromString =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetGamepadAxisFromString").orElseThrow(),
+                FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.ADDRESS));
+    SDL_GetGamepadStringForAxis =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetGamepadStringForAxis").orElseThrow(),
+                FunctionDescriptor.of(ValueLayout.ADDRESS, ValueLayout.JAVA_INT));
+    SDL_GamepadHasAxis =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GamepadHasAxis").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS, ValueLayout.JAVA_INT));
+    SDL_GetGamepadAxis =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetGamepadAxis").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_SHORT, ValueLayout.ADDRESS, ValueLayout.JAVA_INT));
+    SDL_GetGamepadButtonFromString =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetGamepadButtonFromString").orElseThrow(),
+                FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.ADDRESS));
+    SDL_GetGamepadStringForButton =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetGamepadStringForButton").orElseThrow(),
+                FunctionDescriptor.of(ValueLayout.ADDRESS, ValueLayout.JAVA_INT));
+    SDL_GamepadHasButton =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GamepadHasButton").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS, ValueLayout.JAVA_INT));
+    SDL_GetGamepadButton =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetGamepadButton").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS, ValueLayout.JAVA_INT));
+    SDL_GetGamepadButtonLabelForType =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetGamepadButtonLabelForType").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT));
+    SDL_GetGamepadButtonLabel =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetGamepadButtonLabel").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.JAVA_INT));
+    SDL_GetNumGamepadTouchpads =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetNumGamepadTouchpads").orElseThrow(),
+                FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.ADDRESS));
+    SDL_GetNumGamepadTouchpadFingers =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetNumGamepadTouchpadFingers").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.JAVA_INT));
+    SDL_GetGamepadTouchpadFinger =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetGamepadTouchpadFinger").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_BOOLEAN,
+                    ValueLayout.ADDRESS,
+                    ValueLayout.JAVA_INT,
+                    ValueLayout.JAVA_INT,
+                    ValueLayout.ADDRESS,
+                    ValueLayout.ADDRESS,
+                    ValueLayout.ADDRESS,
+                    ValueLayout.ADDRESS));
+    SDL_GamepadHasSensor =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GamepadHasSensor").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS, ValueLayout.JAVA_INT));
+    SDL_SetGamepadSensorEnabled =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_SetGamepadSensorEnabled").orElseThrow(),
+                FunctionDescriptor.ofVoid(
+                    ValueLayout.JAVA_BOOLEAN,
+                    ValueLayout.ADDRESS,
+                    ValueLayout.JAVA_INT,
+                    ValueLayout.JAVA_BOOLEAN));
+    SDL_GamepadSensorEnabled =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_SetGamepadSensorEnabled").orElseThrow(),
+                FunctionDescriptor.ofVoid(
+                    ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS, ValueLayout.JAVA_INT));
+    SDL_GetGamepadSensorDataRate =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetGamepadSensorDataRate").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_FLOAT, ValueLayout.ADDRESS, ValueLayout.JAVA_INT));
+    SDL_GetGamepadSensorData =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_GetGamepadSensorData").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_BOOLEAN,
+                    ValueLayout.ADDRESS,
+                    ValueLayout.JAVA_INT,
+                    ValueLayout.ADDRESS,
+                    ValueLayout.JAVA_INT));
+    SDL_RumbleGamepad =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_RumbleGamepad").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_BOOLEAN,
+                    ValueLayout.ADDRESS,
+                    ValueLayout.JAVA_SHORT,
+                    ValueLayout.JAVA_SHORT,
+                    ValueLayout.JAVA_INT));
+    SDL_RumbleGamepadTriggers =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_RumbleGamepadTriggers").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_BOOLEAN,
+                    ValueLayout.ADDRESS,
+                    ValueLayout.JAVA_SHORT,
+                    ValueLayout.JAVA_SHORT,
+                    ValueLayout.JAVA_INT));
+    SDL_SetGamepadLED =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_SetGamepadLED").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_BOOLEAN,
+                    ValueLayout.ADDRESS,
+                    ValueLayout.JAVA_BYTE,
+                    ValueLayout.JAVA_BYTE,
+                    ValueLayout.JAVA_BYTE));
+    SDL_SendGamepadEffect =
+        Linker.nativeLinker()
+            .downcallHandle(
+                library.find("SDL_SendGamepadEffect").orElseThrow(),
+                FunctionDescriptor.of(
+                    ValueLayout.JAVA_BOOLEAN,
+                    ValueLayout.ADDRESS,
+                    ValueLayout.ADDRESS,
+                    ValueLayout.JAVA_INT));
     SDL_CloseGamepad =
         Linker.nativeLinker()
             .downcallHandle(
