@@ -26,10 +26,12 @@ public class SdlEnumeratePropertiesCallback implements AutoCloseable {
         Linker.nativeLinker()
             .upcallStub(callbackHandle, callbackHandleDescriptor, callbackAllocator);
   }
-  public MemorySegment getCallbackAddress(){
+
+  public MemorySegment getCallbackAddress() {
     return callbackAddress.asReadOnly();
   }
-  public MemorySegment getUserData(){
+
+  public MemorySegment getUserData() {
     return userData.asReadOnly();
   }
 

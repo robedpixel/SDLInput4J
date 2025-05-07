@@ -2,7 +2,7 @@ package robedpixel.sdl.gamepad;
 
 import java.lang.foreign.MemorySegment;
 
-public class SdlGamepadDevice implements AutoCloseable {
+public class SdlGamepadDevice implements AutoCloseable, SdlGamepadDeviceInterface {
   private final MemorySegment address;
   private NativeSdlGamepadFuncs funcs;
 
@@ -11,6 +11,7 @@ public class SdlGamepadDevice implements AutoCloseable {
     this.funcs = funcs;
   }
 
+  @Override
   public MemorySegment getAddress() {
     return address.asReadOnly();
   }

@@ -1,10 +1,8 @@
 package robedpixel.sdl.mouse;
 
-import lombok.Getter;
-
 import java.lang.foreign.MemorySegment;
 
-public class SdlCursorInstance implements AutoCloseable,SdlCursor {
+public class SdlCursorInstance implements AutoCloseable, SdlCursor {
   private MemorySegment address;
   private NativeSdlMouseFuncs funcs;
 

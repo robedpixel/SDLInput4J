@@ -12,10 +12,10 @@ public abstract class SdlMainThreadCallback implements AutoCloseable {
   private static final FunctionDescriptor callbackHandleDescriptor =
       FunctionDescriptor.ofVoid(ValueLayout.ADDRESS);
 
-    public SdlMainThreadCallback(MemorySegment userData) {
+  public SdlMainThreadCallback(MemorySegment userData) {
     this.userData = userData;
-        MethodHandle callbackHandle;
-        try {
+    MethodHandle callbackHandle;
+    try {
       callbackHandle =
           MethodHandles.publicLookup()
               .bind(this, "callback", callbackHandleDescriptor.toMethodType());
@@ -26,10 +26,12 @@ public abstract class SdlMainThreadCallback implements AutoCloseable {
         Linker.nativeLinker()
             .upcallStub(callbackHandle, callbackHandleDescriptor, callbackAllocator);
   }
-  public MemorySegment getCallbackAddress(){
+
+  public MemorySegment getCallbackAddress() {
     return callbackAddress.asReadOnly();
   }
-  public MemorySegment getUserData(){
+
+  public MemorySegment getUserData() {
     return userData.asReadOnly();
   }
 

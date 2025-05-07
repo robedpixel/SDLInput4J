@@ -19,13 +19,13 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.slf4j:slf4j-api:2.0.7'
-    implementation 'com.google.guava:guava:33.4.0-jre'
-    implementation 'org.apache.logging.log4j:log4j-slf4j2-impl:2.20.0'
-    testImplementation platform('org.junit:junit-bom:5.10.0')
+    implementation 'org.slf4j:slf4j-api:2.0.17'
+    implementation 'com.google.guava:guava:33.4.8-jre'
+    implementation 'org.apache.logging.log4j:log4j-slf4j2-impl:2.24.3'
+    testImplementation platform('org.junit:junit-bom:5.12.2')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-    compileOnly 'org.projectlombok:lombok:1.18.36'
-    annotationProcessor 'org.projectlombok:lombok:1.18.36'
+    compileOnly 'org.projectlombok:lombok:1.18.38'
+    annotationProcessor 'org.projectlombok:lombok:1.18.38'
 }
 
 test {

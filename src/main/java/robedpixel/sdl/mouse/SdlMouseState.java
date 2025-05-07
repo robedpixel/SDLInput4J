@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SdlMouseState {
-    private float x;
-    private float y;
-    private int mouseButtonFlags;
+  private float x;
+  private float y;
+  private int mouseButtonFlags;
 }

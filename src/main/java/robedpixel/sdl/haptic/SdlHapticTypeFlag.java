@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import java.util.List;
 import lombok.Getter;
-import robedpixel.sdl.touch.SdlTouchDeviceType;
 
 public enum SdlHapticTypeFlag {
   SDL_HAPTIC_CONSTANT(1),
