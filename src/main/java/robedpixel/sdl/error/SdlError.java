@@ -1,5 +1,7 @@
 package robedpixel.sdl.error;
 
+import org.jspecify.annotations.NonNull;
+
 import java.lang.foreign.Arena;
 
 public class SdlError {
@@ -16,6 +18,7 @@ public class SdlError {
    *     string if there hasn't been an error message set since the last call to SDL_ClearError().
    * @throws Throwable
    */
+  @NonNull
   public String getError() throws Throwable {
     return SdlFuncs.getError();
   }

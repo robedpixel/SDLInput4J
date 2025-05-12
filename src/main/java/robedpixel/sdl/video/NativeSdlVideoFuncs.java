@@ -1,5 +1,5 @@
 package robedpixel.sdl.video;
-
+//TODO: add nullablility annotations
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 import java.nio.charset.StandardCharsets;

@@ -1,5 +1,7 @@
 package robedpixel.sdl.guid;
 
+import org.jspecify.annotations.NonNull;
+
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 import java.nio.charset.StandardCharsets;
@@ -26,7 +28,7 @@ class NativeSdlGuidFuncs {
                 library.find("SDL_StringToGUID").orElseThrow(),
                 FunctionDescriptor.of(NativeSdlGuidModel.getStructLayout(), ValueLayout.ADDRESS));
   }
-
+@NonNull
   public synchronized String guidToString(
       Arena localAllocator, NativeSdlGuidModel guid, SdlGuidByteArray byteArray) throws Throwable {
     SDL_GUIDToString.invoke(
@@ -39,13 +41,14 @@ class NativeSdlGuidFuncs {
   }
 
   // TODO: test, may not be correct
+  @NonNull
   public synchronized NativeSdlGuidModel stringToGuid(Arena localAllocator, String pchGuid)
       throws Throwable {
     MemorySegment stringAddress = localAllocator.allocateFrom(pchGuid);
     MemorySegment guidAddress = (MemorySegment) SDL_StringToGUID.invoke(stringAddress);
     return NativeSdlGuidModel.fromSegment(guidAddress);
   }
-
+@NonNull
   public static NativeSdlGuidFuncs getInstance(Arena allocator) {
     NativeSdlGuidFuncs result = INSTANCE;
     if (result == null) {

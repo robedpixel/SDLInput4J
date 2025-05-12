@@ -1,5 +1,5 @@
 package robedpixel.sdl.hints;
-
+//TODO: add nullablility annotations
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;

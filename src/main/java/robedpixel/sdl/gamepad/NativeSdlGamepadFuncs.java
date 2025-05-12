@@ -2,6 +2,9 @@ package robedpixel.sdl.gamepad;
 
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import robedpixel.sdl.NativeSdlLib;
 import robedpixel.sdl.guid.NativeSdlGuidModel;
 import robedpixel.sdl.joystick.SdlJoystickId;
@@ -513,7 +516,7 @@ public class NativeSdlGamepadFuncs {
   public synchronized boolean reloadGamepadMappings() throws Throwable {
     return (boolean) SDL_ReloadGamepadMappings.invoke();
   }
-
+  @Nullable
   public SdlGamepadMappingArray getGamepadMappings() throws Throwable {
     synchronized (addressMutex) {
       MemorySegment temp = (MemorySegment) SDL_GetGamepadMappings.invoke(tempIntAddress);
@@ -525,6 +528,7 @@ public class NativeSdlGamepadFuncs {
       }
     }
   }
+  @Nullable
 
   public synchronized String getGamepadMappingForGUID(NativeSdlGuidModel guid) throws Throwable {
     MemorySegment temp = (MemorySegment) SDL_GetGamepadMappingForGUID.invoke(guid.getDataAddress());
@@ -536,7 +540,7 @@ public class NativeSdlGamepadFuncs {
       return returnObject;
     }
   }
-
+@Nullable
   public synchronized String getGamepadMapping(SdlGamepadDevice gamepad) throws Throwable {
     MemorySegment temp = (MemorySegment) SDL_GetGamepadMapping.invoke(gamepad.getAddress());
     if (temp == MemorySegment.NULL) {
@@ -561,7 +565,7 @@ public class NativeSdlGamepadFuncs {
   public synchronized boolean hasGamepad() throws Throwable {
     return (boolean) SDL_HasGamepad.invoke();
   }
-
+@Nullable
   public SdlJoystickIdArray getGamepads() throws Throwable {
     synchronized (addressMutex) {
       MemorySegment temp = (MemorySegment) SDL_GetGamepads.invoke(tempIntAddress);
@@ -577,7 +581,7 @@ public class NativeSdlGamepadFuncs {
   public synchronized boolean isGamepad(SdlJoystickId instanceId) throws Throwable {
     return (boolean) SDL_IsGamepad.invoke(instanceId.getValue());
   }
-
+@Nullable
   public synchronized String getGamepadNameForId(SdlJoystickId instanceId) throws Throwable {
     MemorySegment temp = (MemorySegment) SDL_GetGamepadNameForID.invoke(instanceId.getValue());
     if (temp == MemorySegment.NULL) {
@@ -586,7 +590,7 @@ public class NativeSdlGamepadFuncs {
       return temp.reinterpret(Integer.MAX_VALUE).getString(0);
     }
   }
-
+@Nullable
   public synchronized String getGamepadPathForId(SdlJoystickId instanceId) throws Throwable {
     MemorySegment temp = (MemorySegment) SDL_GetGamepadPathForID.invoke(instanceId.getValue());
     if (temp == MemorySegment.NULL) {
@@ -599,7 +603,7 @@ public class NativeSdlGamepadFuncs {
   public synchronized int getGamepadPlayerIndexForId(SdlJoystickId instanceId) throws Throwable {
     return (int) SDL_GetGamepadPlayerIndexForID.invoke(instanceId.getValue());
   }
-
+@NonNull
   public synchronized NativeSdlGuidModel getGamepadGuidForId(SdlJoystickId instanceId)
       throws Throwable {
     MemorySegment temp = (MemorySegment) SDL_GetGamepadGUIDForID.invoke(instanceId.getValue());
@@ -626,7 +630,7 @@ public class NativeSdlGamepadFuncs {
   public synchronized int getRealGamepadTypeForId(SdlJoystickId instanceId) throws Throwable {
     return (int) SDL_GetRealGamepadTypeForID.invoke(instanceId.getValue());
   }
-
+@Nullable
   public synchronized String getGamepadMappingForId(SdlJoystickId instanceId) throws Throwable {
     MemorySegment temp = (MemorySegment) SDL_GetGamepadMappingForID.invoke(instanceId.getValue());
     if (temp == MemorySegment.NULL) {
@@ -637,7 +641,7 @@ public class NativeSdlGamepadFuncs {
       return returnObject;
     }
   }
-
+@Nullable
   public synchronized SdlGamepadDevice openGamepad(SdlJoystickId instanceId) throws Throwable {
     MemorySegment temp = (MemorySegment) SDL_OpenGamepad.invoke(instanceId.getValue());
     if (temp == MemorySegment.NULL) {
@@ -646,7 +650,7 @@ public class NativeSdlGamepadFuncs {
       return new SdlGamepadDevice(temp, this);
     }
   }
-
+@Nullable
   public synchronized SdlGamepadDeviceInstance getGamepadFromId(SdlJoystickId instanceId)
       throws Throwable {
     MemorySegment temp = (MemorySegment) SDL_GetGamepadFromID.invoke(instanceId.getValue());
@@ -656,7 +660,7 @@ public class NativeSdlGamepadFuncs {
       return new SdlGamepadDeviceInstance(temp);
     }
   }
-
+@Nullable
   public synchronized SdlGamepadDeviceInstance getGamepadFromPlayerIndex(int playerIndex)
       throws Throwable {
     MemorySegment temp = (MemorySegment) SDL_GetGamepadFromPlayerIndex.invoke(playerIndex);
@@ -670,7 +674,7 @@ public class NativeSdlGamepadFuncs {
   public synchronized void closeGamepad(MemorySegment gamepad) throws Throwable {
     SDL_CloseGamepad.invoke(gamepad);
   }
-
+@Nullable
   public synchronized String getGamepadAppleSFSymbolsNameForButton(
       MemorySegment gamepad, int button) throws Throwable {
     MemorySegment temp =
@@ -681,7 +685,7 @@ public class NativeSdlGamepadFuncs {
       return temp.reinterpret(Integer.MAX_VALUE).getString(0);
     }
   }
-
+@Nullable
   public synchronized String getGamepadAppleSFSymbolsNameForAxis(MemorySegment gamepad, int axis)
       throws Throwable {
     MemorySegment temp =
@@ -692,7 +696,7 @@ public class NativeSdlGamepadFuncs {
       return temp.reinterpret(Integer.MAX_VALUE).getString(0);
     }
   }
-
+@NonNull
   public static NativeSdlGamepadFuncs getInstance(Arena allocator) {
     NativeSdlGamepadFuncs result = INSTANCE;
     if (result == null) {

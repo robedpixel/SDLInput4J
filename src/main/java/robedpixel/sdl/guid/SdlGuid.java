@@ -1,5 +1,7 @@
 package robedpixel.sdl.guid;
 
+import org.jspecify.annotations.NonNull;
+
 import java.lang.foreign.Arena;
 
 public class SdlGuid {
@@ -17,6 +19,7 @@ public class SdlGuid {
    * @return The converted ASCII string
    * @throws Throwable
    */
+  @NonNull
   public String guidToString(NativeSdlGuidModel guid, SdlGuidByteArray buffer) throws Throwable {
     try (Arena arena = Arena.ofConfined()) {
       return SdlFuncs.guidToString(arena, guid, buffer);
@@ -30,6 +33,7 @@ public class SdlGuid {
    * @return Returns a SDL_GUID structure.
    * @throws Throwable
    */
+  @NonNull
   public NativeSdlGuidModel stringToGuid(String pchGuid) throws Throwable {
     try (Arena arena = Arena.ofConfined()) {
       return SdlFuncs.stringToGuid(arena, pchGuid);

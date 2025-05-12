@@ -2,6 +2,9 @@ package robedpixel.sdl.haptic;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import robedpixel.sdl.haptic.effect.SdlHapticEffect;
 import robedpixel.sdl.joystick.SdlJoystickDevice;
 
@@ -20,6 +23,7 @@ public class SdlHaptic {
    *     longer needed.
    * @throws Throwable
    */
+  @Nullable
   public SdlHapticIdArray getHaptics() throws Throwable {
     return SdlFuncs.getHaptics();
   }
@@ -32,6 +36,7 @@ public class SdlHaptic {
    *     returns null; call SdlError.getError() for more information.
    * @throws Throwable
    */
+  @Nullable
   public String getHapticId(SdlHapticId instanceId) throws Throwable {
     return SdlFuncs.getHapticId(instanceId.getValue());
   }
@@ -44,6 +49,7 @@ public class SdlHaptic {
    *     information.
    * @throws Throwable
    */
+  @Nullable
   public SdlHapticDevice openHaptic(SdlHapticId instanceId) throws Throwable {
     MemorySegment address = SdlFuncs.openHaptic(instanceId.getValue());
     if (address == MemorySegment.NULL) {
@@ -61,6 +67,7 @@ public class SdlHaptic {
    *     yet; call SdlError.getError() for more information.
    * @throws Throwable
    */
+  @Nullable
   public SdlHapticDevice getHapticFromId(SdlHapticId instanceId) throws Throwable {
     MemorySegment address = SdlFuncs.getHapticFromId(instanceId.getValue());
     if (address == MemorySegment.NULL) {
@@ -78,6 +85,7 @@ public class SdlHaptic {
    *     SdlError.getError() for more information.
    * @throws Throwable
    */
+  @NonNull
   public SdlHapticId getHapticId(SdlHapticDevice haptic) throws Throwable {
     SdlHapticId hapticId = new SdlHapticId();
     hapticId.setValue(SdlFuncs.getHapticId(haptic.getAddress()));
@@ -92,6 +100,7 @@ public class SdlHaptic {
    *     returns NULL; call SdlError.getError() for more information.
    * @throws Throwable
    */
+  @Nullable
   public String getHapticName(SdlHapticDevice haptic) throws Throwable {
     return SdlFuncs.getHapticName(haptic.getAddress());
   }
@@ -113,6 +122,7 @@ public class SdlHaptic {
    *     more information.
    * @throws Throwable
    */
+  @Nullable
   public SdlHapticDevice openHapticFromMouse() throws Throwable {
     MemorySegment address = SdlFuncs.openHapticFromMouse();
     if (address == MemorySegment.NULL) {
@@ -141,6 +151,7 @@ public class SdlHaptic {
    *     SdlError.getError() for more information.
    * @throws Throwable
    */
+  @Nullable
   public SdlHapticDevice openHapticFromJoystick(SdlJoystickDevice joystick) throws Throwable {
     MemorySegment address = SdlFuncs.openHapticFromJoystick(joystick.getAddress());
     if (address == MemorySegment.NULL) {
