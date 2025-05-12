@@ -1,8 +1,7 @@
 package robedpixel.sdl.error;
 
-import org.jspecify.annotations.NonNull;
-
 import java.lang.foreign.Arena;
+import org.jspecify.annotations.NonNull;
 
 public class SdlError {
   private final NativeSdlErrorFuncs SdlFuncs;

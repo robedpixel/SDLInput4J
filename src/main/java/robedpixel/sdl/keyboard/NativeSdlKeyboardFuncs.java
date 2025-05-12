@@ -1,7 +1,9 @@
 package robedpixel.sdl.keyboard;
-//TODO: add nullablility annotations
+
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import robedpixel.sdl.video.SdlWindow;
 
 public class NativeSdlKeyboardFuncs {
@@ -179,6 +181,7 @@ public class NativeSdlKeyboardFuncs {
     return (boolean) SDL_HasKeyboard.invoke();
   }
 
+  @Nullable
   public SdlKeyboardIdArray getKeyboards() throws Throwable {
     synchronized (addressMutex) {
       MemorySegment temp = (MemorySegment) SDL_GetKeyboards.invoke(tempIntAddress);
@@ -191,7 +194,8 @@ public class NativeSdlKeyboardFuncs {
     }
   }
 
-  public synchronized String getKeyboardNameForID(int instanceId) throws Throwable {
+  @Nullable
+  public synchronized String getKeyboardNameForId(int instanceId) throws Throwable {
     MemorySegment temp = (MemorySegment) SDL_GetKeyboardNameForID.invoke(instanceId);
     if (temp == MemorySegment.NULL) {
       return null;
@@ -200,6 +204,7 @@ public class NativeSdlKeyboardFuncs {
     }
   }
 
+  @Nullable
   public synchronized SdlWindow getKeyboardFocus() throws Throwable {
     MemorySegment temp = (MemorySegment) SDL_GetKeyboardFocus.invoke();
     if (temp == MemorySegment.NULL) {
@@ -209,7 +214,7 @@ public class NativeSdlKeyboardFuncs {
     }
   }
 
-  public boolean[] getKeyboardState() throws Throwable {
+  public boolean @Nullable [] getKeyboardState() throws Throwable {
     synchronized (addressMutex) {
       MemorySegment temp = (MemorySegment) SDL_GetKeyboardState.invoke(tempIntAddress);
       if (temp == MemorySegment.NULL) {
@@ -253,6 +258,7 @@ public class NativeSdlKeyboardFuncs {
     return (boolean) SDL_SetScancodeName.invoke(scanCode, localAllocator.allocateFrom(name));
   }
 
+  @Nullable
   public String getScancodeName(int scanCode) throws Throwable {
     MemorySegment charArrayAddress = (MemorySegment) SDL_GetScancodeName.invoke(scanCode);
     if (charArrayAddress == MemorySegment.NULL) {
@@ -266,6 +272,7 @@ public class NativeSdlKeyboardFuncs {
     return (int) SDL_GetScancodeFromName.invoke(localAllocator.allocateFrom(name));
   }
 
+  @Nullable
   public String getKeyName(int key) throws Throwable {
     MemorySegment charArrayAddress = (MemorySegment) SDL_GetKeyName.invoke(key);
     if (charArrayAddress == MemorySegment.NULL) {
@@ -317,6 +324,7 @@ public class NativeSdlKeyboardFuncs {
     return (boolean) SDL_ScreenKeyboardShown.invoke(window);
   }
 
+  @NonNull
   public static NativeSdlKeyboardFuncs getInstance(Arena allocator) {
     NativeSdlKeyboardFuncs result = INSTANCE;
     if (result == null) {

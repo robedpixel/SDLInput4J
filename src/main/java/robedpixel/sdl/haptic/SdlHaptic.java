@@ -2,7 +2,6 @@ package robedpixel.sdl.haptic;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
-
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import robedpixel.sdl.haptic.effect.SdlHapticEffect;

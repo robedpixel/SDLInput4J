@@ -1,10 +1,9 @@
 package robedpixel.sdl.haptic;
 
-import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.Nullable;
-
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 class NativeSdlHapticFuncs {
   private static volatile NativeSdlHapticFuncs INSTANCE;
@@ -222,7 +221,8 @@ class NativeSdlHapticFuncs {
                 library.find("SDL_StopHapticRumble").orElseThrow(),
                 FunctionDescriptor.of(ValueLayout.JAVA_BOOLEAN, ValueLayout.ADDRESS));
   }
-@Nullable
+
+  @Nullable
   public SdlHapticIdArray getHaptics() throws Throwable {
     synchronized (addressMutex) {
       MemorySegment temp = (MemorySegment) SDL_GetHaptics.invoke(tempIntAddress);
@@ -234,7 +234,8 @@ class NativeSdlHapticFuncs {
       }
     }
   }
-@NonNull
+
+  @NonNull
   public synchronized String getHapticId(int instanceId) throws Throwable {
     MemorySegment temp = (MemorySegment) SDL_GetHapticNameForID.invoke(instanceId);
     if (temp == MemorySegment.NULL) {
@@ -243,11 +244,13 @@ class NativeSdlHapticFuncs {
       return temp.reinterpret(Integer.MAX_VALUE).getString(0);
     }
   }
+
   @NonNull
   public synchronized MemorySegment openHaptic(int instanceId) throws Throwable {
     return (MemorySegment) SDL_OpenHaptic.invoke(instanceId);
   }
-@Nullable
+
+  @Nullable
   public synchronized MemorySegment getHapticFromId(int instanceId) throws Throwable {
     return (MemorySegment) SDL_GetHapticFromID.invoke(instanceId);
   }
@@ -255,7 +258,8 @@ class NativeSdlHapticFuncs {
   public synchronized int getHapticId(MemorySegment haptic) throws Throwable {
     return (int) SDL_GetHapticID.invoke(haptic);
   }
-@Nullable
+
+  @Nullable
   public synchronized String getHapticName(MemorySegment haptic) throws Throwable {
     MemorySegment temp = (MemorySegment) SDL_GetHapticName.invoke(haptic);
     if (temp == MemorySegment.NULL) {
@@ -268,7 +272,8 @@ class NativeSdlHapticFuncs {
   public synchronized boolean isMouseHaptic() throws Throwable {
     return (boolean) SDL_IsMouseHaptic.invoke();
   }
-@NonNull
+
+  @NonNull
   public synchronized MemorySegment openHapticFromMouse() throws Throwable {
     return (MemorySegment) SDL_OpenHapticFromMouse.invoke();
   }
@@ -276,6 +281,7 @@ class NativeSdlHapticFuncs {
   public synchronized boolean isJoystickHaptic(MemorySegment joystick) throws Throwable {
     return (boolean) SDL_IsJoystickHaptic.invoke(joystick);
   }
+
   @NonNull
   public synchronized MemorySegment openHapticFromJoystick(MemorySegment joystick)
       throws Throwable {
@@ -372,7 +378,8 @@ class NativeSdlHapticFuncs {
   public synchronized boolean stopHapticRumble(MemorySegment haptic) throws Throwable {
     return (boolean) SDL_StopHapticRumble.invoke(haptic);
   }
-@NonNull
+
+  @NonNull
   public static NativeSdlHapticFuncs getInstance(Arena allocator) {
     NativeSdlHapticFuncs result = INSTANCE;
     if (result == null) {

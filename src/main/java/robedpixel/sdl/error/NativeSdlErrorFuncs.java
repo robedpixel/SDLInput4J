@@ -1,9 +1,8 @@
 package robedpixel.sdl.error;
 
-import org.jspecify.annotations.NonNull;
-
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
+import org.jspecify.annotations.NonNull;
 
 class NativeSdlErrorFuncs {
   private static volatile NativeSdlErrorFuncs INSTANCE;
@@ -24,6 +23,7 @@ class NativeSdlErrorFuncs {
                 library.find("SDL_ClearError").orElseThrow(),
                 FunctionDescriptor.of(ValueLayout.JAVA_BOOLEAN));
   }
+
   @NonNull
   public synchronized String getError() throws Throwable {
     MemorySegment charArrayAddress = (MemorySegment) SDL_GetError.invoke();

@@ -1,5 +1,6 @@
 package robedpixel.sdl.power;
-//TODO: add nullablility annotations
+
+// TODO: add nullablility annotations
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 

@@ -1,5 +1,6 @@
 package robedpixel.sdl.rect;
-//TODO: add nullablility annotations
+
+// TODO: add nullablility annotations
 import java.lang.foreign.Arena;
 
 public class SdlRect {

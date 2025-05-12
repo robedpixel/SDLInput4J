@@ -1,5 +1,6 @@
 package robedpixel.sdl.properties;
-//TODO: add nullablility annotations
+
+// TODO: add nullablility annotations
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 

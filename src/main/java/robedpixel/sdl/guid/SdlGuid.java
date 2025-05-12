@@ -1,8 +1,7 @@
 package robedpixel.sdl.guid;
 
-import org.jspecify.annotations.NonNull;
-
 import java.lang.foreign.Arena;
+import org.jspecify.annotations.NonNull;
 
 public class SdlGuid {
   private final NativeSdlGuidFuncs SdlFuncs;

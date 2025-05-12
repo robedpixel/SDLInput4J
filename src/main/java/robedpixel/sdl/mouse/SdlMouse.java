@@ -1,5 +1,6 @@
 package robedpixel.sdl.mouse;
-//TODO: add nullablility annotations
+
+// TODO: add nullablility annotations
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import robedpixel.sdl.video.SdlWindow;
