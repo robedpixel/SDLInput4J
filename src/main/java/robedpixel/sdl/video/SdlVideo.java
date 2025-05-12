@@ -1,8 +1,10 @@
 package robedpixel.sdl.video;
 
-// TODO: add nullablility annotations
+
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import robedpixel.sdl.properties.SdlPropertiesId;
 import robedpixel.sdl.rect.SdlPointModel;
 import robedpixel.sdl.rect.SdlRectModel;
@@ -33,6 +35,7 @@ public class SdlVideo {
    * @return Returns the name of the video driver with the given index.
    * @throws Throwable
    */
+  @NonNull
   public String getVideoDriver(int index) throws Throwable {
     return SdlFuncs.getVideoDriver(index);
   }
@@ -43,6 +46,7 @@ public class SdlVideo {
    * @return Returns the name of the current video driver or NULL if no driver has been initialized.
    * @throws Throwable
    */
+  @Nullable
   public String getCurrentVideoDriver() throws Throwable {
     return SdlFuncs.getCurrentVideoDriver();
   }
@@ -65,6 +69,7 @@ public class SdlVideo {
    *     for more information.
    * @throws Throwable
    */
+  @Nullable
   public SdlDisplayIdArray getDisplays() throws Throwable {
     return SdlFuncs.getDisplays();
   }
@@ -76,6 +81,7 @@ public class SdlVideo {
    *     SdlError.getError() for more information.
    * @throws Throwable
    */
+  @NonNull
   public SdlDisplayId getPrimaryDisplay() throws Throwable {
     SdlDisplayId returnObject = new SdlDisplayId();
     returnObject.setValue(SdlFuncs.getPrimaryDisplay());
@@ -90,6 +96,7 @@ public class SdlVideo {
    *     more information.
    * @throws Throwable
    */
+  @NonNull
   public SdlPropertiesId getDisplayProperties(SdlDisplayId displayId) throws Throwable {
     SdlPropertiesId returnObject = new SdlPropertiesId();
     returnObject.setValue(SdlFuncs.getDisplayProperties(displayId.getValue()));
@@ -104,6 +111,7 @@ public class SdlVideo {
    *     information.
    * @throws Throwable
    */
+  @Nullable
   public String getDisplayName(SdlDisplayId displayId) throws Throwable {
     return SdlFuncs.getDisplayName(displayId.getValue());
   }
@@ -184,6 +192,7 @@ public class SdlVideo {
    *     for more information
    * @throws Throwable
    */
+  @Nullable
   public SdlDisplayModeArray getFullscreenDisplayModes(SdlDisplayId displayId) throws Throwable {
     return SdlFuncs.getFullscreenDisplayModes(displayId.getValue());
   }
@@ -230,6 +239,7 @@ public class SdlVideo {
    *     SdlError.getError() for more information.
    * @throws Throwable
    */
+  @Nullable
   public SdlDisplayMode getDesktopDisplayMode(SdlDisplayId displayId) throws Throwable {
     MemorySegment segment = SdlFuncs.getDesktopDisplayMode(displayId.getValue());
     if (segment == MemorySegment.NULL) {
@@ -247,6 +257,7 @@ public class SdlVideo {
    *     SdlError.getError() for more information.
    * @throws Throwable
    */
+  @Nullable
   public SdlDisplayMode getCurrentDisplayMode(SdlDisplayId displayId) throws Throwable {
     MemorySegment segment = SdlFuncs.getCurrentDisplayMode(displayId.getValue());
     if (segment == MemorySegment.NULL) {
@@ -264,6 +275,7 @@ public class SdlVideo {
    *     SdlError.getError() for more information.
    * @throws Throwable
    */
+  @NonNull
   public SdlDisplayId getDisplayForPoint(SdlPointModel point) throws Throwable {
     SdlDisplayId returnObject = new SdlDisplayId();
     returnObject.setValue(SdlFuncs.getDisplayForPoint(point.getDataAddress()));
@@ -279,6 +291,7 @@ public class SdlVideo {
    *     information.
    * @throws Throwable
    */
+  @NonNull
   public SdlDisplayId getDisplayForRect(SdlRectModel rect) throws Throwable {
     SdlDisplayId returnObject = new SdlDisplayId();
     returnObject.setValue(SdlFuncs.getDisplayForRect(rect.getDataAddress()));

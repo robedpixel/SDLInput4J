@@ -3,6 +3,8 @@ package robedpixel.sdl;
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 import lombok.Getter;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 class NativeSdlLibFuncs {
   private static volatile NativeSdlLibFuncs INSTANCE;
@@ -80,6 +82,7 @@ class NativeSdlLibFuncs {
                 FunctionDescriptor.ofVoid(ValueLayout.ADDRESS));
   }
 
+  @NonNull
   public static NativeSdlLibFuncs getInstance() {
     NativeSdlLibFuncs result = INSTANCE;
     if (result == null) {
@@ -142,6 +145,7 @@ class NativeSdlLibFuncs {
     SDL_free.invoke(pointer);
   }
 
+  @Nullable
   public synchronized String getAppMetadataProperty(Arena localAllocator, String name)
       throws Throwable {
     MemorySegment charArrayAddress =

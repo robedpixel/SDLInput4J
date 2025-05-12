@@ -1,9 +1,11 @@
 package robedpixel.sdl.video;
 
-// TODO: add nullablility annotations
+
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 import java.nio.charset.StandardCharsets;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 class NativeSdlVideoFuncs {
   private static volatile NativeSdlVideoFuncs INSTANCE;
@@ -163,11 +165,13 @@ class NativeSdlVideoFuncs {
     return (int) SDL_GetNumVideoDrivers.invoke();
   }
 
+  @NonNull
   public synchronized String getVideoDriver(int index) throws Throwable {
     MemorySegment charAddress = (MemorySegment) SDL_GetVideoDriver.invoke(index);
     return charAddress.reinterpret(Integer.MAX_VALUE).getString(0);
   }
 
+  @Nullable
   public synchronized String getCurrentVideoDriver() throws Throwable {
     MemorySegment charAddress = (MemorySegment) SDL_GetCurrentVideoDriver.invoke();
     if (charAddress == MemorySegment.NULL) {
@@ -181,6 +185,7 @@ class NativeSdlVideoFuncs {
     return (int) SDL_GetSystemTheme.invoke();
   }
 
+  @Nullable
   public SdlDisplayIdArray getDisplays() throws Throwable {
     synchronized (addressMutex) {
       MemorySegment temp = (MemorySegment) SDL_GetDisplays.invoke(tempIntAddress);
@@ -202,6 +207,7 @@ class NativeSdlVideoFuncs {
     return (int) SDL_GetDisplayProperties.invoke(displayId);
   }
 
+  @Nullable
   public synchronized String getDisplayName(int displayId) throws Throwable {
     MemorySegment charAddress = (MemorySegment) SDL_GetDisplayName.invoke(displayId);
     if (charAddress == MemorySegment.NULL) {
@@ -233,6 +239,7 @@ class NativeSdlVideoFuncs {
   }
 
   // TODO: need test
+  @Nullable
   public SdlDisplayModeArray getFullscreenDisplayModes(int displayId) throws Throwable {
     synchronized (addressMutex) {
       MemorySegment temp =
@@ -288,6 +295,7 @@ class NativeSdlVideoFuncs {
     return (boolean) SDL_DisableScreenSaver.invoke();
   }
 
+  @NonNull
   public static NativeSdlVideoFuncs getInstance(Arena allocator) {
     NativeSdlVideoFuncs result = INSTANCE;
     if (result == null) {

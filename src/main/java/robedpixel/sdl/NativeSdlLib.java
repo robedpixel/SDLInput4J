@@ -2,6 +2,8 @@ package robedpixel.sdl;
 
 import java.lang.foreign.*;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import robedpixel.sdl.error.SdlError;
 import robedpixel.sdl.guid.SdlGuid;
 import robedpixel.sdl.haptic.SdlHaptic;
@@ -129,6 +131,7 @@ public class NativeSdlLib implements AutoCloseable {
    *     null for properties with no default.
    * @throws Throwable
    */
+  @Nullable
   public String getAppMetadataProperty(String name) throws Throwable {
     try (Arena arena = Arena.ofConfined()) {
       return SdlFuncs.getAppMetadataProperty(arena, name);
@@ -140,6 +143,7 @@ public class NativeSdlLib implements AutoCloseable {
    *
    * @return Hints module for SDL
    */
+  @NonNull
   public SdlSensor getSdlSensor() {
     return new SdlSensor(SdlFuncs.getGlobalAllocator());
   }
@@ -149,6 +153,7 @@ public class NativeSdlLib implements AutoCloseable {
    *
    * @return Hints module for SDL
    */
+  @NonNull
   public SdlHints getSdlHints() {
     return new SdlHints(SdlFuncs.getGlobalAllocator());
   }
@@ -158,6 +163,7 @@ public class NativeSdlLib implements AutoCloseable {
    *
    * @return Error module for SDL
    */
+  @NonNull
   public SdlError getSdlError() {
     return new SdlError(SdlFuncs.getGlobalAllocator());
   }
@@ -167,6 +173,7 @@ public class NativeSdlLib implements AutoCloseable {
    *
    * @return Guid module for SDL
    */
+  @NonNull
   public SdlGuid getSdlGuid() {
     return new SdlGuid(SdlFuncs.getGlobalAllocator());
   }
@@ -176,6 +183,7 @@ public class NativeSdlLib implements AutoCloseable {
    *
    * @return Power module for SDL
    */
+  @NonNull
   public SdlPower getSdlPower() {
     return new SdlPower(SdlFuncs.getGlobalAllocator());
   }
@@ -185,6 +193,7 @@ public class NativeSdlLib implements AutoCloseable {
    *
    * @return Misc module for SDL
    */
+  @NonNull
   public SdlMisc getSdlMisc() {
     return new SdlMisc(SdlFuncs.getGlobalAllocator());
   }
@@ -194,6 +203,7 @@ public class NativeSdlLib implements AutoCloseable {
    *
    * @return Video module for SDL
    */
+  @NonNull
   public SdlVideo getSdlVideo() {
     return new SdlVideo(SdlFuncs.getGlobalAllocator());
   }
@@ -203,6 +213,7 @@ public class NativeSdlLib implements AutoCloseable {
    *
    * @return Rect module for SDL
    */
+  @NonNull
   public SdlRect getSdlRect() {
     return new SdlRect(SdlFuncs.getGlobalAllocator());
   }
@@ -212,6 +223,7 @@ public class NativeSdlLib implements AutoCloseable {
    *
    * @return Haptic module for SDL
    */
+  @NonNull
   public SdlHaptic getSdlHaptic() {
     return new SdlHaptic(SdlFuncs.getGlobalAllocator());
   }
@@ -221,6 +233,7 @@ public class NativeSdlLib implements AutoCloseable {
    *
    * @return Touch module for SDL
    */
+  @NonNull
   public SdlTouch getSdlTouch() {
     return new SdlTouch(SdlFuncs.getGlobalAllocator());
   }
@@ -230,6 +243,7 @@ public class NativeSdlLib implements AutoCloseable {
    *
    * @return Properties module for SDL
    */
+  @NonNull
   public SdlProperties getSdlProperties() {
     return new SdlProperties(SdlFuncs.getGlobalAllocator());
   }
