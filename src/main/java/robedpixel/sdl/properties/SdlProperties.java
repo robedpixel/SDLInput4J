@@ -1,6 +1,9 @@
 package robedpixel.sdl.properties;
 
-// TODO: add nullablility annotations
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 
@@ -18,6 +21,7 @@ public class SdlProperties {
    *     more information.
    * @throws Throwable
    */
+  @NonNull
   public SdlPropertiesId getGlobalProperties() throws Throwable {
     SdlPropertiesId returnObject = new SdlPropertiesId();
     returnObject.setValue(SdlFuncs.getGlobalProperties());
@@ -31,6 +35,7 @@ public class SdlProperties {
    *     for more information.
    * @throws Throwable
    */
+  @NonNull
   public SdlPropertiesId createProperties() throws Throwable {
     SdlPropertiesId returnObject = new SdlPropertiesId();
     returnObject.setValue(SdlFuncs.createProperties());
@@ -220,6 +225,7 @@ public class SdlProperties {
    *     property.
    * @throws Throwable
    */
+  @NonNull
   public MemorySegment getPointerProperty(int props, String name, MemorySegment defaultValue)
       throws Throwable {
     try (Arena arena = Arena.ofConfined()) {
@@ -237,6 +243,7 @@ public class SdlProperties {
    *     property.
    * @throws Throwable
    */
+  @Nullable
   public String getStringProperty(int props, String name, String defaultValue) throws Throwable {
     try (Arena arena = Arena.ofConfined()) {
       return SdlFuncs.getStringProperty(arena, props, name, defaultValue);

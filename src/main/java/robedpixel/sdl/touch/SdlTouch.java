@@ -1,6 +1,9 @@
 package robedpixel.sdl.touch;
 
-// TODO: add nullablility annotations
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import java.lang.foreign.Arena;
 
 public class SdlTouch {
@@ -16,6 +19,7 @@ public class SdlTouch {
    *
    * @return An array of SdlTouchIds or null on failure,
    */
+  @Nullable
   public SdlTouchIdArray getTouchDevices() throws Throwable {
     return SdlFuncs.getTouchDevices();
   }
@@ -27,6 +31,7 @@ public class SdlTouch {
    * @return Returns touch device name, or null on failure; call SdlError.getError() for more
    *     information.
    */
+  @Nullable
   public String getTouchDeviceName(SdlTouchId touchId) throws Throwable {
     return SdlFuncs.getTouchDeviceName(touchId.getValue());
   }
@@ -37,6 +42,7 @@ public class SdlTouch {
    * @param touchId the ID of a touch device.
    * @return Returns touch device type.
    */
+  @NonNull
   public SdlTouchDeviceType getTouchDeviceType(SdlTouchId touchId) throws Throwable {
     return SdlTouchDeviceType.fromInt(SdlFuncs.getTouchDeviceType(touchId.getValue()));
   }
@@ -45,10 +51,11 @@ public class SdlTouch {
    * Get a list of active fingers for a given touch device.
    *
    * @param touchId The ID of a touch device.
-   * @return Returns a 2d array of SdlFinger objects or nullptr on failure; call SdlError.getError()
+   * @return Returns a 2d array of SdlFinger objects or null on failure; call SdlError.getError()
    *     for more information.
    * @throws Throwable
    */
+  @Nullable
   public SdlFinger2dArray getTouchFingers(SdlTouchId touchId) throws Throwable {
     return SdlFuncs.getTouchFingers(touchId.getValue());
   }

@@ -1,6 +1,7 @@
 package robedpixel.sdl.rect;
 
-// TODO: add nullablility annotations
+import org.jspecify.annotations.NonNull;
+
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 
@@ -53,7 +54,7 @@ class NativeSdlRectFuncs {
       throws Throwable {
     return (boolean) SDL_GetRectUnion.invoke(A, B, result);
   }
-
+@NonNull
   public static NativeSdlRectFuncs getInstance(Arena allocator) {
     NativeSdlRectFuncs result = INSTANCE;
     if (result == null) {

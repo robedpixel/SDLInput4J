@@ -247,10 +247,14 @@ public class NativeSdlKeyboardFuncs {
     return (int) SDL_GetKeyFromScancode.invoke(scanCode, modState, keyEvent);
   }
 
-  public int getScancodeFromKey(int key, short modState) throws Throwable {
+  public int getScancodeFromKey(int key, Short modState) throws Throwable {
     synchronized (addressMutex) {
-      tempShortAddress.set(ValueLayout.JAVA_SHORT, 0, modState);
-      return (int) SDL_GetScancodeFromKey.invoke(key, tempShortAddress);
+      if (modState == null){
+        return (int) SDL_GetScancodeFromKey.invoke(key, MemorySegment.NULL);
+      }else {
+        tempShortAddress.set(ValueLayout.JAVA_SHORT, 0, modState);
+        return (int) SDL_GetScancodeFromKey.invoke(key, tempShortAddress);
+      }
     }
   }
 

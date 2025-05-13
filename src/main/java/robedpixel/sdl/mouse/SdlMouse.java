@@ -1,8 +1,11 @@
 package robedpixel.sdl.mouse;
 
-// TODO: add nullablility annotations
+
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import robedpixel.sdl.video.SdlWindow;
 
 public class SdlMouse {
@@ -29,7 +32,7 @@ public class SdlMouse {
    *     more information.
    * @throws Throwable
    */
-  public int[] getMice() throws Throwable {
+  public int @NonNull [] getMice() throws Throwable {
     return SdlFuncs.getMice();
   }
 
@@ -41,6 +44,7 @@ public class SdlMouse {
    *     for more information.
    * @throws Throwable
    */
+  @Nullable
   public String getMouseNameForID(int instanceId) throws Throwable {
     return SdlFuncs.getMouseNameForID(instanceId);
   }
@@ -51,6 +55,7 @@ public class SdlMouse {
    * @return Returns the window with mouse focus.
    * @throws Throwable
    */
+  @NonNull
   public SdlWindow getMouseFocus() throws Throwable {
     MemorySegment windowSegment = SdlFuncs.getMouseFocus();
     return new SdlWindow(windowSegment);
@@ -184,6 +189,7 @@ public class SdlMouse {
    *     SdlError.getError() for more information.
    * @throws Throwable
    */
+  @Nullable
   public SdlCursorInstance createCursor(SdlCursorBitmap bitmap) throws Throwable {
     MemorySegment cursorAddress =
         SdlFuncs.createCursor(
@@ -211,6 +217,7 @@ public class SdlMouse {
    *     information.
    * @throws Throwable
    */
+  @Nullable
   public SdlCursorInstance createSystemCursor(SdlSystemCursor instanceId) throws Throwable {
     MemorySegment cursorAddress = SdlFuncs.createSystemCursor(instanceId.ordinal());
     if (cursorAddress == MemorySegment.NULL) {
@@ -237,6 +244,7 @@ public class SdlMouse {
    * @return Returns the active cursor or null if there is no mouse.
    * @throws Throwable
    */
+  @Nullable
   public SdlCursorReference getCursor() throws Throwable {
     MemorySegment cursorAddress = SdlFuncs.getCursor();
     if (cursorAddress == MemorySegment.NULL) {
@@ -252,6 +260,7 @@ public class SdlMouse {
    *     more information.
    * @throws Throwable
    */
+  @NonNull
   public SdlCursorReference getDefaultCursor() throws Throwable {
     MemorySegment cursorAddress = SdlFuncs.getDefaultCursor();
     return new SdlCursorReference(cursorAddress);

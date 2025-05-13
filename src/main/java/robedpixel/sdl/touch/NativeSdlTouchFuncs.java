@@ -1,6 +1,9 @@
 package robedpixel.sdl.touch;
 
-// TODO: add nullablility annotations
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 
@@ -39,6 +42,7 @@ class NativeSdlTouchFuncs {
                 FunctionDescriptor.of(
                     ValueLayout.ADDRESS, ValueLayout.JAVA_INT, ValueLayout.ADDRESS));
   }
+  @Nullable
 
   public SdlTouchIdArray getTouchDevices() throws Throwable {
     synchronized (addressMutex) {
@@ -52,7 +56,7 @@ class NativeSdlTouchFuncs {
       }
     }
   }
-
+  @Nullable
   public synchronized String getTouchDeviceName(int touchId) throws Throwable {
     MemorySegment charAddress = (MemorySegment) SDL_GetTouchDeviceName.invoke(touchId);
     if (charAddress == MemorySegment.NULL) {
@@ -65,7 +69,7 @@ class NativeSdlTouchFuncs {
   public synchronized int getTouchDeviceType(int touchId) throws Throwable {
     return (int) SDL_GetTouchDeviceType.invoke(touchId);
   }
-
+  @Nullable
   // assume return 2d array
   public SdlFinger2dArray getTouchFingers(int touchId) throws Throwable {
     synchronized (addressMutex) {
@@ -79,7 +83,7 @@ class NativeSdlTouchFuncs {
       }
     }
   }
-
+@NonNull
   public static NativeSdlTouchFuncs getInstance(Arena allocator) {
     NativeSdlTouchFuncs result = INSTANCE;
     if (result == null) {

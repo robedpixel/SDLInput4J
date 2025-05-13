@@ -1,6 +1,8 @@
 package robedpixel.sdl.power;
 
 // TODO: add nullablility annotations
+import org.jspecify.annotations.NonNull;
+
 import java.lang.foreign.Arena;
 
 public class SdlPower {
@@ -16,6 +18,7 @@ public class SdlPower {
    * @return Snapshot of power info at the time of call
    * @throws Throwable
    */
+  @NonNull
   public SdlPowerSnapshot getPowerInfo() throws Throwable {
     SdlPowerSnapshot returnObject = new SdlPowerSnapshot();
     SdlFuncs.getPowerInfo(returnObject);

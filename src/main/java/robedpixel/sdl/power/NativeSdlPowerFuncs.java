@@ -1,6 +1,7 @@
 package robedpixel.sdl.power;
 
-// TODO: add nullablility annotations
+import org.jspecify.annotations.NonNull;
+
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 
@@ -31,7 +32,7 @@ class NativeSdlPowerFuncs {
       sdlPowerSnapshot.setPercent(percentAddress.get(ValueLayout.JAVA_INT, 0));
     }
   }
-
+@NonNull
   public static NativeSdlPowerFuncs getInstance(Arena allocator) {
     NativeSdlPowerFuncs result = INSTANCE;
     if (result == null) {

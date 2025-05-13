@@ -1,6 +1,9 @@
 package robedpixel.sdl.mouse;
 
-// TODO: add nullablility annotations
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 
@@ -172,8 +175,7 @@ class NativeSdlMouseFuncs {
   public synchronized boolean hasMouse() throws Throwable {
     return (boolean) SDL_HasMouse.invoke();
   }
-
-  public int[] getMice() throws Throwable {
+public int @NonNull [] getMice() throws Throwable {
     synchronized (addressMutex) {
       MemorySegment intArray = (MemorySegment) SDL_GetMice.invoke(tempIntAddress);
       int numMice = tempIntAddress.get(ValueLayout.JAVA_INT, 0);
@@ -188,7 +190,7 @@ class NativeSdlMouseFuncs {
       }
     }
   }
-
+@Nullable
   public synchronized String getMouseNameForID(int instanceId) throws Throwable {
     MemorySegment temp = (MemorySegment) SDL_GetMouseNameForID.invoke(instanceId);
     if (temp == MemorySegment.NULL) {
@@ -197,7 +199,7 @@ class NativeSdlMouseFuncs {
       return temp.reinterpret(Integer.MAX_VALUE).getString(0);
     }
   }
-
+@NonNull
   public synchronized MemorySegment getMouseFocus() throws Throwable {
     return (MemorySegment) SDL_GetMouseFocus.invoke();
   }
@@ -257,7 +259,7 @@ class NativeSdlMouseFuncs {
   public synchronized boolean captureMouse(boolean enabled) throws Throwable {
     return (boolean) SDL_CaptureMouse.invoke(enabled);
   }
-
+@NonNull
   public synchronized MemorySegment createCursor(
       MemorySegment data, MemorySegment mask, int w, int h, int hot_x, int hot_y) throws Throwable {
     return (MemorySegment) SDL_CreateCursor.invoke(data, mask, w, h, hot_x, hot_y);
@@ -266,6 +268,7 @@ class NativeSdlMouseFuncs {
   /*public synchronized MemorySegment  createColorCursor(MemorySegment surface,int hot_x, int hot_y){
 
   }*/
+  @NonNull
   public synchronized MemorySegment createSystemCursor(int instanceId) throws Throwable {
     return (MemorySegment) SDL_CreateSystemCursor.invoke(instanceId);
   }
@@ -273,11 +276,11 @@ class NativeSdlMouseFuncs {
   public synchronized boolean setCursor(MemorySegment cursor) throws Throwable {
     return (boolean) SDL_SetCursor.invoke(cursor);
   }
-
+@NonNull
   public synchronized MemorySegment getCursor() throws Throwable {
     return (MemorySegment) SDL_GetCursor.invoke();
   }
-
+@NonNull
   public synchronized MemorySegment getDefaultCursor() throws Throwable {
     return (MemorySegment) SDL_GetDefaultCursor.invoke();
   }
@@ -297,7 +300,7 @@ class NativeSdlMouseFuncs {
   public synchronized boolean cursorVisible() throws Throwable {
     return (boolean) SDL_CursorVisible.invoke();
   }
-
+@NonNull
   public static NativeSdlMouseFuncs getInstance(Arena allocator) {
     NativeSdlMouseFuncs result = INSTANCE;
     if (result == null) {

@@ -1,9 +1,12 @@
 package robedpixel.sdl.sensors;
 
-// TODO: add nullablility annotations
+
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import robedpixel.sdl.properties.SdlPropertiesId;
 
 public class SdlSensor {
@@ -13,7 +16,7 @@ public class SdlSensor {
     SdlFuncs = NativeSdlSensorsFuncs.getInstance(allocator);
   }
 
-  // TODO: NEEDS BETTER MEMORY MANAGEMENT
+
   /**
    * Get a list of currently connected sensors.
    *
@@ -21,6 +24,7 @@ public class SdlSensor {
    *     for more information.
    * @throws Throwable
    */
+  @Nullable
   public SdlSensorIdArray getSensors() throws Throwable {
     return SdlFuncs.getSensors();
   }
@@ -32,6 +36,7 @@ public class SdlSensor {
    * @return Returns the sensor name, or null if instance_id is not valid.
    * @throws Throwable
    */
+  @Nullable
   public String getSensorNameForId(SdlSensorId instanceId) throws Throwable {
     return SdlFuncs.getSensorNameForId(instanceId.getValue());
   }
@@ -43,6 +48,7 @@ public class SdlSensor {
    * @return Returns the SensorType , or SDL_SENSOR_INVALID if instance_id is not valid.
    * @throws Throwable
    */
+  @NonNull
   public SdlSensorType getSensorTypeForId(SdlSensorId instanceId) throws Throwable {
     return SdlSensorType.fromInt(SdlFuncs.getSensorTypeForId(instanceId.getValue()));
   }
@@ -62,10 +68,11 @@ public class SdlSensor {
    * Open a sensor for use.
    *
    * @param instanceId The sensor instance ID
-   * @return Returns an SDL_Sensor object or NULL on failure; call SdlError.getError() for more
+   * @return Returns an SDL_Sensor object or null on failure; call SdlError.getError() for more
    *     information.
    * @throws Throwable
    */
+  @Nullable
   public SdlSensorDevice openSensor(SdlSensorId instanceId) throws Throwable {
     MemorySegment address = SdlFuncs.openSensor(instanceId.getValue());
     if (address == MemorySegment.NULL) {
@@ -83,6 +90,7 @@ public class SdlSensor {
    *     more information.
    * @throws Throwable
    */
+  @NonNull
   public SdlPropertiesId getSensorProperties(SdlSensorDevice sensor) throws Throwable {
     SdlPropertiesId returnedObject = new SdlPropertiesId();
     returnedObject.setValue(SdlFuncs.getSensorProperties(sensor.getAddress()));
@@ -93,10 +101,11 @@ public class SdlSensor {
    * Get the implementation dependent name of a sensor.
    *
    * @param sensor The SdlSensorDevice object
-   * @return Returns the sensor name or nullptr on failure; call SdlError.getError() for more
+   * @return Returns the sensor name or null on failure; call SdlError.getError() for more
    *     information.
    * @throws Throwable
    */
+  @Nullable
   public String getSensorName(SdlSensorDevice sensor) throws Throwable {
     return SdlFuncs.getSensorName(sensor.getAddress());
   }
