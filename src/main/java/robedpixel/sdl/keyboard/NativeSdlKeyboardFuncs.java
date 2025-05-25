@@ -2,11 +2,12 @@ package robedpixel.sdl.keyboard;
 
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
+import java.util.HashMap;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import robedpixel.sdl.video.SdlWindow;
 
-public class NativeSdlKeyboardFuncs {
+public class NativeSdlKeyboardFuncs implements AutoCloseable {
   private static volatile NativeSdlKeyboardFuncs INSTANCE;
   private static final Object mutex = new Object();
   private static final Object addressMutex = new Object();
@@ -34,12 +35,13 @@ public class NativeSdlKeyboardFuncs {
   private final MethodHandle SDL_GetTextInputArea;
   private final MethodHandle SDL_HasScreenKeyboardSupport;
   private final MethodHandle SDL_ScreenKeyboardShown;
-
+  private final HashMap<String, Arena> scancodeNameMap = new HashMap<>();
   private final Arena objectAllocator = Arena.ofAuto();
   private final MemorySegment tempIntAddress = objectAllocator.allocate(ValueLayout.JAVA_INT);
   private final MemorySegment tempShortAddress = objectAllocator.allocate(ValueLayout.JAVA_SHORT);
 
   public NativeSdlKeyboardFuncs(Arena allocator) {
+
     SymbolLookup library = SymbolLookup.libraryLookup("SDL3", allocator);
     SDL_HasKeyboard =
         Linker.nativeLinker()
@@ -258,18 +260,33 @@ public class NativeSdlKeyboardFuncs {
     }
   }
 
-  public boolean setScancodeName(Arena localAllocator, int scanCode, String name) throws Throwable {
-    return (boolean) SDL_SetScancodeName.invoke(scanCode, localAllocator.allocateFrom(name));
+  public boolean setScancodeName(int scanCode, String name) throws Throwable {
+    String scanCodeStr = String.valueOf(scanCode);
+    Arena hashmapAllocator = scancodeNameMap.get(scanCodeStr);
+    Arena allocator = Arena.ofShared();
+    boolean result = (boolean) SDL_SetScancodeName.invoke(scanCode, allocator.allocateFrom(name));
+    if (hashmapAllocator != null) {
+      if (result) {
+        scancodeNameMap.remove(scanCodeStr);
+        hashmapAllocator.close();
+        scancodeNameMap.put(scanCodeStr, allocator);
+      } else {
+        allocator.close();
+      }
+    } else {
+      if (result) {
+        scancodeNameMap.put(scanCodeStr, allocator);
+      } else {
+        allocator.close();
+      }
+    }
+    return result;
   }
 
-  @Nullable
+  @NonNull
   public String getScancodeName(int scanCode) throws Throwable {
     MemorySegment charArrayAddress = (MemorySegment) SDL_GetScancodeName.invoke(scanCode);
-    if (charArrayAddress == MemorySegment.NULL) {
-      return null;
-    } else {
-      return charArrayAddress.reinterpret(Integer.MAX_VALUE).getString(0);
-    }
+    return charArrayAddress.reinterpret(Integer.MAX_VALUE).getString(0);
   }
 
   public int getScancodeFromName(Arena localAllocator, String name) throws Throwable {
@@ -315,9 +332,16 @@ public class NativeSdlKeyboardFuncs {
     return (boolean) SDL_SetTextInputArea.invoke(window, rect, cursor);
   }
 
-  public boolean getTextInputArea(MemorySegment window, MemorySegment rect, int cursor)
+  public boolean getTextInputArea(MemorySegment window, MemorySegment rect, Integer cursor)
       throws Throwable {
-    return (boolean) SDL_GetTextInputArea.invoke(window, rect, cursor);
+    synchronized (addressMutex) {
+      if (cursor == null) {
+        return (boolean) SDL_GetTextInputArea.invoke(window, rect, MemorySegment.NULL);
+      } else {
+        tempIntAddress.set(ValueLayout.JAVA_INT, 0, cursor);
+        return (boolean) SDL_GetTextInputArea.invoke(window, rect, tempIntAddress);
+      }
+    }
   }
 
   public boolean hasScreenKeyboardSupport() throws Throwable {
@@ -339,4 +363,7 @@ public class NativeSdlKeyboardFuncs {
     }
     return result;
   }
+
+  @Override
+  public void close() throws Exception {}
 }

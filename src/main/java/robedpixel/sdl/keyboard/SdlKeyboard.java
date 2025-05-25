@@ -2,6 +2,9 @@ package robedpixel.sdl.keyboard;
 
 // TODO: complete javadoc for keyboard
 import java.lang.foreign.Arena;
+import java.lang.foreign.MemorySegment;
+
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import robedpixel.sdl.rect.SdlRectModel;
 import robedpixel.sdl.video.SdlWindow;
@@ -118,11 +121,25 @@ public class SdlKeyboard {
     return SdlFuncs.getScancodeFromKey(key, modState);
   }
 
-  public boolean setScancodeName(Arena localAllocator, int scanCode, String name) throws Throwable {
-    return SdlFuncs.setScancodeName(localAllocator, scanCode, name);
+  /**
+   * Set a human-readable name for a scancode.
+   *
+   * @param scanCode The desired SDLScancode.
+   * @param name The name to use for the scancode
+   * @return
+   * @throws Throwable
+   */
+  public boolean setScancodeName(int scanCode, String name) throws Throwable {
+    return SdlFuncs.setScancodeName(scanCode, name);
   }
 
-  @Nullable
+  /**
+   * Get a human-readable name for a scancode.
+   * @param scanCode The desired SDLScancode to query.
+   * @return Returns a pointer to the name for the scancode. If the scancode doesn't have a name this function returns an empty string
+   * @throws Throwable
+   */
+  @NonNull
   public String getScancodeName(int scanCode) throws Throwable {
     return SdlFuncs.getScancodeName(scanCode);
   }
@@ -167,15 +184,49 @@ public class SdlKeyboard {
     return SdlFuncs.setTextInputArea(window.getAddress(), rect.getDataAddress(), cursor);
   }
 
-  public boolean getTextInputArea(SdlWindow window, SdlRectModel rect, int cursor)
+  /**
+   * Get the area used to type Unicode text input.
+   *
+   * <p>This function should only be called on the main thread.
+   *
+   * @param window The window for which to query the text input area.
+   * @param rect A pointer to an SDL_Rect filled in with the text input area, may be null.
+   * @param cursor A pointer to the offset of the current cursor location relative to rect->x, may
+   *     be null.
+   * @return Returns true on success or false on failure; call SDLError.getError() for more
+   *     information.
+   * @throws Throwable
+   */
+  public boolean getTextInputArea(SdlWindow window, SdlRectModel rect, Integer cursor)
       throws Throwable {
-    return SdlFuncs.getTextInputArea(window.getAddress(), rect.getDataAddress(), cursor);
+    if (rect == null) {
+      return SdlFuncs.getTextInputArea(window.getAddress(), MemorySegment.NULL, cursor);
+    } else {
+      return SdlFuncs.getTextInputArea(window.getAddress(), rect.getDataAddress(), cursor);
+    }
   }
 
+  /**
+   * Check whether the platform has screen keyboard support.
+   *
+   * <p>This function should only be called on the main thread.
+   *
+   * @return Returns true if the platform has some screen keyboard support or false if not.
+   * @throws Throwable
+   */
   public boolean hasScreenKeyboardSupport() throws Throwable {
     return SdlFuncs.hasScreenKeyboardSupport();
   }
 
+  /**
+   * Check whether the screen keyboard is shown for given window.
+   *
+   * <p>This function should only be called on the main thread.
+   *
+   * @param window The window for which screen keyboard should be queried.
+   * @return Returns true if screen keyboard is shown or false if not.
+   * @throws Throwable
+   */
   public boolean screenKeyboardShown(SdlWindow window) throws Throwable {
     return SdlFuncs.screenKeyboardShown(window.getAddress());
   }
