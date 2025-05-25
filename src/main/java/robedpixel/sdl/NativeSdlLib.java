@@ -1,6 +1,7 @@
 package robedpixel.sdl;
 
 import java.lang.foreign.*;
+import java.util.LinkedList;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -8,7 +9,9 @@ import robedpixel.sdl.error.SdlError;
 import robedpixel.sdl.guid.SdlGuid;
 import robedpixel.sdl.haptic.SdlHaptic;
 import robedpixel.sdl.hints.SdlHints;
+import robedpixel.sdl.keyboard.SdlKeyboard;
 import robedpixel.sdl.misc.SdlMisc;
+import robedpixel.sdl.mouse.SdlMouse;
 import robedpixel.sdl.power.SdlPower;
 import robedpixel.sdl.properties.SdlProperties;
 import robedpixel.sdl.rect.SdlRect;
@@ -24,6 +27,7 @@ import robedpixel.sdl.video.SdlVideo;
 public class NativeSdlLib implements AutoCloseable {
   private static volatile NativeSdlLib INSTANCE;
   private NativeSdlLibFuncs SdlFuncs;
+  private LinkedList<AutoCloseable> closableList;
 
   /**
    * Initialize the SDL library
@@ -37,6 +41,7 @@ public class NativeSdlLib implements AutoCloseable {
       if (!SdlFuncs.initLibrary(SdlInitFlagsFactory.orSdlInitFlag(flags))) {
         throw new IllegalStateException("Unable to init SDL3 library!");
       }
+      closableList = new LinkedList<>();
       log.debug("SDL3 library initialised!");
     } catch (IllegalArgumentException e) {
       log.error("Unable to find SDL3 Library!");
@@ -139,16 +144,6 @@ public class NativeSdlLib implements AutoCloseable {
   }
 
   /**
-   * Get the SDL Sensor module
-   *
-   * @return Hints module for SDL
-   */
-  @NonNull
-  public SdlSensor getSdlSensor() {
-    return new SdlSensor(SdlFuncs.getGlobalAllocator());
-  }
-
-  /**
    * Get the SDL Hints module
    *
    * @return Hints module for SDL
@@ -179,13 +174,25 @@ public class NativeSdlLib implements AutoCloseable {
   }
 
   /**
-   * Get the SDL Power module
+   * Get the SDL Haptic module
    *
-   * @return Power module for SDL
+   * @return Haptic module for SDL
    */
   @NonNull
-  public SdlPower getSdlPower() {
-    return new SdlPower(SdlFuncs.getGlobalAllocator());
+  public SdlHaptic getSdlHaptic() {
+    return new SdlHaptic(SdlFuncs.getGlobalAllocator());
+  }
+
+  /**
+   * Get the SDL Keyboard module
+   *
+   * @return Keyboard module for SDL
+   */
+  @NonNull
+  public SdlKeyboard getSdlKeyboard() {
+    SdlKeyboard keyboard = new SdlKeyboard(SdlFuncs.getGlobalAllocator());
+    closableList.add(keyboard);
+    return keyboard;
   }
 
   /**
@@ -199,13 +206,33 @@ public class NativeSdlLib implements AutoCloseable {
   }
 
   /**
-   * Get the SDL Video module
+   * Get the SDL Mouse module
    *
-   * @return Video module for SDL
+   * @return Mouse module for SDL
    */
   @NonNull
-  public SdlVideo getSdlVideo() {
-    return new SdlVideo(SdlFuncs.getGlobalAllocator());
+  public SdlMouse getSdlMouse() {
+    return new SdlMouse(SdlFuncs.getGlobalAllocator());
+  }
+
+  /**
+   * Get the SDL Power module
+   *
+   * @return Power module for SDL
+   */
+  @NonNull
+  public SdlPower getSdlPower() {
+    return new SdlPower(SdlFuncs.getGlobalAllocator());
+  }
+
+  /**
+   * Get the SDL Properties module
+   *
+   * @return Properties module for SDL
+   */
+  @NonNull
+  public SdlProperties getSdlProperties() {
+    return new SdlProperties(SdlFuncs.getGlobalAllocator());
   }
 
   /**
@@ -219,13 +246,13 @@ public class NativeSdlLib implements AutoCloseable {
   }
 
   /**
-   * Get the SDL Haptic module
+   * Get the SDL Sensor module
    *
-   * @return Haptic module for SDL
+   * @return Hints module for SDL
    */
   @NonNull
-  public SdlHaptic getSdlHaptic() {
-    return new SdlHaptic(SdlFuncs.getGlobalAllocator());
+  public SdlSensor getSdlSensor() {
+    return new SdlSensor(SdlFuncs.getGlobalAllocator());
   }
 
   /**
@@ -239,13 +266,13 @@ public class NativeSdlLib implements AutoCloseable {
   }
 
   /**
-   * Get the SDL Properties module
+   * Get the SDL Video module
    *
-   * @return Properties module for SDL
+   * @return Video module for SDL
    */
   @NonNull
-  public SdlProperties getSdlProperties() {
-    return new SdlProperties(SdlFuncs.getGlobalAllocator());
+  public SdlVideo getSdlVideo() {
+    return new SdlVideo(SdlFuncs.getGlobalAllocator());
   }
 
   public static void sdlFree(MemorySegment pointer) throws Throwable {
@@ -255,6 +282,10 @@ public class NativeSdlLib implements AutoCloseable {
   @Override
   public void close() throws Exception {
     try {
+      for (AutoCloseable closeable : closableList) {
+        closeable.close();
+      }
+      closableList.clear();
       SdlFuncs.quitLibrary();
     } catch (Throwable e) {
       throw new RuntimeException(e);

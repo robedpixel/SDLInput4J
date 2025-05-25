@@ -3,13 +3,12 @@ package robedpixel.sdl.keyboard;
 // TODO: complete javadoc for keyboard
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
-
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import robedpixel.sdl.rect.SdlRectModel;
 import robedpixel.sdl.video.SdlWindow;
 
-public class SdlKeyboard {
+public class SdlKeyboard implements AutoCloseable {
   private NativeSdlKeyboardFuncs SdlFuncs;
 
   public SdlKeyboard(Arena allocator) {
@@ -135,8 +134,10 @@ public class SdlKeyboard {
 
   /**
    * Get a human-readable name for a scancode.
+   *
    * @param scanCode The desired SDLScancode to query.
-   * @return Returns a pointer to the name for the scancode. If the scancode doesn't have a name this function returns an empty string
+   * @return Returns a pointer to the name for the scancode. If the scancode doesn't have a name
+   *     this function returns an empty string
    * @throws Throwable
    */
   @NonNull
@@ -229,5 +230,10 @@ public class SdlKeyboard {
    */
   public boolean screenKeyboardShown(SdlWindow window) throws Throwable {
     return SdlFuncs.screenKeyboardShown(window.getAddress());
+  }
+
+  @Override
+  public void close() throws Exception {
+    SdlFuncs.close();
   }
 }

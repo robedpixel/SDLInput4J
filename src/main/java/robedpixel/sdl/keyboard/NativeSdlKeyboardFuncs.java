@@ -365,5 +365,10 @@ public class NativeSdlKeyboardFuncs implements AutoCloseable {
   }
 
   @Override
-  public void close() throws Exception {}
+  public void close() throws Exception {
+    for (Arena arena : scancodeNameMap.values()) {
+      arena.close();
+    }
+    scancodeNameMap.clear();
+  }
 }
