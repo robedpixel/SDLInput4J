@@ -1,10 +1,8 @@
 package robedpixel.sdl.touch;
 
-
+import java.lang.foreign.Arena;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
-
-import java.lang.foreign.Arena;
 
 public class SdlTouch {
   private final NativeSdlTouchFuncs SdlFuncs;

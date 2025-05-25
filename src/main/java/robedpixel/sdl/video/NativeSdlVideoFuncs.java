@@ -1,6 +1,5 @@
 package robedpixel.sdl.video;
 
-
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 import java.nio.charset.StandardCharsets;

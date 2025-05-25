@@ -7,7 +7,7 @@ import java.lang.foreign.ValueLayout;
 import java.lang.invoke.VarHandle;
 import lombok.Getter;
 
-// TODO:
+/** Defines an SDL display mode object */
 public class SdlDisplayMode {
   public static final MemoryLayout objectLayout =
       MemoryLayout.structLayout(
@@ -31,7 +31,7 @@ public class SdlDisplayMode {
   @Getter private int refreshRateDenominator;
   @Getter private MemorySegment internal;
   @Getter private MemorySegment dataAddress;
-  private Arena allocator = Arena.ofAuto();
+  private final Arena allocator = Arena.ofAuto();
   private static final VarHandle displayIdHandle =
       objectLayout.varHandle(MemoryLayout.PathElement.groupElement("displayID"));
   private static final VarHandle formatHandle =

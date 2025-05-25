@@ -7,7 +7,6 @@ import java.lang.foreign.ValueLayout;
 import java.nio.charset.Charset;
 import lombok.Getter;
 
-// TODO: modify SdlGuid to use this class for methods
 public class SdlGuidByteArray {
   private final byte[] data;
   @Getter private final MemorySegment dataAddress;

@@ -1,6 +1,5 @@
 package robedpixel.sdl.video;
 
-
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import org.jspecify.annotations.NonNull;

@@ -1,9 +1,7 @@
 package robedpixel.sdl.power;
 
-// TODO: add nullablility annotations
-import org.jspecify.annotations.NonNull;
-
 import java.lang.foreign.Arena;
+import org.jspecify.annotations.NonNull;
 
 public class SdlPower {
   private final NativeSdlPowerFuncs SdlFuncs;

@@ -1,10 +1,8 @@
 package robedpixel.sdl.sensors;
 
-
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
-
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import robedpixel.sdl.properties.SdlPropertiesId;
@@ -15,7 +13,6 @@ public class SdlSensor {
   public SdlSensor(Arena allocator) {
     SdlFuncs = NativeSdlSensorsFuncs.getInstance(allocator);
   }
-
 
   /**
    * Get a list of currently connected sensors.

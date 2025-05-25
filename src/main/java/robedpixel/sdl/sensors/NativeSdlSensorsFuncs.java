@@ -1,11 +1,9 @@
 package robedpixel.sdl.sensors;
 
-
-import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.Nullable;
-
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 class NativeSdlSensorsFuncs {
   private static volatile NativeSdlSensorsFuncs INSTANCE;
@@ -104,6 +102,7 @@ class NativeSdlSensorsFuncs {
             .downcallHandle(
                 library.find("SDL_UpdateSensors").orElseThrow(), FunctionDescriptor.ofVoid());
   }
+
   @Nullable
   public SdlSensorIdArray getSensors() throws Throwable {
     synchronized (addressMutex) {
@@ -117,6 +116,7 @@ class NativeSdlSensorsFuncs {
       }
     }
   }
+
   @Nullable
   public synchronized String getSensorNameForId(int instanceId) throws Throwable {
     MemorySegment charArrayAddress = (MemorySegment) SDL_GetSensorNameForID.invoke(instanceId);
@@ -146,6 +146,7 @@ class NativeSdlSensorsFuncs {
   public synchronized int getSensorProperties(MemorySegment sensor) throws Throwable {
     return (int) SDL_GetSensorProperties.invoke(sensor);
   }
+
   @Nullable
   public synchronized String getSensorName(MemorySegment sensor) throws Throwable {
     MemorySegment charArrayAddress = (MemorySegment) SDL_GetSensorName.invoke(sensor);
@@ -180,7 +181,8 @@ class NativeSdlSensorsFuncs {
   public synchronized void updateSensors() throws Throwable {
     SDL_UpdateSensors.invoke();
   }
-@NonNull
+
+  @NonNull
   public static NativeSdlSensorsFuncs getInstance(Arena allocator) {
     NativeSdlSensorsFuncs result = INSTANCE;
     if (result == null) {

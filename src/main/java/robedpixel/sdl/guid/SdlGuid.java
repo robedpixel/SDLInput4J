@@ -29,7 +29,7 @@ public class SdlGuid {
    * Convert a GUID string into a SDL_GUID structure.
    *
    * @param pchGuid string containing an ASCII representation of a GUID.
-   * @return Returns a SDL_GUID structure.
+   * @return Returns a SdlGuid structure.
    * @throws Throwable
    */
   @NonNull

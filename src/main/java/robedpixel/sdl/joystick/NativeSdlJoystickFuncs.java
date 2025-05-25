@@ -1,8 +1,9 @@
 package robedpixel.sdl.joystick;
 
-// TODO: add nullablility annotations
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import robedpixel.sdl.guid.NativeSdlGuidModel;
 
 class NativeSdlJoystickFuncs {
@@ -448,6 +449,7 @@ class NativeSdlJoystickFuncs {
     return (boolean) SDL_HasJoystick.invoke();
   }
 
+  @Nullable
   public SdlJoystickIdArray getJoysticks() throws Throwable {
     synchronized (addressMutex) {
       MemorySegment temp = (MemorySegment) SDL_GetJoysticks.invoke(tempIntAddress);
@@ -461,6 +463,7 @@ class NativeSdlJoystickFuncs {
     }
   }
 
+  @Nullable
   public synchronized String getJoystickNameForId(int instanceId) throws Throwable {
     MemorySegment charArrayAddress = (MemorySegment) SDL_GetJoystickNameForID.invoke(instanceId);
     if (charArrayAddress == MemorySegment.NULL) {
@@ -470,6 +473,7 @@ class NativeSdlJoystickFuncs {
     }
   }
 
+  @Nullable
   public synchronized String getJoystickPathForId(int instanceId) throws Throwable {
     MemorySegment charArrayAddress = (MemorySegment) SDL_GetJoystickPathForID.invoke(instanceId);
     if (charArrayAddress == MemorySegment.NULL) {
@@ -483,6 +487,7 @@ class NativeSdlJoystickFuncs {
     return (int) SDL_GetJoystickPlayerIndexForID.invoke(instanceId);
   }
 
+  @Nullable
   public synchronized NativeSdlGuidModel getJoystickGuidForId(int instanceId) throws Throwable {
     MemorySegment guidAddress = (MemorySegment) SDL_GetJoystickGUIDForID.invoke(instanceId);
     if (guidAddress == MemorySegment.NULL) {
@@ -508,14 +513,17 @@ class NativeSdlJoystickFuncs {
     return (int) SDL_GetJoystickTypeForID.invoke(instanceId);
   }
 
+  @NonNull
   public synchronized MemorySegment openJoystick(int instanceId) throws Throwable {
     return (MemorySegment) SDL_OpenJoystick.invoke(instanceId);
   }
 
+  @NonNull
   public synchronized MemorySegment getJoystickFromId(int instanceId) throws Throwable {
     return (MemorySegment) SDL_GetJoystickFromID.invoke(instanceId);
   }
 
+  @NonNull
   public synchronized MemorySegment getJoystickFromPlayerIndex(int playerIndex) throws Throwable {
     return (MemorySegment) SDL_GetJoystickFromPlayerIndex.invoke(playerIndex);
   }
@@ -576,6 +584,7 @@ class NativeSdlJoystickFuncs {
     return (int) SDL_GetJoystickProperties.invoke(joystick);
   }
 
+  @Nullable
   public synchronized String getJoystickName(MemorySegment joystick) throws Throwable {
     MemorySegment temp = (MemorySegment) SDL_GetJoystickName.invoke(joystick);
     if (temp == MemorySegment.NULL) {
@@ -585,6 +594,7 @@ class NativeSdlJoystickFuncs {
     }
   }
 
+  @Nullable
   public synchronized String getJoystickPath(MemorySegment joystick) throws Throwable {
     MemorySegment temp = (MemorySegment) SDL_GetJoystickPath.invoke(joystick);
     if (temp == MemorySegment.NULL) {
@@ -603,6 +613,7 @@ class NativeSdlJoystickFuncs {
     return (boolean) SDL_SetJoystickPlayerIndex.invoke(joystick, playerIndex);
   }
 
+  @Nullable
   public synchronized NativeSdlGuidModel getJoystickGuid(MemorySegment joystick) throws Throwable {
     MemorySegment guidAddress = (MemorySegment) SDL_GetJoystickGUID.invoke(joystick);
     if (guidAddress == MemorySegment.NULL) {
@@ -628,6 +639,7 @@ class NativeSdlJoystickFuncs {
     return (short) SDL_GetJoystickFirmwareVersion.invoke(joystick);
   }
 
+  @Nullable
   public synchronized String getJoystickSerial(MemorySegment joystick) throws Throwable {
     MemorySegment temp = (MemorySegment) SDL_GetJoystickSerial.invoke(joystick);
     if (temp == MemorySegment.NULL) {
@@ -766,6 +778,7 @@ class NativeSdlJoystickFuncs {
     }
   }
 
+  @NonNull
   public static NativeSdlJoystickFuncs getInstance(Arena allocator) {
     NativeSdlJoystickFuncs result = INSTANCE;
     if (result == null) {

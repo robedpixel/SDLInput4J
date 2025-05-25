@@ -1,8 +1,9 @@
 package robedpixel.sdl.hints;
 
-// TODO: add nullablility annotations
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 class NativeSdlHintsFuncs {
   private static volatile NativeSdlHintsFuncs INSTANCE;
@@ -95,6 +96,7 @@ class NativeSdlHintsFuncs {
     SDL_ResetHints.invoke();
   }
 
+  @Nullable
   public synchronized String getHint(Arena localAllocator, String name) throws Throwable {
     MemorySegment charArrayAddress =
         (MemorySegment) SDL_GetHint.invoke(localAllocator.allocateFrom(name));
@@ -121,6 +123,7 @@ class NativeSdlHintsFuncs {
     return (boolean) SDL_RemoveHintCallback.invoke(name, callbackFunc, userData);
   }
 
+  @NonNull
   public static NativeSdlHintsFuncs getInstance(Arena allocator) {
     NativeSdlHintsFuncs result = INSTANCE;
     if (result == null) {

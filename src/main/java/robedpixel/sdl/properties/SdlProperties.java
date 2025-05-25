@@ -1,11 +1,9 @@
 package robedpixel.sdl.properties;
 
-
-import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.Nullable;
-
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 public class SdlProperties {
   private final NativeSdlPropertiesFuncs SdlFuncs;

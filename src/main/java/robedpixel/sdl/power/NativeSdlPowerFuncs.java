@@ -1,9 +1,8 @@
 package robedpixel.sdl.power;
 
-import org.jspecify.annotations.NonNull;
-
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
+import org.jspecify.annotations.NonNull;
 
 class NativeSdlPowerFuncs {
   private static volatile NativeSdlPowerFuncs INSTANCE;
@@ -32,7 +31,8 @@ class NativeSdlPowerFuncs {
       sdlPowerSnapshot.setPercent(percentAddress.get(ValueLayout.JAVA_INT, 0));
     }
   }
-@NonNull
+
+  @NonNull
   public static NativeSdlPowerFuncs getInstance(Arena allocator) {
     NativeSdlPowerFuncs result = INSTANCE;
     if (result == null) {

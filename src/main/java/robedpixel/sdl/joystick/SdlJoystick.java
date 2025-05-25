@@ -1,13 +1,12 @@
 package robedpixel.sdl.joystick;
 
-// TODO: add nullablility annotations
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import robedpixel.sdl.guid.NativeSdlGuidModel;
 import robedpixel.sdl.properties.SdlPropertiesId;
-
-// TODO: add rest of javadoc
 
 public class SdlJoystick {
   private NativeSdlJoystickFuncs SdlFuncs;
@@ -51,6 +50,7 @@ public class SdlJoystick {
    *     for more information.
    * @throws Throwable
    */
+  @Nullable
   public SdlJoystickIdArray getJoysticks() throws Throwable {
     return SdlFuncs.getJoysticks();
   }
@@ -63,6 +63,7 @@ public class SdlJoystick {
    *     returns null; call SdlError.getError() for more information.
    * @throws Throwable
    */
+  @Nullable
   public String getJoystickNameForId(SdlJoystickId instanceId) throws Throwable {
     return SdlFuncs.getJoystickNameForId(instanceId.getValue());
   }
@@ -75,6 +76,7 @@ public class SdlJoystick {
    *     returns null; call SdlError.getError() for more information.
    * @throws Throwable
    */
+  @Nullable
   public String getJoystickPathForId(SdlJoystickId instanceId) throws Throwable {
     return SdlFuncs.getJoystickPathForId(instanceId.getValue());
   }
@@ -87,6 +89,7 @@ public class SdlJoystick {
    *     function returns a zero GUID.
    * @throws Throwable
    */
+  @Nullable
   public NativeSdlGuidModel getJoystickGuidForId(SdlJoystickId instanceId) throws Throwable {
     return SdlFuncs.getJoystickGuidForId(instanceId.getValue());
   }
@@ -158,6 +161,7 @@ public class SdlJoystick {
    *     information.
    * @throws Throwable
    */
+  @Nullable
   public SdlJoystickDevice openJoystick(SdlJoystickId instanceId) throws Throwable {
     MemorySegment joystickAddress = SdlFuncs.openJoystick(instanceId.getValue());
     if (joystickAddress == MemorySegment.NULL) {
@@ -175,6 +179,7 @@ public class SdlJoystick {
    *     yet; call SdlError.getError() for more information.
    * @throws Throwable
    */
+  @Nullable
   public SdlJoystickDevice getJoystickFromId(SdlJoystickId instanceId) throws Throwable {
     MemorySegment joystickAddress = SdlFuncs.getJoystickFromId(instanceId.getValue());
     if (joystickAddress == MemorySegment.NULL) {
@@ -192,6 +197,7 @@ public class SdlJoystick {
    *     for more information.
    * @throws Throwable
    */
+  @Nullable
   public SdlJoystickDevice getJoystickFromPlayerIndex(SdlJoystickId instanceId) throws Throwable {
     MemorySegment joystickAddress = SdlFuncs.getJoystickFromPlayerIndex(instanceId.getValue());
     if (joystickAddress == MemorySegment.NULL) {
@@ -209,6 +215,7 @@ public class SdlJoystick {
    *     information.
    * @throws Throwable
    */
+  @NonNull
   public SdlJoystickId attachVirtualJoystick(SdlVirtualJoystickDesc desc) throws Throwable {
     SdlJoystickId returnObject = new SdlJoystickId();
     returnObject.setValue(SdlFuncs.attachVirtualJoystick(desc.getDataAddress()));
@@ -361,6 +368,7 @@ public class SdlJoystick {
    *     more information.
    * @throws Throwable
    */
+  @NonNull
   public SdlPropertiesId getJoystickProperties(SdlJoystickDevice joystick) throws Throwable {
     SdlPropertiesId propertiesId = new SdlPropertiesId();
     propertiesId.setValue(SdlFuncs.getJoystickProperties(joystick.getAddress()));
@@ -375,6 +383,7 @@ public class SdlJoystick {
    *     returns null; call SdlError.getError() for more information.
    * @throws Throwable
    */
+  @Nullable
   public String getJoystickName(SdlJoystickDevice joystick) throws Throwable {
     return SdlFuncs.getJoystickName(joystick.getAddress());
   }
@@ -387,6 +396,7 @@ public class SdlJoystick {
    *     returns null; call SdlError.getError() for more information.
    * @throws Throwable
    */
+  @Nullable
   public String getJoystickPath(SdlJoystickDevice joystick) throws Throwable {
     return SdlFuncs.getJoystickPath(joystick.getAddress());
   }
@@ -424,6 +434,7 @@ public class SdlJoystick {
    *     returns a zero GUID; call SdlError.getError() for more information.
    * @throws Throwable
    */
+  @Nullable
   public NativeSdlGuidModel getJoystickGuid(SdlJoystickDevice joystick) throws Throwable {
     return SdlFuncs.getJoystickGuid(joystick.getAddress());
   }
@@ -479,6 +490,7 @@ public class SdlJoystick {
    * @return Returns the serial number of the selected joystick, or null if unavailable.
    * @throws Throwable
    */
+  @Nullable
   public String getJoystickSerial(SdlJoystickDevice joystick) throws Throwable {
     return SdlFuncs.getJoystickSerial(joystick.getAddress());
   }
@@ -628,6 +640,7 @@ public class SdlJoystick {
    *     array if no values are returned
    * @throws Throwable
    */
+  @NonNull
   public SdlJoystickAxisReading[] getAllJoystickAxisInitialState(SdlJoystickDevice joystick)
       throws Throwable {
     int numaxes = SdlFuncs.getNumJoystickAxes(joystick.getAddress());

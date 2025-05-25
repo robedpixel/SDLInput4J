@@ -1,9 +1,9 @@
 package robedpixel.sdl.hints;
 
-// TODO: add nullablility annotations
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
+import org.jspecify.annotations.Nullable;
 
 public class SdlHints {
   private NativeSdlHintsFuncs SdlFuncs;
@@ -73,6 +73,7 @@ public class SdlHints {
    * @return Returns the string value of a hint or null if the hint isn't set.
    * @throws Throwable
    */
+  @Nullable
   public String getHint(String name) throws Throwable {
     try (Arena arena = Arena.ofConfined()) {
       return SdlFuncs.getHint(arena, name);

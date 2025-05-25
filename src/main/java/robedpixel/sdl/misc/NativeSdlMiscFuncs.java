@@ -1,10 +1,8 @@
 package robedpixel.sdl.misc;
 
-// TODO: add nullablility annotations
-import org.jspecify.annotations.NonNull;
-
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
+import org.jspecify.annotations.NonNull;
 
 class NativeSdlMiscFuncs {
   private static volatile NativeSdlMiscFuncs INSTANCE;
@@ -23,8 +21,8 @@ class NativeSdlMiscFuncs {
   public synchronized boolean openUrl(Arena localAllocator, String url) throws Throwable {
     return (boolean) SDL_OpenURL.invoke(localAllocator.allocateFrom(url));
   }
-  @NonNull
 
+  @NonNull
   public static NativeSdlMiscFuncs getInstance(Arena allocator) {
     NativeSdlMiscFuncs result = INSTANCE;
     if (result == null) {

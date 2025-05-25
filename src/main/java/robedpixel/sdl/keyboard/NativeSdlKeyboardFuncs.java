@@ -249,9 +249,9 @@ public class NativeSdlKeyboardFuncs {
 
   public int getScancodeFromKey(int key, Short modState) throws Throwable {
     synchronized (addressMutex) {
-      if (modState == null){
+      if (modState == null) {
         return (int) SDL_GetScancodeFromKey.invoke(key, MemorySegment.NULL);
-      }else {
+      } else {
         tempShortAddress.set(ValueLayout.JAVA_SHORT, 0, modState);
         return (int) SDL_GetScancodeFromKey.invoke(key, tempShortAddress);
       }

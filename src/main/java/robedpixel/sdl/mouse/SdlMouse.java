@@ -1,9 +1,7 @@
 package robedpixel.sdl.mouse;
 
-
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
-
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import robedpixel.sdl.video.SdlWindow;

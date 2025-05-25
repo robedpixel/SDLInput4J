@@ -1,5 +1,6 @@
 package robedpixel.sdl.keyboard;
-//TODO: complete javadoc for keyboard
+
+// TODO: complete javadoc for keyboard
 import java.lang.foreign.Arena;
 import org.jspecify.annotations.Nullable;
 import robedpixel.sdl.rect.SdlRectModel;
@@ -18,6 +19,7 @@ public class SdlKeyboard {
 
   /**
    * Return whether a keyboard is currently connected.
+   *
    * @return Returns true if a keyboard is connected, false otherwise.
    * @throws Throwable
    */
@@ -28,8 +30,10 @@ public class SdlKeyboard {
 
   /**
    * Get the name of a keyboard.
+   *
    * @param instanceId The keyboard instance Id.
-   * @return Returns the name of the selected keyboard or nullL on failure; call SDL_GetError() for more information.
+   * @return Returns the name of the selected keyboard or nullL on failure; call SDL_GetError() for
+   *     more information.
    * @throws Throwable
    */
   @Nullable
@@ -39,6 +43,7 @@ public class SdlKeyboard {
 
   /**
    * Query the window which currently has keyboard focus.
+   *
    * @return Returns the window with keyboard focus.
    * @throws Throwable
    */
@@ -49,7 +54,8 @@ public class SdlKeyboard {
 
   /**
    * Get a snapshot of the current state of the keyboard.
-   * @return  Returns an array of key states.
+   *
+   * @return Returns an array of key states.
    * @throws Throwable
    */
   public boolean @Nullable [] getKeyboardState() throws Throwable {
@@ -58,6 +64,7 @@ public class SdlKeyboard {
 
   /**
    * Clear the state of the keyboard.
+   *
    * @throws Throwable
    */
   public void resetKeyboard() throws Throwable {
@@ -66,7 +73,9 @@ public class SdlKeyboard {
 
   /**
    * Get the current key modifier state for the keyboard.
-   * @return Returns an OR'd combination of the modifier keys for the keyboard. See SdlKeymod for details.
+   *
+   * @return Returns an OR'd combination of the modifier keys for the keyboard. See SdlKeymod for
+   *     details.
    * @throws Throwable
    */
   public short getModState() throws Throwable {
@@ -75,6 +84,7 @@ public class SdlKeyboard {
 
   /**
    * Set the current key modifier state for the keyboard.
+   *
    * @param modState the desired SdlKeymod for the keyboard.
    * @throws Throwable
    */
@@ -84,6 +94,7 @@ public class SdlKeyboard {
 
   /**
    * Get the key code corresponding to the given scancode according to the current keyboard layout.
+   *
    * @param scanCode The desired SdlScancode to query.
    * @param modState The modifier state to use when translating the scancode to a keycode.
    * @param keyEvent True if the keycode will be used in key events.
@@ -96,8 +107,10 @@ public class SdlKeyboard {
 
   /**
    * Get the scancode corresponding to the given key code according to the current keyboard layout.
+   *
    * @param key The desired SDL_Keycode to query.
-   * @param modState the modifier state that would be used when the scancode generates this key, may be null.
+   * @param modState the modifier state that would be used when the scancode generates this key, may
+   *     be null.
    * @return Returns the SdlScancode that corresponds to the given SdlKeycode.
    * @throws Throwable
    */

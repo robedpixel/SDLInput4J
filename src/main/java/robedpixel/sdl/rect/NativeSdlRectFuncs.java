@@ -1,9 +1,8 @@
 package robedpixel.sdl.rect;
 
-import org.jspecify.annotations.NonNull;
-
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
+import org.jspecify.annotations.NonNull;
 
 class NativeSdlRectFuncs {
   private static volatile NativeSdlRectFuncs INSTANCE;
@@ -54,7 +53,8 @@ class NativeSdlRectFuncs {
       throws Throwable {
     return (boolean) SDL_GetRectUnion.invoke(A, B, result);
   }
-@NonNull
+
+  @NonNull
   public static NativeSdlRectFuncs getInstance(Arena allocator) {
     NativeSdlRectFuncs result = INSTANCE;
     if (result == null) {

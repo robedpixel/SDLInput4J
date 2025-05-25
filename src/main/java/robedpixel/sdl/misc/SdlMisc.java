@@ -1,6 +1,5 @@
 package robedpixel.sdl.misc;
 
-// TODO: add nullablility annotations
 import java.lang.foreign.Arena;
 
 public class SdlMisc {
