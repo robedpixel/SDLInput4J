@@ -262,13 +262,12 @@ public class NativeSdlKeyboardFuncs implements AutoCloseable {
 
   public boolean setScancodeName(int scanCode, String name) throws Throwable {
     String scanCodeStr = String.valueOf(scanCode);
-    Arena hashmapAllocator = scancodeNameMap.get(scanCodeStr);
     Arena allocator = Arena.ofShared();
     boolean result = (boolean) SDL_SetScancodeName.invoke(scanCode, allocator.allocateFrom(name));
-    if (hashmapAllocator != null) {
+    if (scancodeNameMap.containsKey(scanCodeStr)) {
       if (result) {
-        scancodeNameMap.remove(scanCodeStr);
-        hashmapAllocator.close();
+        Arena previousAllocator = scancodeNameMap.remove(scanCodeStr);
+        previousAllocator.close();
         scancodeNameMap.put(scanCodeStr, allocator);
       } else {
         allocator.close();
@@ -293,14 +292,10 @@ public class NativeSdlKeyboardFuncs implements AutoCloseable {
     return (int) SDL_GetScancodeFromName.invoke(localAllocator.allocateFrom(name));
   }
 
-  @Nullable
+  @NonNull
   public String getKeyName(int key) throws Throwable {
     MemorySegment charArrayAddress = (MemorySegment) SDL_GetKeyName.invoke(key);
-    if (charArrayAddress == MemorySegment.NULL) {
-      return null;
-    } else {
-      return charArrayAddress.reinterpret(Integer.MAX_VALUE).getString(0);
-    }
+    return charArrayAddress.reinterpret(Integer.MAX_VALUE).getString(0);
   }
 
   public int getKeyFromName(Arena localAllocator, String name) throws Throwable {

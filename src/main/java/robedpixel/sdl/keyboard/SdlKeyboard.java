@@ -1,10 +1,11 @@
 package robedpixel.sdl.keyboard;
 
-// TODO: complete javadoc for keyboard
+
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
+import robedpixel.sdl.properties.SdlPropertiesId;
 import robedpixel.sdl.rect.SdlRectModel;
 import robedpixel.sdl.video.SdlWindow;
 
@@ -145,44 +146,107 @@ public class SdlKeyboard implements AutoCloseable {
     return SdlFuncs.getScancodeName(scanCode);
   }
 
+  /**
+   * Get a scancode from a human-readable name.
+   * @param name The human-readable scancode name.
+   * @return Returns the SDLScancode, or SDL_SCANCODE_UNKNOWN if the name wasn't recognized; call SDLError.getError()for more information.
+   * @throws Throwable
+   */
   public int getScancodeFromName(Arena localAllocator, String name) throws Throwable {
-    return SdlFuncs.getScancodeFromName(localAllocator, name);
+    try(Arena arena = Arena.ofConfined()) {
+      return SdlFuncs.getScancodeFromName(arena, name);
+    }
   }
 
-  @Nullable
+  /**
+   * Get a human-readable name for a key.
+   * @param key The desired SDLKeycode to query.
+   * @return Returns a UTF-8 encoded string of the key name.
+   * @throws Throwable
+   */
+  @NonNull
   public String getKeyName(int key) throws Throwable {
     return SdlFuncs.getKeyName(key);
   }
 
+  /**
+   * Get a key code from a human-readable name.
+   * @param name The human-readable key name.
+   * @return Returns key code, or SDLK_UNKNOWN if the name wasn't recognized; call SDLError.getError() for more information.
+   * @throws Throwable
+   */
   public int getKeyFromName(String name) throws Throwable {
     try (Arena arena = Arena.ofConfined()) {
       return SdlFuncs.getKeyFromName(arena, name);
     }
   }
 
+  /**
+   * Start accepting Unicode text input events in a window.
+   * @param window The window to enable text input.
+   * @return Returns true on success or false on failure; call SDLError.getError() for more information.
+   * @throws Throwable
+   */
   public boolean startTextInput(SdlWindow window) throws Throwable {
     return SdlFuncs.startTextInput(window.getAddress());
   }
 
-  public boolean startTextInputWithProperties(SdlWindow window, int props) throws Throwable {
-    return SdlFuncs.startTextInputWithProperties(window.getAddress(), props);
+  /**
+   * Start accepting Unicode text input events in a window, with properties describing the input.
+   * @param window The window to enable text input.
+   * @param props The properties to use.
+   * @return Returns true on success or false on failure; call SDLError.getError() for more information.
+   * @throws Throwable
+   */
+  public boolean startTextInputWithProperties(SdlWindow window, SdlPropertiesId props) throws Throwable {
+    return SdlFuncs.startTextInputWithProperties(window.getAddress(), props.getValue());
   }
 
+  /**
+   * Check whether Unicode text input events are enabled for a window.
+   * @param window The window to check.
+   * @return Returns true if text input events are enabled else false.
+   * @throws Throwable
+   */
   public boolean textInputActive(SdlWindow window) throws Throwable {
     return SdlFuncs.textInputActive(window.getAddress());
   }
 
+  /**
+   * Stop receiving any text input events in a window.
+   * @param window The window to disable text input.
+   * @return Returns true on success or false on failure; call SDLError.getError() for more information.
+   * @throws Throwable
+   */
   public boolean stopTextInput(SdlWindow window) throws Throwable {
     return SdlFuncs.stopTextInput(window.getAddress());
   }
 
+  /**
+   * Dismiss the composition window/IME without disabling the subsystem.
+   * @param window The window to affect.
+   * @return Returns true on success or false on failure; call SDLError.getError() for more information.
+   * @throws Throwable
+   */
   public boolean clearComposition(SdlWindow window) throws Throwable {
     return SdlFuncs.clearComposition(window.getAddress());
   }
 
+  /**
+   * Set the area used to type Unicode text input.
+   * @param window The window for which to set the text input area.
+   * @param rect The SDLRect representing the text input area, in window coordinates, or null to clear it.
+   * @param cursor The offset of the current cursor location relative to rect->x, in window coordinates.
+   * @return Returns true on success or false on failure; call SDLError.getError() for more information.
+   * @throws Throwable
+   */
   public boolean setTextInputArea(SdlWindow window, SdlRectModel rect, int cursor)
       throws Throwable {
-    return SdlFuncs.setTextInputArea(window.getAddress(), rect.getDataAddress(), cursor);
+    if (rect ==null){
+      return SdlFuncs.setTextInputArea(window.getAddress(), MemorySegment.NULL, cursor);
+    }else {
+      return SdlFuncs.setTextInputArea(window.getAddress(), rect.getDataAddress(), cursor);
+    }
   }
 
   /**
