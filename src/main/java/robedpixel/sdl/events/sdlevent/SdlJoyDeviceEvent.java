@@ -6,18 +6,20 @@ import java.lang.foreign.StructLayout;
 import java.lang.foreign.ValueLayout;
 import java.lang.invoke.VarHandle;
 import lombok.Getter;
-import robedpixel.sdl.mouse.SdlMouseId;
+import robedpixel.sdl.joystick.SdlJoystickId;
 
-public class SdlMouseDeviceEvent {
+public class SdlJoyDeviceEvent {
   public static final StructLayout objectLayout =
       MemoryLayout.structLayout(
               ValueLayout.JAVA_INT.withName("type"),
               ValueLayout.JAVA_INT.withName("reserved"),
               ValueLayout.JAVA_LONG.withName("timestamp"),
               ValueLayout.JAVA_INT.withName("which"))
-          .withName("SDL_MouseDeviceEvent");
+          .withName("SDL_JoyDeviceEvent");
 
-  /** SDL_EVENT_MOUSE_ADDED or SDL_EVENT_MOUSE_REMOVED* */
+  /**
+   * SDL_EVENT_JOYSTICK_ADDED or SDL_EVENT_JOYSTICK_REMOVED or SDL_EVENT_JOYSTICK_UPDATE_COMPLETE*
+   */
   @Getter int type;
 
   @Getter int reserved;
@@ -25,8 +27,8 @@ public class SdlMouseDeviceEvent {
   /** (Unsigned Int64) In nanoseconds, populated using SDL_GetTicksNS() */
   @Getter long timestamp;
 
-  /** The mouse instance id */
-  @Getter SdlMouseId which;
+  /** The joystick instance id */
+  @Getter SdlJoystickId which;
 
   private static final VarHandle typeHandle =
       objectLayout.varHandle(MemoryLayout.PathElement.groupElement("type"));
@@ -37,12 +39,12 @@ public class SdlMouseDeviceEvent {
   private static final VarHandle whichHandle =
       objectLayout.varHandle(MemoryLayout.PathElement.groupElement("which"));
 
-  public static SdlMouseDeviceEvent getEventFromMemorySegment(MemorySegment segment) {
-    SdlMouseDeviceEvent retEvent = new SdlMouseDeviceEvent();
+  public static SdlJoyDeviceEvent getEventFromMemorySegment(MemorySegment segment) {
+    SdlJoyDeviceEvent retEvent = new SdlJoyDeviceEvent();
     retEvent.type = (int) typeHandle.get(segment, 0);
     retEvent.reserved = (int) reservedHandle.get(segment, 0);
     retEvent.timestamp = (long) timestampHandle.get(segment, 0);
-    retEvent.which = new SdlMouseId();
+    retEvent.which = new SdlJoystickId();
     retEvent.which.setValue((int) whichHandle.get(segment, 0));
     return retEvent;
   }
