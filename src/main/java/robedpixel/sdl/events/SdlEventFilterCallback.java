@@ -39,6 +39,12 @@ public class SdlEventFilterCallback implements AutoCloseable {
     return false;
   }
 
+  public MemorySegment generatePointerToCallbackAddress(Arena allocator) {
+    MemorySegment pointer = allocator.allocate(ValueLayout.ADDRESS);
+    pointer.set(ValueLayout.JAVA_LONG, 0, callbackAddress.address());
+    return pointer;
+  }
+
   @Override
   public void close() {
     callbackAllocator.close();

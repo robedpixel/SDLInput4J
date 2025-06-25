@@ -6,9 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import robedpixel.sdl.error.SdlError;
+import robedpixel.sdl.events.SdlEvents;
+import robedpixel.sdl.gamepad.SdlGamepad;
 import robedpixel.sdl.guid.SdlGuid;
 import robedpixel.sdl.haptic.SdlHaptic;
 import robedpixel.sdl.hints.SdlHints;
+import robedpixel.sdl.joystick.SdlJoystick;
 import robedpixel.sdl.keyboard.SdlKeyboard;
 import robedpixel.sdl.misc.SdlMisc;
 import robedpixel.sdl.mouse.SdlMouse;
@@ -144,16 +147,6 @@ public class NativeSdlLib implements AutoCloseable {
   }
 
   /**
-   * Get the SDL Hints module
-   *
-   * @return Hints module for SDL
-   */
-  @NonNull
-  public SdlHints getSdlHints() {
-    return new SdlHints(SdlFuncs.getGlobalAllocator());
-  }
-
-  /**
    * Get the SDL Error module
    *
    * @return Error module for SDL
@@ -161,6 +154,26 @@ public class NativeSdlLib implements AutoCloseable {
   @NonNull
   public SdlError getSdlError() {
     return new SdlError(SdlFuncs.getGlobalAllocator());
+  }
+
+  /**
+   * Get the SDL Events module
+   *
+   * @return Events module for SDL
+   */
+  @NonNull
+  public SdlEvents getSdlEvents() {
+    return new SdlEvents(SdlFuncs.getGlobalAllocator());
+  }
+
+  /**
+   * Get the SDL Gamepad module
+   *
+   * @return Gamepad module for SDL
+   */
+  @NonNull
+  public SdlGamepad getSdlGamepad() {
+    return new SdlGamepad(SdlFuncs.getGlobalAllocator());
   }
 
   /**
@@ -181,6 +194,26 @@ public class NativeSdlLib implements AutoCloseable {
   @NonNull
   public SdlHaptic getSdlHaptic() {
     return new SdlHaptic(SdlFuncs.getGlobalAllocator());
+  }
+
+  /**
+   * Get the SDL Hints module
+   *
+   * @return Hints module for SDL
+   */
+  @NonNull
+  public SdlHints getSdlHints() {
+    return new SdlHints(SdlFuncs.getGlobalAllocator());
+  }
+
+  /**
+   * Get the SDL Joystick module
+   *
+   * @return Joystick module for SDL
+   */
+  @NonNull
+  public SdlJoystick getSdlJoystick() {
+    return new SdlJoystick(SdlFuncs.getGlobalAllocator());
   }
 
   /**
@@ -248,7 +281,7 @@ public class NativeSdlLib implements AutoCloseable {
   /**
    * Get the SDL Sensor module
    *
-   * @return Hints module for SDL
+   * @return Sensor module for SDL
    */
   @NonNull
   public SdlSensor getSdlSensor() {
