@@ -8,6 +8,7 @@ class NativeEventsFuncs {
   private static final Object mutex = new Object();
   private final MethodHandle SDL_PumpEvents;
   private final MethodHandle SDL_PeepEvents;
+    private final MethodHandle SDL_HasEvent;
 
   public NativeEventsFuncs(Arena allocator) {
     SymbolLookup library = SymbolLookup.libraryLookup("SDL3", allocator);
@@ -19,12 +20,13 @@ class NativeEventsFuncs {
     SDL_PeepEvents =
         Linker.nativeLinker()
             .downcallHandle(
-                library.find("SDL_PeepEvents").orElseThrow(), FunctionDescriptor.ofVoid());
+                library.find("SDL_PeepEvents").orElseThrow(), FunctionDescriptor.of(ValueLayout.ADDRESS,ValueLayout.JAVA_INT,ValueLayout.JAVA_INT,ValueLayout.JAVA_INT,ValueLayout.JAVA_INT));
   }
 
   public void pumpEvents() throws Throwable {
     SDL_PumpEvents.invoke();
   }
+  //public int peepEvents()
 
   public static NativeEventsFuncs getInstance(Arena allocator) {
     NativeEventsFuncs result = INSTANCE;
