@@ -1,10 +1,13 @@
 package robedpixel.sdl.events.sdlevent;
 
-import java.lang.foreign.MemoryLayout;
-import java.lang.foreign.UnionLayout;
-import java.lang.foreign.ValueLayout;
+import lombok.Getter;
 
-public class SdlEvent {
+import java.lang.foreign.*;
+
+public class SdlEvent implements AutoCloseable{
+    @Getter
+    private MemorySegment segment;
+    private Arena arena = Arena.ofConfined();
   public static final UnionLayout objectLayout =
       MemoryLayout.unionLayout(
               ValueLayout.JAVA_INT.withName("type"),
@@ -45,4 +48,12 @@ public class SdlEvent {
               SdlDropEvent.objectLayout.withName("drop"),
               SdlClipboardEvent.objectLayout.withName("clipboard"))
           .withName("SDL_Event");
+    public SdlEvent(){
+        segment = arena.allocate(objectLayout);
+    }
+
+    @Override
+    public void close() throws Exception {
+        arena.close();
+    }
 }

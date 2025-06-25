@@ -1,5 +1,8 @@
 package robedpixel.sdl.events;
 
+import robedpixel.sdl.events.sdlevent.SdlEvent;
+import robedpixel.sdl.video.SdlWindowId;
+
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 
@@ -159,6 +162,61 @@ class NativeEventsFuncs {
   public boolean hasEvent(SdlEventType type) throws Throwable {
     return (boolean) SDL_HasEvent.invoke(type.ordinal());
   }
+  public boolean hasEvents(int minType, int maxType) throws Throwable {
+      return (boolean) SDL_HasEvents.invoke(minType, maxType);
+  }
+  public void flushEvent(int type) throws Throwable {
+      SDL_FlushEvent.invoke(type);
+  }
+  public void flushEvents(int minType, int maxType) throws Throwable {
+      SDL_FlushEvents.invoke(minType, maxType);
+  }
+  public boolean pollEvent(SdlEvent event) throws Throwable {
+      return (boolean) SDL_PollEvent.invoke(event.getSegment());
+  }
+  public boolean waitEvent(SdlEvent event) throws Throwable {
+      return (boolean) SDL_WaitEvent.invoke(event.getSegment());
+  }
+  public boolean waitEventTimeout(SdlEvent event, int timeoutMs) throws Throwable {
+      return (boolean) SDL_WaitEventTimeout.invoke(event.getSegment(), timeoutMs);
+  }
+  public boolean pushEvent(SdlEvent event) throws Throwable {
+      return (boolean) SDL_PushEvent.invoke(event.getSegment());
+  }
+  public boolean setEventFilter(SdlEventFilterCallback filter, MemorySegment userdata) throws Throwable {
+      return (boolean) SDL_SetEventFilter.invoke(filter.getCallbackAddress(), userdata);
+  }
+  public boolean getEventFilter(MemorySegment sdlEventFilterPointer, MemorySegment userdataPointer) throws Throwable {
+      return (boolean) SDL_GetEventFilter.invoke(sdlEventFilterPointer,userdataPointer);
+  }
+  public boolean addEventWatch(SdlEventFilterCallback filter, MemorySegment userdata) throws Throwable {
+      return (boolean) SDL_AddEventWatch.invoke(filter, userdata);
+  }
+  public boolean removeEventWatch(SdlEventFilterCallback filter, MemorySegment userdata) throws Throwable {
+      return (boolean) SDL_RemoveEventWatch.invoke(filter, userdata);
+  }
+  public boolean filterEvents(SdlEventFilterCallback filter, MemorySegment userdata) throws Throwable {
+      return (boolean) SDL_FilterEvents.invoke(filter, userdata);
+  }
+  public void setEventEnabled(int type, boolean enabled) throws Throwable {
+      SDL_SetEventEnabled.invoke(type, enabled);
+  }
+  public boolean eventEnabled(int type) throws Throwable {
+      return (boolean) SDL_EventEnabled.invoke(type);
+  }
+  public int registerEvents(int numEvents) throws Throwable {
+      return (int) SDL_RegisterEvents.invoke(numEvents);
+  }
+  public SdlWindowId getWindowFromEvent(SdlEvent event) throws Throwable {
+      SdlWindowId window = new SdlWindowId();
+      window.setValue((int) SDL_GetWindowFromEvent.invoke(event.getSegment()));
+      return window;
+  }
+  public String getEventDescription(int type) throws Throwable {
+      return (String) SDL_GetEventDescription.invoke(type);
+  }
+
+
 
   public static NativeEventsFuncs getInstance(Arena allocator) {
     NativeEventsFuncs result = INSTANCE;
