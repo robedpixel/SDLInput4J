@@ -12,7 +12,7 @@ spotless{
     }
 }
 java{
-    sourceCompatibility = JavaVersion.VERSION_23
+    sourceCompatibility = JavaVersion.VERSION_25
 }
 repositories {
     mavenCentral()
